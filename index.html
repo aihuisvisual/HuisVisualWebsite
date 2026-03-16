@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuisVisual.nl - Beeldkracht.</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Reset & Basis */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            justify-content: center;
+            padding: 24px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container voor de layout */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Hoofdafbeelding (Collage) */
+        .hero-image {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 16px; /* Zorgt voor de afgeronde hoeken uit je voorbeeld */
+            margin-bottom: 32px;
+            object-fit: cover;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        /* Tekst en Knoppen sectie */
+        .content-wrapper {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        /* Typografie */
+        .brand-name {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .main-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 4px;
+        }
+
+        .sub-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        /* Icoon */
+        .icon-wrapper {
+            margin-bottom: 32px;
+            color: #9ca3af;
+        }
+
+        /* Knoppen Groep */
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 480px; /* Houdt de knoppen mooi in verhouding */
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            text-align: center;
+            transition: all 0.2s ease-in-out;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Specifieke knop stijlen */
+        .btn-primary {
+            background-color: #cca655; /* Goud/okergeel */
+            color: #ffffff; /* Witte tekst zoals gevraagd */
+        }
+
+        .btn-primary:hover {
+            background-color: #b8954c;
+            transform: scale(1.015);
+        }
+
+        .btn-secondary {
+            background-color: #f3f4f6; /* Lichtgrijs */
+            color: #111827; /* Zwart/Donkergrijs */
+        }
+
+        .btn-secondary:hover {
+            background-color: #e5e7eb;
+            transform: scale(1.015);
+        }
+
+        /* Responsive Design voor mobiel */
+        @media (max-width: 600px) {
+            body {
+                padding: 16px;
+            }
+            .hero-image {
+                border-radius: 12px;
+                margin-bottom: 24px;
+            }
+            .main-title {
+                font-size: 2.25rem;
+            }
+            .sub-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <!-- Placeholder voor de collage afbeelding -->
+        <img class="hero-image" src="assets/collage.jpg" alt="HuisVisual 3D Renders Collage">
+
+        <div class="content-wrapper">
+            <!-- Tekst elementen -->
+            <p class="brand-name">HuisVisual.nl</p>
+            <h1 class="main-title">Beeldkracht.</h1>
+            <h2 class="sub-title">Hoogwaardige 3D renders voor architectuur en interieur.</h2>
+
+            <!-- Lucide Brievenbus/Envelop Icoon -->
+            <div class="icon-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z"/>
+                    <polyline points="15,9 18,9 18,11"/>
+                    <path d="M6.5 5C9 5 11 7 11 9.5V17a2 2 0 0 1-2 2v0"/>
+                </svg>
+            </div>
+
+            <!-- Knoppen -->
+            <div class="button-group">
+                <a href="offerte.html" class="btn btn-primary">Offerte aanvragen</a>
+                <a href="projecten.html" class="btn btn-secondary">Projecten</a>
+                <a href="info.html" class="btn btn-secondary">Info</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

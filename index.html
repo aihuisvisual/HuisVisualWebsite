@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HuisVisual.nl - Groen Design & 3D Renders</title>
+    <title>HuisVisual.nl - Premium 3D Renders</title>
     
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,8 +12,15 @@
 
     <style>
         /* ==========================================================================
-           1. Basis & Reset
+           1. Basis & Variabelen
            ========================================================================== */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.03); /* Zeer hoge transparantie */
+            --glass-border-light: rgba(255, 255, 255, 0.4);
+            --glass-border-dark: rgba(255, 255, 255, 0.1);
+            --glass-glow: rgba(138, 100, 255, 0.15); /* Subtiele paars/blauwe gloed */
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -22,59 +29,100 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f9fafb; /* Lichtgrijze achtergrond voor de content sectie */
+            background-color: #ffffff;
             color: #111827;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
         /* ==========================================================================
-           2. Glassmorphism Utilities
+           2. Liquid Glass Utility (Kern van de esthetiek)
            ========================================================================== */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px); /* Voor Safari */
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+        .liquid-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px); /* Minder blur, meer transparantie */
+            -webkit-backdrop-filter: blur(8px);
+            
+            /* Gelaagde randen voor reflectie (highlights & shadows op de rand) */
+            border: 1px solid transparent;
+            border-top-color: var(--glass-border-light);
+            border-left-color: var(--glass-border-light);
+            border-bottom-color: var(--glass-border-dark);
+            border-right-color: var(--glass-border-dark);
+            
+            /* Complexe schaduwen: Diepte, Interne reflectie, en Gloed */
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.2), /* Drop shadow voor zwevend effect */
+                inset 0 1px 1px rgba(255, 255, 255, 0.5), /* Interne top highlight */
+                inset 0 -1px 1px rgba(0, 0, 0, 0.2), /* Interne bottom shadow */
+                0 0 30px var(--glass-glow); /* De subtiele gekleurde gloed buitenom */
         }
 
         /* ==========================================================================
-           3. Navigatiebalk
+           3. Navigatiebalk (Zwevende Capsule)
            ========================================================================== */
-        .navbar {
+        .navbar-wrapper {
             position: fixed;
-            top: 0;
+            top: 24px;
             left: 0;
             width: 100%;
-            z-index: 100;
-            padding: 16px 0;
             display: flex;
             justify-content: center;
-            /* Subtieler glass effect voor de header */
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            padding: 0 24px;
         }
 
-        .nav-links {
-            list-style: none;
+        .liquid-nav {
             display: flex;
-            gap: 32px;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+            padding: 16px 32px;
+            border-radius: 100px; /* Perfect ronde capsule vorm */
+            color: #ffffff;
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #ffffff; /* Wit voor leesbaarheid over de foto */
+        .nav-left, .nav-right {
+            flex: 1; /* Neemt gelijke ruimte in aan de zijkanten */
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-right {
+            text-align: right;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 40px;
             font-weight: 500;
             font-size: 0.95rem;
-            transition: color 0.3s ease;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Zorgt dat de tekst altijd leesbaar is, ongeacht de foto */
         }
 
-        .nav-links a:hover {
-            color: #cca655; /* Goud accent op hover */
+        .liquid-nav a {
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Zorgt voor leesbaarheid over foto */
+        }
+
+        .liquid-nav a:hover {
+            color: #d1d5db; /* Iets lichter op hover */
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        /* Hover effect specifiek voor de linker 'knop' in nav */
+        .nav-left a:hover {
+            color: #fff;
+            opacity: 0.8;
         }
 
         /* ==========================================================================
@@ -87,198 +135,235 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* Placeholder achtergrondfoto */
-            background-image: url('assets/garden-hero.jpg'), linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)); /* Fallback gradient voor contrast */
+            /* Donkere overlay gradient over de tuinfoto */
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url('assets/garden-hero.jpg');
             background-size: cover;
             background-position: center;
-            background-blend-mode: overlay;
             padding: 24px;
         }
 
         .hero-content {
+            text-align: center;
+            margin-top: 80px; /* Ruimte voor de navigatie */
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
-            max-width: 500px;
-            margin-top: 60px; /* Compenseer voor fixed header */
         }
 
-        .brand-container {
-            padding: 24px 48px;
-            border-radius: 16px;
-            margin-bottom: 32px;
-            text-align: center;
-        }
-
-        .brand-name {
-            font-size: 3rem;
+        /* Het Complexe Liquid Glass Tekst Effect */
+        .liquid-text {
+            font-size: clamp(3.5rem, 10vw, 8rem); /* Schaalt enorm mee met scherm */
             font-weight: 800;
-            color: #ffffff;
             letter-spacing: -0.04em;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-bottom: 48px;
+            line-height: 1;
+            
+            /* Transparante basis met lichte gradient */
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.1) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            
+            /* Witte 'stroke' fungeert als de glanzende rand van het glas */
+            -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.6);
+            
+            /* Diepe schaduw erachter om het los te trekken van de achtergrond */
+            filter: drop-shadow(0px 15px 25px rgba(0, 0, 0, 0.5));
         }
 
-        /* ==========================================================================
-           5. Knoppen (Frosted Glass Stijl)
-           ========================================================================== */
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            width: 100%;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 16px 24px;
-            border-radius: 12px;
-            text-decoration: none;
+        /* De Enkele Knop */
+        .liquid-btn {
+            display: inline-block;
+            padding: 18px 48px;
+            border-radius: 50px;
+            font-size: 1.125rem;
             font-weight: 600;
-            font-size: 1.05rem;
-            text-align: center;
             color: #ffffff;
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            /* Hergebruikt de liquid-glass class in HTML, we voegen alleen specifieke knop-styling toe */
         }
 
-        /* Primaire knop heeft een gouden gloed in het glass effect */
-        .btn-primary {
-            background: rgba(204, 166, 85, 0.4); /* Gouden oker tint, transparant */
-            border: 1px solid rgba(204, 166, 85, 0.6);
-        }
-
-        /* Secundaire knoppen zijn standaard wit/grijs glass */
-        .btn-secondary {
-            /* Neemt standaard .glass-panel styling over via HTML class list, voeg alleen border radius toe */
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .btn-primary:hover {
-            background: rgba(204, 166, 85, 0.6);
-            border-color: rgba(204, 166, 85, 0.8);
+        .liquid-btn:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.3),
+                inset 0 1px 2px rgba(255, 255, 255, 0.8),
+                0 0 40px rgba(138, 100, 255, 0.3); /* Versterk de gloed op hover */
+            border-top-color: rgba(255, 255, 255, 0.6);
         }
 
         /* ==========================================================================
-           6. Content Sectie (Onder de Hero)
+           5. Content Sectie (Strak en Minimalistisch)
            ========================================================================== */
         .content-section {
-            padding: 96px 24px;
+            padding: 120px 24px;
             background-color: #ffffff;
             display: flex;
             justify-content: center;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             width: 100%;
             display: grid;
-            grid-template-columns: 1.2fr 1fr; /* Links iets breder dan rechts */
-            gap: 64px;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
             align-items: center;
         }
 
         .text-column h2 {
-            font-size: 2.25rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 24px;
-            color: #111827;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
+            margin-bottom: 32px;
+            color: #000000;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
         }
 
         .text-column p {
             font-size: 1.125rem;
-            color: #4b5563; /* Donkergrijs voor goede leesbaarheid */
+            color: #4b5563;
             line-height: 1.8;
+            font-weight: 400;
         }
 
         .image-column img {
             width: 100%;
             height: auto;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            border-radius: 8px; /* Subtielere afronding passend bij modern minimalisme */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08);
             object-fit: cover;
             aspect-ratio: 4/3;
         }
 
         /* ==========================================================================
-           7. Responsive Design (Mobiel & Tablet)
+           6. Footer (Zwart en Clean)
            ========================================================================== */
-        @media (max-width: 850px) {
+        .site-footer {
+            background-color: #0a0a0a;
+            color: #9ca3af;
+            padding: 80px 24px 60px;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            text-align: center;
+        }
+
+        .footer-col h4 {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            transition: color 0.2s ease;
+        }
+
+        .footer-col a:hover {
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           7. Responsive Design
+           ========================================================================== */
+        @media (max-width: 992px) {
             .container {
-                grid-template-columns: 1fr; /* Zet tekst en afbeelding onder elkaar */
+                gap: 50px;
+            }
+            .text-column h2 { font-size: 2.25rem; }
+        }
+
+        @media (max-width: 768px) {
+            /* Navigatie Mobiel: Stapel elementen in de capsule */
+            .liquid-nav {
+                flex-direction: column;
+                border-radius: 24px; /* Minder rond bij een gestapelde layout */
+                padding: 24px;
+                gap: 20px;
+            }
+
+            .nav-left, .nav-right, .nav-center {
+                text-align: center;
+                width: 100%;
+            }
+
+            .nav-center {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            /* Content Sectie Mobiel */
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-column { order: -1; margin-bottom: 20px; } /* Foto boven tekst op mobiel */
+            
+            .content-section { padding: 80px 24px; }
+
+            /* Footer Mobiel */
+            .footer-container {
+                grid-template-columns: 1fr;
                 gap: 40px;
-            }
-
-            .image-column {
-                order: 2; /* Zorgt dat de afbeelding onder de tekst staat */
-            }
-
-            .text-column {
-                order: 1;
-            }
-
-            .content-section {
-                padding: 64px 24px;
             }
         }
 
-        @media (max-width: 600px) {
-            .brand-name {
-                font-size: 2.25rem;
-            }
-            
-            .brand-container {
-                padding: 16px 32px;
-            }
-
-            .nav-links {
-                gap: 16px;
-            }
-
-            .text-column h2 {
-                font-size: 1.75rem;
-            }
+        @media (max-width: 480px) {
+            .navbar-wrapper { padding: 0 16px; top: 16px; }
+            .liquid-text { -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6); } /* Iets dunnere rand op klein scherm */
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigatie -->
-    <nav class="navbar">
-        <ul class="nav-links">
-            <li><a href="#">Diensten</a></li>
-            <li><a href="#">Portfolio</a></li>
-            <li><a href="#">Over ons</a></li>
-        </ul>
-    </nav>
+    <!-- Vernieuwde Liquid Glass Navigatie -->
+    <div class="navbar-wrapper">
+        <nav class="liquid-nav liquid-glass">
+            <div class="nav-left">
+                <a href="#offerte">Offerte aanvragen</a>
+            </div>
+            
+            <div class="nav-center">
+                <a href="#mogelijkheden">Mogelijkheden</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#over-ons">Over ons</a>
+            </div>
+            
+            <div class="nav-right">
+                <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
+            </div>
+        </nav>
+    </div>
 
-    <!-- Hero Sectie met Grote Achtergrond en Frosted Glass -->
+    <!-- Hero Sectie -->
     <header class="hero">
         <div class="hero-content">
+            <!-- Het liquid tekst effect (geen achtergrond blokje meer) -->
+            <h1 class="liquid-text">HuisVisual.nl</h1>
             
-            <div class="brand-container glass-panel">
-                <h1 class="brand-name">HuisVisual.nl</h1>
-            </div>
-
-            <div class="button-group">
-                <a href="offerte.html" class="btn btn-primary glass-panel">Offerte aanvragen</a>
-                <a href="projecten.html" class="btn btn-secondary glass-panel">Projecten</a>
-                <a href="info.html" class="btn btn-secondary glass-panel">Info</a>
-            </div>
-
+            <!-- De enkele call-to-action knop, opgemaakt als liquid glass -->
+            <a href="offerte.html" class="liquid-btn liquid-glass">Offerte aanvragen</a>
         </div>
     </header>
 
-    <!-- Witte Content Sectie -->
+    <!-- Witte Content Sectie (Strak & Minimalistisch) -->
     <section class="content-section">
         <div class="container">
             
@@ -288,11 +373,46 @@
             </div>
 
             <div class="image-column">
-                <img src="assets/small-garden.jpg" alt="Voorbeeld van een 3D tuinontwerp">
+                <!-- Placeholder voor de kleine tuin render -->
+                <img src="assets/small-garden.jpg" alt="Minimalistische 3D Tuin Render">
             </div>
 
         </div>
     </section>
+
+    <!-- Nieuwe Zwarte Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            
+            <div class="footer-col">
+                <h4>Navigatie</h4>
+                <ul>
+                    <li><a href="#mogelijkheden">Mogelijkheden</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#over-ons">Over ons</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a></li>
+                    <li><br></li> <!-- Spacing -->
+                    <li><a href="#offerte" style="color: #ffffff; text-decoration: underline;">Offerte aanvragen</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Bedrijfsgegevens</h4>
+                <ul>
+                    <li>HuisVisual B.V.</li>
+                    <li>KVK: [NUMMER]</li>
+                    <li>Algemene Voorwaarden</li>
+                </ul>
+            </div>
+
+        </div>
+    </footer>
 
 </body>
 </html>

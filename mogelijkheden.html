@@ -1,1 +1,511 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mogelijkheden & Tarieven - HuisVisual.nl</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <style>
+        /* ==========================================================================
+           1. Basis & Variabelen (Aura Studio Vibe)
+           ========================================================================== */
+        :root {
+            --accent-gold: #cca655;
+            --accent-gold-hover: #b8954c;
+            
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.2);
+            --glass-shadow: rgba(0, 0, 0, 0.4);
+            
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.65);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Donkere basis met subtiele warme aura/glow effecten via radial gradients */
+            background-color: #0a0a0c;
+            background-image: 
+                radial-gradient(circle at 15% 30%, rgba(204, 166, 85, 0.12), transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(138, 100, 255, 0.08), transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.03), transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ==========================================================================
+           2. Navigatiebalk (Zwevende Capsule uit vorig design)
+           ========================================================================== */
+        .navbar-wrapper {
+            position: fixed;
+            top: 24px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            padding: 0 24px;
+        }
+
+        .liquid-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+            padding: 16px 32px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .nav-left, .nav-right { flex: 1; font-weight: 600; font-size: 0.9rem; }
+        .nav-right { text-align: right; font-weight: 500; opacity: 0.9; }
+        .nav-center { display: flex; gap: 40px; font-weight: 500; font-size: 0.95rem; }
+
+        .liquid-nav a { transition: all 0.3s ease; }
+        .liquid-nav a:hover { color: var(--accent-gold); text-shadow: 0 0 10px rgba(204, 166, 85, 0.4); }
+
+        /* ==========================================================================
+           3. Hoofd Layout & Header
+           ========================================================================== */
+        .page-container {
+            flex: 1;
+            padding: 160px 24px 80px; /* Top padding compenseert voor fixed nav */
+            max-width: 1250px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+            max-width: 700px;
+        }
+
+        .section-header h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ==========================================================================
+           4. Liquid Glass Cards (De 3 Kolommen)
+           ========================================================================== */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            width: 100%;
+            margin-bottom: 48px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-left: 1px solid var(--glass-highlight);
+            box-shadow: 0 20px 40px var(--glass-shadow), inset 0 1px 1px rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 40px 32px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(204, 166, 85, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .kicker {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .glass-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .glass-card p.desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            flex-grow: 1; /* Zorgt dat de prijs altijd onderaan wordt uitgelijnd */
+        }
+
+        /* Kenmerken Lijst */
+        .features-list {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: #d1d5db;
+            margin-bottom: 12px;
+        }
+
+        .features-list svg {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            color: var(--accent-gold);
+            margin-top: 2px;
+        }
+
+        .price-tag {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ==========================================================================
+           5. Trust-Bar
+           ========================================================================== */
+        .trust-bar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 24px 32px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 64px;
+            box-shadow: 0 10px 30px var(--glass-shadow);
+        }
+
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 16px;
+        }
+
+        /* Verticale lijnen tussen de trust items op desktop */
+        .trust-item:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trust-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .trust-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           6. Call to Action (Grote Okergele Knop)
+           ========================================================================== */
+        .cta-container {
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-cta {
+            display: inline-block;
+            background-color: var(--accent-gold);
+            color: #ffffff; /* Wit contrast voor de gouden knop */
+            padding: 20px 48px;
+            border-radius: 50px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 25px rgba(204, 166, 85, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-cta:hover {
+            background-color: var(--accent-gold-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(204, 166, 85, 0.4), inset 0 1px 1px rgba(255,255,255,0.4);
+        }
+
+        /* ==========================================================================
+           7. Footer (Kopie van vorig design voor consistentie)
+           ========================================================================== */
+        .site-footer {
+            background-color: rgba(0, 0, 0, 0.5); /* Iets transparanter gemaakt om te blenden met aura */
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #9ca3af;
+            padding: 60px 24px;
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-col h4 { color: #ffffff; margin-bottom: 16px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 8px; }
+        .footer-col a:hover { color: #ffffff; }
+
+        /* ==========================================================================
+           8. Responsive Design
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-wrapper { padding: 0 16px; top: 16px; }
+            .liquid-nav { flex-direction: column; border-radius: 24px; padding: 24px; gap: 20px; }
+            .nav-left, .nav-right, .nav-center { text-align: center; width: 100%; }
+            .nav-center { flex-wrap: wrap; justify-content: center; gap: 20px; }
+
+            .page-container { padding-top: 220px; } /* Meer ruimte voor gestapelde mobiele nav */
+
+            .pricing-grid {
+                grid-template-columns: 1fr; /* Stapel de kaarten op mobiel */
+                gap: 24px;
+            }
+
+            .trust-bar {
+                grid-template-columns: 1fr; /* Stapel de trust items */
+                gap: 24px;
+                padding: 32px 24px;
+            }
+
+            .trust-item:not(:last-child) {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding-bottom: 24px;
+            }
+
+            .footer-container { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigatie -->
+    <div class="navbar-wrapper">
+        <nav class="liquid-nav">
+            <div class="nav-left">
+                <a href="offerte.html">Offerte aanvragen</a>
+            </div>
+            <div class="nav-center">
+                <a href="mogelijkheden.html" style="color: var(--accent-gold);">Mogelijkheden</a>
+                <a href="projecten.html">Portfolio</a>
+                <a href="index.html">Home</a>
+            </div>
+            <div class="nav-right">
+                <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="page-container">
+        
+        <!-- Header -->
+        <header class="section-header">
+            <h1>Mogelijkheden & Tarieven</h1>
+            <p>Hoogwaardige visualisaties op maat, afgestemd op uw projectfase.</p>
+        </header>
+
+        <!-- 3 Kolommen (Cards) -->
+        <section class="pricing-grid">
+            
+            <!-- Card 1 -->
+            <div class="glass-card">
+                <span class="kicker">High-End Stills</span>
+                <h3>Exterieur & Interieur Renders</h3>
+                <p class="desc">Fotorealistische beelden die de sfeer, materialen en lichtinval van uw ontwerp perfect vangen. Ideaal voor verkoopbrochures en presentaties.</p>
+                <ul class="features-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        4K Ultra HD resolutie
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Inclusief sfeer-stijling
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        2 revisierondes inbegrepen
+                    </li>
+                </ul>
+                <div class="price-tag">Vanaf €150,- per beeld</div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-card">
+                <span class="kicker">3D Modeling & Floorplans</span>
+                <h3>Van 2D naar 3D</h3>
+                <p class="desc">Heeft u alleen plattegronden of een moodboard? Wij bouwen het volledige 3D-model voor u op. Ook voor overzichtelijke 3D-plattegronden.</p>
+                <ul class="features-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Modellering o.b.v. DWG/PDF
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Accurate maatvoering
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Ook als white model
+                    </li>
+                </ul>
+                <div class="price-tag">Toeslag o.b.v. complexiteit</div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-card">
+                <span class="kicker">Cinematic Animation</span>
+                <h3>Video & Animatie</h3>
+                <p class="desc">De ultieme beleving van een ontwerp. Een meeslepende video-wandeling door het gebouw of een vogelvlucht over het terrein.</p>
+                <ul class="features-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Vloeiende camera
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Incl. muziek/sound-design
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        Professionele kleurcorrectie
+                    </li>
+                </ul>
+                <div class="price-tag">Op aanvraag (maatwerk)</div>
+            </div>
+
+        </section>
+
+        <!-- Trust-Bar -->
+        <section class="trust-bar">
+            <div class="trust-item">
+                <span class="trust-title">Bestandstypen</span>
+                <span class="trust-value">Revit, SketchUp, AutoCAD & Schetsen</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-title">Levertijd</span>
+                <span class="trust-value">Eerste concept binnen 4 tot 5 werkdagen</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-title">Direct Contact</span>
+                <span class="trust-value">Altijd een vast aanspreekpunt</span>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <div class="cta-container">
+            <a href="offerte.html" class="btn-cta">Vraag nu een offerte op maat aan</a>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Navigatie</h4>
+                <ul>
+                    <li><a href="mogelijkheden.html">Mogelijkheden</a></li>
+                    <li><a href="projecten.html">Portfolio</a></li>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a></li>
+                    <li><br></li>
+                    <li><a href="offerte.html" style="color: var(--accent-gold);">Offerte aanvragen</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Bedrijfsgegevens</h4>
+                <ul>
+                    <li>HuisVisual B.V.</li>
+                    <li>KVK: [NUMMER]</li>
+                    <li>Algemene Voorwaarden</li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

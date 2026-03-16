@@ -1,1 +1,380 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - HuisVisual.nl</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <style>
+        /* ==========================================================================
+           1. Basis & Variabelen
+           ========================================================================== */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08); /* Hoge transparantie */
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-highlight: rgba(255, 255, 255, 0.5);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --glass-glow: rgba(255, 255, 255, 0.15); /* Subtiele witte glow op hover */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff; /* Witte tekst voor contrast op foto's */
+            overflow: hidden; /* Voorkomt scrollen, creëert app-gevoel */
+            background-color: #000; /* Valback kleur tijdens laden */
+        }
+
+        a, button {
+            all: unset;
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           2. Full-Screen Achtergrond
+           ========================================================================== */
+        #background-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            transition: opacity 0.5s ease-in-out; /* Zorgt voor de fade */
+        }
+
+        /* Subtiele donkere overlay om te zorgen dat het glas & tekst altijd leesbaar is */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           3. Liquid Glass Utility
+           ========================================================================== */
+        .liquid-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-left: 1px solid var(--glass-highlight);
+            box-shadow: 0 15px 35px var(--glass-shadow);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .liquid-glass:hover {
+            box-shadow: 0 15px 35px var(--glass-shadow), 0 0 25px var(--glass-glow);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* ==========================================================================
+           4. Layout: Terugknop, Sidebar & Bottom Nav
+           ========================================================================== */
+        
+        /* Terug naar Home knop (Boven links) */
+        .back-btn {
+            position: absolute;
+            top: 32px;
+            left: 40px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Zwevende Sidebar (Links) */
+        .sidebar {
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            transform: translateY(-50%);
+            width: 400px;
+            padding: 40px;
+            z-index: 10;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+
+        .project-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #e5e7eb;
+            margin-bottom: 32px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Interactieve Thumbnails */
+        .thumbnails-container {
+            display: flex;
+            gap: 16px;
+        }
+
+        .thumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: 2px solid transparent; /* Ruimte voor actieve status */
+            transition: all 0.3s ease;
+        }
+
+        .thumb:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .thumb.active {
+            border-color: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+        }
+
+        /* Bottom Navigation (Project Schakelaar) */
+        .bottom-nav {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+            padding: 12px 24px;
+            border-radius: 100px; /* Capsule vorm */
+            z-index: 10;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ==========================================================================
+           5. Responsive Design (Mobiel)
+           ========================================================================== */
+        @media (max-width: 800px) {
+            .back-btn {
+                top: 20px;
+                left: 20px;
+            }
+
+            .sidebar {
+                top: auto;
+                bottom: 120px; /* Ruimte voor bottom nav */
+                left: 20px;
+                transform: none;
+                width: calc(100% - 40px);
+                padding: 24px;
+            }
+
+            .project-title { font-size: 2rem; }
+            .project-desc { font-size: 0.95rem; margin-bottom: 24px; }
+            .thumb { width: 60px; height: 60px; }
+
+            .bottom-nav {
+                width: calc(100% - 40px);
+                bottom: 20px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamische Achtergrond -->
+    <div id="background-layer" style="background-image: url('assets/project1-main.jpg');"></div>
+    <div class="overlay"></div>
+
+    <!-- Terug naar Home -->
+    <a href="index.html" class="back-btn liquid-glass">← Terug naar Home</a>
+
+    <!-- Liquid Glass Sidebar met Content -->
+    <aside class="sidebar liquid-glass">
+        <h1 class="project-title" id="project-title">Project Laden...</h1>
+        <p class="project-desc" id="project-desc">Beschrijving laden...</p>
+        
+        <!-- Thumbnails worden hier via JS ingeladen -->
+        <div class="thumbnails-container" id="thumbnails-container"></div>
+    </aside>
+
+    <!-- Project Schakelaar (Bottom Nav) -->
+    <nav class="bottom-nav liquid-glass">
+        <button class="nav-btn" onclick="prevProject()">
+            <span>←</span> Vorig Project
+        </button>
+        <button class="nav-btn" onclick="nextProject()">
+            Volgend Project <span>→</span>
+        </button>
+    </nav>
+
+    <!-- JavaScript voor Interactiviteit -->
+    <script>
+        // --- 1. Data Structuur: Jouw Portfolio Projecten ---
+        // Vervang de URL's door je echte afbeeldingen in het mapje /assets/
+        const projects = [
+            {
+                title: "Villa Modern",
+                desc: "Een strakke, minimalistische villa met grote raampartijen en een naadloze overgang tussen binnen en buiten. De render focust op de interactie tussen het harde beton en de organische tuin.",
+                images: [
+                    "assets/project1-main.jpg",
+                    "assets/project1-thumb1.jpg",
+                    "assets/project1-thumb2.jpg"
+                ]
+            },
+            {
+                title: "Stadstuin Oase",
+                desc: "Een transformatie van een compacte stadstuin tot een groene, weelderige oase. Compleet met een luxe overkapping, sfeerverlichting en een ingebouwde jacuzzi.",
+                images: [
+                    "assets/project2-main.jpg",
+                    "assets/project2-thumb1.jpg",
+                    "assets/project2-thumb2.jpg"
+                ]
+            },
+            {
+                title: "Klassiek Landgoed",
+                desc: "Visualisatie van een grootschalig landgoed waar klassieke architectuur samenkomt met moderne landschapsarchitectuur. Let op de gedetailleerde weergave van beplanting en waterpartijen.",
+                images: [
+                    "assets/project3-main.jpg",
+                    "assets/project3-thumb1.jpg",
+                    "assets/project3-thumb2.jpg"
+                ]
+            }
+        ];
+
+        // --- 2. Variabelen en DOM Elementen ---
+        let currentProjectIndex = 0;
+        let currentImageIndex = 0;
+
+        const bgLayer = document.getElementById('background-layer');
+        const titleEl = document.getElementById('project-title');
+        const descEl = document.getElementById('project-desc');
+        const thumbsContainer = document.getElementById('thumbnails-container');
+
+        // Pre-load images voor soepele overgangen (optioneel maar aangeraden)
+        projects.forEach(p => {
+            p.images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+
+        // --- 3. Functies ---
+
+        // Functie om de achtergrond te veranderen (met fade effect)
+        function changeBackground(imgSrc, thumbElement) {
+            // Fade out
+            bgLayer.style.opacity = 0;
+            
+            setTimeout(() => {
+                // Wissel image als het onzichtbaar is
+                bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+                // Fade in
+                bgLayer.style.opacity = 1;
+            }, 500); // 500ms komt overeen met de CSS transition tijd
+
+            // Update actieve thumbnail styling
+            if(thumbElement) {
+                const allThumbs = document.querySelectorAll('.thumb');
+                allThumbs.forEach(t => t.classList.remove('active'));
+                thumbElement.classList.add('active');
+            }
+        }
+
+        // Functie om een compleet project in de UI te laden
+        function loadProject(index) {
+            const project = projects[index];
+            
+            // Update Tekst
+            titleEl.innerText = project.title;
+            descEl.innerText = project.desc;
+
+            // Wis oude thumbnails
+            thumbsContainer.innerHTML = '';
+
+            // Genereer nieuwe thumbnails
+            project.images.forEach((imgSrc, i) => {
+                const thumb = document.createElement('div');
+                thumb.classList.add('thumb');
+                if (i === 0) thumb.classList.add('active'); // Eerste is standaard actief
+                
+                // Styling en event listener
+                thumb.style.backgroundImage = `url('${imgSrc}')`;
+                thumb.onclick = () => changeBackground(imgSrc, thumb);
+                
+                thumbsContainer.appendChild(thumb);
+            });
+
+            // Zet de hoofdachtergrond naar de eerste foto van het nieuwe project
+            changeBackground(project.images[0], null);
+        }
+
+        // Navigatie Functies
+        function nextProject() {
+            currentProjectIndex++;
+            if (currentProjectIndex >= projects.length) {
+                currentProjectIndex = 0; // Loop terug naar begin
+            }
+            loadProject(currentProjectIndex);
+        }
+
+        function prevProject() {
+            currentProjectIndex--;
+            if (currentProjectIndex < 0) {
+                currentProjectIndex = projects.length - 1; // Loop naar laatste
+            }
+            loadProject(currentProjectIndex);
+        }
+
+        // --- 4. Initialisatie bij het laden van de pagina ---
+        window.onload = () => {
+            loadProject(currentProjectIndex);
+        };
+
+    </script>
+</body>
+</html>

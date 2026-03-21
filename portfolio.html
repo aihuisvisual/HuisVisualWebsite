@@ -15,11 +15,11 @@
            1. Basis & Variabelen
            ========================================================================== */
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.08); /* Hoge transparantie */
+            --glass-bg: rgba(255, 255, 255, 0.08);
             --glass-border: rgba(255, 255, 255, 0.25);
             --glass-highlight: rgba(255, 255, 255, 0.5);
             --glass-shadow: rgba(0, 0, 0, 0.3);
-            --glass-glow: rgba(255, 255, 255, 0.15); /* Subtiele witte glow op hover */
+            --glass-glow: rgba(255, 255, 255, 0.15);
         }
 
         * {
@@ -32,9 +32,9 @@
             height: 100%;
             margin: 0;
             font-family: 'Inter', sans-serif;
-            color: #ffffff; /* Witte tekst voor contrast op foto's */
-            overflow: hidden; /* Voorkomt scrollen, creëert app-gevoel */
-            background-color: #000; /* Valback kleur tijdens laden */
+            color: #ffffff;
+            overflow: hidden;
+            background-color: #000;
         }
 
         a, button {
@@ -53,18 +53,20 @@
             height: 100%;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             z-index: -2;
-            transition: opacity 0.5s ease-in-out; /* Zorgt voor de fade */
+            opacity: 1; /* Expliciet op 1 gezet */
+            transition: opacity 0.5s ease-in-out; 
+            background-color: #111; /* Fallback kleur als de foto laadt */
         }
 
-        /* Subtiele donkere overlay om te zorgen dat het glas & tekst altijd leesbaar is */
         .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);
+            background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%);
             z-index: -1;
             pointer-events: none;
         }
@@ -90,10 +92,8 @@
         }
 
         /* ==========================================================================
-           4. Layout: Terugknop, Sidebar & Bottom Nav
+           4. Layout: Sidebar & Bottom Nav
            ========================================================================== */
-        
-        /* Terug naar Home knop (Boven links) */
         .back-btn {
             position: absolute;
             top: 32px;
@@ -106,7 +106,6 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Zwevende Sidebar (Links) */
         .sidebar {
             position: absolute;
             top: 50%;
@@ -133,7 +132,6 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
-        /* Interactieve Thumbnails */
         .thumbnails-container {
             display: flex;
             gap: 16px;
@@ -146,7 +144,7 @@
             background-size: cover;
             background-position: center;
             cursor: pointer;
-            border: 2px solid transparent; /* Ruimte voor actieve status */
+            border: 2px solid transparent;
             transition: all 0.3s ease;
         }
 
@@ -162,7 +160,6 @@
             box-shadow: 0 0 15px rgba(255,255,255,0.4);
         }
 
-        /* Bottom Navigation (Project Schakelaar) */
         .bottom-nav {
             position: absolute;
             bottom: 40px;
@@ -174,7 +171,7 @@
             width: 90%;
             max-width: 600px;
             padding: 12px 24px;
-            border-radius: 100px; /* Capsule vorm */
+            border-radius: 100px;
             z-index: 10;
         }
 
@@ -195,158 +192,204 @@
         }
 
         /* ==========================================================================
-           5. Responsive Design (Mobiel)
+           5. Responsive
            ========================================================================== */
         @media (max-width: 800px) {
-            .back-btn {
-                top: 20px;
-                left: 20px;
-            }
-
+            .back-btn { top: 20px; left: 20px; }
             .sidebar {
                 top: auto;
-                bottom: 120px; /* Ruimte voor bottom nav */
+                bottom: 120px;
                 left: 20px;
                 transform: none;
                 width: calc(100% - 40px);
                 padding: 24px;
             }
-
             .project-title { font-size: 2rem; }
             .project-desc { font-size: 0.95rem; margin-bottom: 24px; }
             .thumb { width: 60px; height: 60px; }
-
-            .bottom-nav {
-                width: calc(100% - 40px);
-                bottom: 20px;
-                padding: 8px 16px;
-            }
+            .bottom-nav { width: calc(100% - 40px); bottom: 20px; padding: 8px 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamische Achtergrond -->
-    <div id="background-layer" style="background-image: url('assets/project1-main.jpg');"></div>
+    <!-- Dynamische Achtergrond (zonder inline style in de HTML, wordt geregeld via JS) -->
+    <div id="background-layer"></div>
     <div class="overlay"></div>
 
     <!-- Terug naar Home -->
     <a href="index.html" class="back-btn liquid-glass">← Terug naar Home</a>
 
-    <!-- Liquid Glass Sidebar met Content -->
+    <!-- Sidebar -->
     <aside class="sidebar liquid-glass">
         <h1 class="project-title" id="project-title">Project Laden...</h1>
         <p class="project-desc" id="project-desc">Beschrijving laden...</p>
-        
-        <!-- Thumbnails worden hier via JS ingeladen -->
         <div class="thumbnails-container" id="thumbnails-container"></div>
     </aside>
 
-    <!-- Project Schakelaar (Bottom Nav) -->
+    <!-- Project Schakelaar -->
     <nav class="bottom-nav liquid-glass">
-        <button class="nav-btn" onclick="prevProject()">
+        <!-- Let op: onclick attributen verwijderd, geregeld via ID's in Javascript -->
+        <button class="nav-btn" id="btn-prev">
             <span>←</span> Vorig Project
         </button>
-        <button class="nav-btn" onclick="nextProject()">
+        <button class="nav-btn" id="btn-next">
             Volgend Project <span>→</span>
         </button>
     </nav>
 
-    <!-- JavaScript voor Interactiviteit -->
-<script>
-    // --- 1. Data Structuur ---
-    const projects = [
-        {
-            title: "Twee-onder-een-kapwoning",
-            desc: "Soms is een frisse blik alles wat een woning nodig heeft. Voor dit project hebben we gekozen voor een tijdloze wit-zwart combinatie...",
-            images: [
-                "assets/project1-main.jpg",
-                "assets/project1-thumb1.jpg",
-                "assets/project1-thumb2.jpg"
-            ]
-        },
-        {
-            title: "Stadstuin Oase",
-            desc: "Een transformatie van een compacte stadstuin tot een groene, weelderige oase...",
-            images: [
-                "assets/project2-main.jpg",
-                "assets/project2-thumb1.jpg",
-                "assets/project2-thumb2.jpg"
-            ]
-        }
-        // Voeg hier je andere projecten toe...
-    ];
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM volledig geladen. Initialiseren van Portfolio Script...");
 
-    let currentProjectIndex = 0;
+            // --- 1. Data Structuur ---
+            const projects = [
+                {
+                    title: "Twee-onder-een-kapwoning",
+                    desc: "Soms is een frisse blik alles wat een woning nodig heeft. Voor dit project hebben we gekozen voor een tijdloze wit-zwart combinatie. De lichte gevels geven de woning een open uitstraling, terwijl de zwarte details en het nieuwe dak voor de nodige body zorgen. De toevoeging van stijlvolle muurverlichting accentueert de lijnen van het huis, waardoor de woning nu ook in het donker straalt.",
+                    images: [
+                        "assets/project1-main.jpg",
+                        "assets/project1-thumb1.jpg",
+                        "assets/project1-thumb2.jpg"
+                    ]
+                },
+                {
+                    title: "Stadstuin Oase",
+                    desc: "Een transformatie van een compacte stadstuin tot een groene, weelderige oase. Compleet met een luxe overkapping, sfeerverlichting en een ingebouwde jacuzzi.",
+                    images: [
+                        "assets/project2-main.jpg",
+                        "assets/project2-thumb1.jpg",
+                        "assets/project2-thumb2.jpg"
+                    ]
+                },
+                {
+                    title: "Klassiek Landgoed",
+                    desc: "Visualisatie van een grootschalig landgoed waar klassieke architectuur samenkomt met moderne landschapsarchitectuur.",
+                    images: [
+                        "assets/project3-main.jpg",
+                        "assets/project3-thumb1.jpg",
+                        "assets/project3-thumb2.jpg"
+                    ]
+                }
+            ];
 
-    // --- 2. De Verbeterde Functies ---
+            // --- 2. Variabelen en DOM Elementen Selecteren ---
+            let currentProjectIndex = 0;
 
-    function changeBackground(imgSrc, thumbElement) {
-        const bgLayer = document.getElementById('background-layer');
-        if (!bgLayer) return;
+            const bgLayer = document.getElementById('background-layer');
+            const titleEl = document.getElementById('project-title');
+            const descEl = document.getElementById('project-desc');
+            const thumbsContainer = document.getElementById('thumbnails-container');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
 
-        console.log("Wisselen naar afbeelding: " + imgSrc);
+            // Dubbelcheck of alle elementen bestaan
+            if (!bgLayer) console.error("CRITICAL ERROR: '#background-layer' niet gevonden in de HTML!");
+            if (!thumbsContainer) console.error("CRITICAL ERROR: '#thumbnails-container' niet gevonden in de HTML!");
 
-        // 1. Start Fade out
-        bgLayer.style.opacity = 0;
-        
-        // 2. Wacht even tot hij onzichtbaar is, wissel dan de foto
-        setTimeout(() => {
-            bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+            // --- 3. Functionaliteit ---
+
+            // Bulletproof functie om afbeelding te veranderen
+            function changeBackground(imgSrc, thumbElement) {
+                console.log(`[Achtergrond Actie] Verzoek om afbeelding te laden: "${imgSrc}"`);
+
+                // 1. Update actieve thumbnail styling direct voor een snelle UI feedback
+                if (thumbElement) {
+                    const allThumbs = document.querySelectorAll('.thumb');
+                    allThumbs.forEach(t => t.classList.remove('active'));
+                    thumbElement.classList.add('active');
+                }
+
+                // 2. Begin met het uitfaden van de huidige afbeelding
+                bgLayer.style.opacity = '0';
+
+                // 3. Creëer een Image object om te checken of het bestand echt bestaat
+                const imgPreload = new Image();
+
+                // 4A. Als het pad klopt en de afbeelding succesvol is binnengehaald:
+                imgPreload.onload = () => {
+                    console.log(`✅ [Succes] Afbeelding gevonden en geladen: "${imgSrc}"`);
+                    
+                    // Wacht precies zolang als de CSS overgang duurt (500ms) voordat je wisselt
+                    setTimeout(() => {
+                        bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+                        bgLayer.style.opacity = '1'; // Fade weer netjes in
+                    }, 500);
+                };
+
+                // 4B. Als het bestandspad niet klopt of de foto mist:
+                imgPreload.onerror = () => {
+                    console.error(`❌ [FOUT] Afbeelding kan niet worden geladen. Bestaat de map/foto? Pad: "${imgSrc}"`);
+                    
+                    // Als er een fout is, zorg dat de container weer zichtbaar wordt (voorkomt vastzitten in zwart scherm)
+                    setTimeout(() => {
+                        bgLayer.style.opacity = '1'; 
+                    }, 500);
+                };
+
+                // Dit start het daadwerkelijke laad/check-proces
+                imgPreload.src = imgSrc;
+            }
+
+            function loadProject(index) {
+                console.log(`--- Laden van project Index: ${index} ---`);
+                const project = projects[index];
+                
+                // Update Tekst
+                titleEl.innerText = project.title;
+                descEl.innerText = project.desc;
+
+                // Wis oude thumbnails
+                thumbsContainer.innerHTML = '';
+
+                // Genereer nieuwe thumbnails
+                project.images.forEach((imgSrc, i) => {
+                    const thumb = document.createElement('div');
+                    thumb.classList.add('thumb');
+                    
+                    if (i === 0) thumb.classList.add('active');
+                    
+                    thumb.style.backgroundImage = `url('${imgSrc}')`;
+                    
+                    // Koppel de click event
+                    thumb.addEventListener('click', () => {
+                        changeBackground(imgSrc, thumb);
+                    });
+                    
+                    thumbsContainer.appendChild(thumb);
+                });
+
+                // Zet de achtergrond naar de eerste foto van het zojuist geladen project
+                changeBackground(project.images[0], thumbsContainer.firstChild);
+            }
+
+            // --- 4. Event Listeners voor navigatie ---
+            btnNext.addEventListener('click', () => {
+                currentProjectIndex++;
+                if (currentProjectIndex >= projects.length) currentProjectIndex = 0;
+                loadProject(currentProjectIndex);
+            });
+
+            btnPrev.addEventListener('click', () => {
+                currentProjectIndex--;
+                if (currentProjectIndex < 0) currentProjectIndex = projects.length - 1;
+                loadProject(currentProjectIndex);
+            });
+
+            // --- 5. Preloader & Initialisatie ---
+            console.log("Starten met pre-loaden van afbeeldingen...");
+            projects.forEach(p => {
+                p.images.forEach(src => {
+                    const preImage = new Image();
+                    preImage.src = src;
+                });
+            });
+
+            // Laad het eerste project bij de start
+            loadProject(currentProjectIndex);
             
-            // 3. Fade weer in
-            bgLayer.style.opacity = 1;
-        }, 500); 
-
-        // Update actieve thumbnail styling
-        if(thumbElement) {
-            const allThumbs = document.querySelectorAll('.thumb');
-            allThumbs.forEach(t => t.classList.remove('active'));
-            thumbElement.classList.add('active');
-        }
-    }
-
-    function loadProject(index) {
-        const project = projects[index];
-        const titleEl = document.getElementById('project-title');
-        const descEl = document.getElementById('project-desc');
-        const thumbsContainer = document.getElementById('thumbnails-container');
-
-        if (!project) return;
-
-        titleEl.innerText = project.title;
-        descEl.innerText = project.desc;
-        thumbsContainer.innerHTML = '';
-
-        project.images.forEach((imgSrc, i) => {
-            const thumb = document.createElement('div');
-            thumb.classList.add('thumb');
-            if (i === 0) thumb.classList.add('active');
-            
-            thumb.style.backgroundImage = `url('${imgSrc}')`;
-            thumb.onclick = () => changeBackground(imgSrc, thumb);
-            
-            thumbsContainer.appendChild(thumb);
-        });
-
-        // Direct de eerste foto van het project als achtergrond zetten
-        changeBackground(project.images[0], null);
-    }
-
-    function nextProject() {
-        currentProjectIndex = (currentProjectIndex + 1) % projects.length;
-        loadProject(currentProjectIndex);
-    }
-
-    function prevProject() {
-        currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length;
-        loadProject(currentProjectIndex);
-    }
-
-    // Wachten tot alles geladen is voor we starten
-    window.addEventListener('DOMContentLoaded', () => {
-        loadProject(currentProjectIndex);
-    });
-</script>
+        }); // Einde DOMContentLoaded
+    </script>
 </body>
 </html>

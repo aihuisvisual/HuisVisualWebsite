@@ -160,6 +160,52 @@
             box-shadow: 0 0 15px rgba(255,255,255,0.4);
         }
 
+        /* ==========================================================================
+           5. Instagram Glass Button
+           ========================================================================== */
+        .insta-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 40px; /* Ruimte tussen thumbnails en knop */
+            padding: 12px 16px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            
+            /* Mini Liquid Glass effect */
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .insta-link svg {
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .insta-link:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            /* Okergeel / gouden glow op hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(218, 165, 32, 0.4);
+        }
+
+        .insta-link:hover svg {
+            transform: scale(1.1);
+        }
+
+        /* ==========================================================================
+           6. Bottom Nav (Project Schakelaar)
+           ========================================================================== */
         .bottom-nav {
             position: absolute;
             bottom: 40px;
@@ -192,7 +238,7 @@
         }
 
         /* ==========================================================================
-           5. Responsive
+           7. Responsive
            ========================================================================== */
         @media (max-width: 800px) {
             .back-btn { top: 20px; left: 20px; }
@@ -207,13 +253,14 @@
             .project-title { font-size: 2rem; }
             .project-desc { font-size: 0.95rem; margin-bottom: 24px; }
             .thumb { width: 60px; height: 60px; }
+            .insta-link { margin-top: 24px; /* Minder afstand op mobiel */ }
             .bottom-nav { width: calc(100% - 40px); bottom: 20px; padding: 8px 16px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamische Achtergrond (zonder inline style in de HTML, wordt geregeld via JS) -->
+    <!-- Dynamische Achtergrond -->
     <div id="background-layer"></div>
     <div class="overlay"></div>
 
@@ -224,12 +271,23 @@
     <aside class="sidebar liquid-glass">
         <h1 class="project-title" id="project-title">Project Laden...</h1>
         <p class="project-desc" id="project-desc">Beschrijving laden...</p>
+        
+        <!-- Thumbnails Container -->
         <div class="thumbnails-container" id="thumbnails-container"></div>
+
+        <!-- Instagram Link -->
+        <a href="https://instagram.com/huisvisual" target="_blank" class="insta-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <span>Kijk op Insta voor alle foto's.</span>
+        </a>
     </aside>
 
     <!-- Project Schakelaar -->
     <nav class="bottom-nav liquid-glass">
-        <!-- Let op: onclick attributen verwijderd, geregeld via ID's in Javascript -->
         <button class="nav-btn" id="btn-prev">
             <span>←</span> Vorig Project
         </button>

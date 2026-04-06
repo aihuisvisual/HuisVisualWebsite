@@ -3,31 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Klant Dashboard - HuisVisual</title>
+    <title>Klant Dashboard - HuisVisual.nl</title>
     
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================================================
-           1. Basis & CSS Variabelen (Liquid Glass Thema)
+           1. CSS Variabelen (Makkelijk aanpasbaar)
            ========================================================================== */
         :root {
-            --accent-gold: #cca655;
-            --accent-gold-glow: rgba(204, 166, 85, 0.4);
+            /* Kleuren */
+            --bg-color: #f8f9fa;
+            --text-dark: #111827;
+            --text-muted: #6b7280;
+            --border-color: rgba(17, 24, 39, 0.08);
             
-            --glass-bg: rgba(255, 255, 255, 0.06);
-            --glass-blur: blur(20px);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --glass-highlight: rgba(255, 255, 255, 0.3);
-            --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-            
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.6);
+            /* Light Liquid Glass Instellingen */
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-blur: blur(15px);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
+            --glass-radius: 20px;
         }
 
+        /* ==========================================================================
+           2. Basis Reset & Body
+           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -36,389 +40,541 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            /* Placeholder achtergrondfoto met donkere overlay voor contrast */
-            background-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url('assets/dashboard-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: var(--text-main);
+            background-color: var(--bg-color);
+            /* Subtiele verloop-achtergrond om het glaseffect (blur) zichtbaar te maken */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 0, 0, 0.03), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 0, 0, 0.02), transparent 25%);
+            color: var(--text-dark);
             -webkit-font-smoothing: antialiased;
-            /* Boven the fold instellingen voor desktop */
             height: 100vh;
-            overflow: hidden; 
+            overflow: hidden; /* Voorkomt scrollen op desktop (boven de vouw) */
+            display: flex;
+            flex-direction: column;
         }
 
         /* ==========================================================================
-           2. Dashboard Grid Layout (Desktop: Boven de vouw)
+           3. Layout & Grid (Desktop Above the Fold)
            ========================================================================== */
-        .dashboard-wrapper {
+        .dashboard-container {
+            padding: 24px 32px;
             display: flex;
             flex-direction: column;
             height: 100%;
-            padding: 24px;
-            gap: 24px;
             max-width: 1600px;
             margin: 0 auto;
+            width: 100%;
         }
 
-        /* Header Balk */
-        .top-bar {
+        /* Header */
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 32px;
-            border-radius: 100px;
-            flex-shrink: 0; /* Zorgt dat de balk niet krimpt */
+            margin-bottom: 24px;
+            flex-shrink: 0;
         }
 
-        .brand { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; }
-        .user-info { display: flex; align-items: center; gap: 16px; font-weight: 500; font-size: 0.95rem; }
-        .logout-btn { color: var(--accent-gold); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; transition: opacity 0.2s;}
-        .logout-btn:hover { opacity: 0.7; }
+        .brand h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
 
-        /* Het daadwerkelijke Grid */
-        .grid-container {
+        .btn-terug {
+            background-color: var(--text-dark);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-terug:hover {
+            background-color: #374151;
+            transform: translateY(-1px);
+        }
+
+        /* Hoofd Grid */
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: 2.5fr 1fr; /* Links (Visuals) is breder dan Rechts (Data) */
-            grid-template-rows: 2fr 1fr;      /* Boven (Pano/Info) is hoger dan Onder (Galerij/Status) */
+            grid-template-columns: 2fr 1.2fr; /* 360 krijgt meer ruimte dan details/foto's */
+            grid-template-rows: auto 1fr auto;
             gap: 24px;
-            flex-grow: 1; /* Vult de resterende hoogte van het scherm */
-            min-height: 0; /* Voorkomt grid blowout */
+            flex-grow: 1; /* Neemt resterende hoogte in */
+            min-height: 0; /* Voorkomt overflow bugs */
         }
 
         /* ==========================================================================
-           3. Liquid Glass Kaart Styling (Globale class)
+           4. Light Liquid Glass Card Systeem
            ========================================================================== */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid var(--glass-highlight);
-            border-left: 1px solid var(--glass-highlight);
+            border: var(--glass-border);
+            border-radius: var(--glass-radius);
             box-shadow: var(--glass-shadow);
-            border-radius: 24px;
             padding: 24px;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Houdt content binnen de afgeronde hoeken */
+            position: relative;
+            overflow: hidden;
         }
 
         .card-header {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-main);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 600;
         }
 
         /* ==========================================================================
-           4. Specifieke Kaart Inhoud
+           5. Specifieke Kaarten (Grid Plaatsing & Inhoud)
            ========================================================================== */
         
-        /* Kaart 1: 360° Panorama Viewer (Top Links) */
-        .pano-card {
-            grid-column: 1 / 2;
-            grid-row: 1 / 2;
-            padding: 16px; /* Minder padding voor meer iframe ruimte */
+        /* -- Project Details (Rechtsboven) -- */
+        .details-card {
+            grid-column: 2;
+            grid-row: 1;
         }
-        
-        .pano-container {
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .detail-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 600; }
+        .detail-value { font-size: 0.95rem; font-weight: 500; }
+
+        /* -- 360° Panorama (Links, beslaat 2 rijen) -- */
+        .pano-card {
+            grid-column: 1;
+            grid-row: 1 / 3;
+            padding: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .pano-card:hover { transform: scale(0.995); }
+
+        .pano-placeholder {
             flex-grow: 1;
-            width: 100%;
-            border-radius: 16px;
-            background: rgba(0,0,0,0.3);
-            border: 1px dashed rgba(255,255,255,0.2);
+            background: #e5e7eb url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80') center/cover;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
         }
-        
-        .pano-placeholder-text { color: var(--text-muted); font-size: 0.9rem; text-align: center;}
-        
-        /* IFRAME STYLING (Voor wanneer je de embed toevoegt) */
-        .pano-container iframe {
+
+        .pano-overlay {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* -- Alle Foto's (Rechtsonder) -- */
+        .photos-card {
+            grid-column: 2;
+            grid-row: 2;
+            overflow: hidden; /* Houdt scroll binnenin */
+        }
+
+        .download-btn {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .download-btn:hover { color: var(--text-muted); }
+
+        .thumbnails-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            overflow-y: auto; /* Scrollbaar als er veel foto's zijn */
+            padding-right: 8px; /* Ruimte voor scrollbar */
+            flex-grow: 1;
+        }
+
+        /* Verberg standaard scrollbar voor cleane look */
+        .thumbnails-grid::-webkit-scrollbar { width: 4px; }
+        .thumbnails-grid::-webkit-scrollbar-track { background: transparent; }
+        .thumbnails-grid::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+
+        .thumb-wrapper {
+            aspect-ratio: 16 / 9;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+        }
+
+        .thumb-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .thumb-wrapper:hover img { transform: scale(1.05); }
+
+        /* -- Project Status (Onderkant, volledige breedte) -- */
+        .status-card {
+            grid-column: 1 / -1;
+            grid-row: 3;
+            padding: 32px 48px;
+        }
+
+        .horizontal-stepper {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            width: 100%;
+        }
+
+        /* De grijze basislijn achter de stappen */
+        .horizontal-stepper::before {
+            content: '';
             position: absolute;
+            top: 10px; /* Helft van bolletje hoogte */
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background-color: #e5e7eb;
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            z-index: 2; /* Boven de lijn */
+            flex: 1;
+        }
+
+        .step-dot {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            border: 4px solid var(--bg-color); /* Creëert ruimte/gat effect */
+            transition: all 0.3s ease;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* Actieve en Voltooide stappen */
+        .step.completed .step-dot { background-color: var(--text-dark); }
+        .step.completed .step-label { color: var(--text-dark); }
+        
+        .step.active .step-dot { 
+            background-color: var(--bg-color); 
+            border: 6px solid var(--text-dark);
+            transform: scale(1.2);
+        }
+        .step.active .step-label { font-weight: 700; color: var(--text-dark); }
+
+        /* ==========================================================================
+           6. Overlay / Modal (Voor Media weergave)
+           ========================================================================== */
+        .modal {
+            display: none; /* Standaard verborgen */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
-        }
-
-        /* Kaart 2: Project Informatie (Top Rechts) */
-        .info-card {
-            grid-column: 2 / 3;
-            grid-row: 1 / 2;
-        }
-
-        .info-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            padding: 40px; /* Zorgt voor de rand rondom (niet 100% fullscreen) */
             align-items: center;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .info-item:last-child { border-bottom: none; }
-        .info-label { color: var(--text-muted); font-size: 0.85rem; }
-        .info-value { font-weight: 600; font-size: 0.95rem; text-align: right;}
-        .info-value.highlight { color: var(--accent-gold); }
-
-        /* Kaart 3: Preview Galerij (Bottom Links) */
-        .gallery-card {
-            grid-column: 1 / 2;
-            grid-row: 2 / 3;
-        }
-
-        .gallery-track {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            padding-bottom: 8px; /* Ruimte voor scrollbar */
-            flex-grow: 1;
-            align-items: stretch;
-        }
-
-        /* Verberg standaard scrollbar voor cleane look */
-        .gallery-track::-webkit-scrollbar { height: 6px; }
-        .gallery-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 10px; }
-        .gallery-track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
-
-        .thumbnail {
-            min-width: 200px;
-            border-radius: 12px;
-            background-color: rgba(255,255,255,0.1);
-            background-size: cover;
-            background-position: center;
-            border: 1px solid rgba(255,255,255,0.1);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .thumbnail:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255,255,255,0.4);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-        }
-
-        /* Kaart 4: Project Status Timeline (Bottom Rechts) */
-        .status-card {
-            grid-column: 2 / 3;
-            grid-row: 2 / 3;
-        }
-
-        .timeline {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            position: relative;
-            flex-grow: 1;
             justify-content: center;
-            padding-left: 10px;
-        }
-
-        /* De verticale lijn achter de bolletjes */
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            bottom: 10px;
-            left: 16px;
-            width: 2px;
-            background: rgba(255,255,255,0.1);
-            z-index: 1;
-        }
-
-        .status-step {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            position: relative;
-            z-index: 2;
-            opacity: 0.5; /* Inactieve stappen */
+            opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .status-step.completed { opacity: 0.8; }
-        
-        /* Actieve stap */
-        .status-step.active {
+        .modal.show {
+            display: flex;
             opacity: 1;
         }
 
-        .step-dot {
-            width: 14px;
-            height: 14px;
+        .modal-content-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            background: #000;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .btn-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: var(--text-muted);
-            border: 2px solid #222; /* Creëert een 'gat' in de lijn */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            transition: background 0.2s;
         }
 
-        .status-step.completed .step-dot { background: var(--text-main); }
-        
-        .status-step.active .step-dot {
-            background: var(--accent-gold);
-            box-shadow: 0 0 15px var(--accent-gold-glow), 0 0 5px var(--accent-gold);
-            transform: scale(1.3);
-        }
+        .btn-close:hover { background: rgba(255,255,255,0.3); }
 
-        .step-text { font-size: 0.9rem; font-weight: 500; }
-        .status-step.active .step-text { font-weight: 700; color: var(--accent-gold); }
+        /* Content in modal (Afbeelding of Iframe) */
+        #modal-body { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        #modal-body img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        #modal-body iframe { width: 100%; height: 100%; border: none; }
 
         /* ==========================================================================
-           5. Responsive Design (Mobiel / Tablet)
+           7. Responsive Design (Tablets & Mobiel)
            ========================================================================== */
         @media (max-width: 1024px) {
-            body {
-                height: auto; /* Laat de body weer scrollen op kleine schermen */
-                overflow: auto;
+            body { height: auto; overflow: auto; } /* Laat weer scrollen toe */
+            .dashboard-container { padding: 16px; height: auto; min-height: 100vh; }
+            .dashboard-grid { 
+                display: flex; 
+                flex-direction: column; 
             }
-
-            .dashboard-wrapper {
-                height: auto;
-                min-height: 100vh;
-            }
-
-            .grid-container {
-                display: flex;
-                flex-direction: column; /* Alles onder elkaar gestapeld */
-            }
-
-            /* Geef elementen een minimale hoogte voor mobiel */
             .pano-card { min-height: 400px; }
-            .gallery-card { min-height: 250px; }
+            .thumbnails-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .modal { padding: 16px; }
         }
-
         @media (max-width: 600px) {
-            .top-bar { flex-direction: column; gap: 12px; align-items: flex-start; padding: 24px; }
-            .glass-card { padding: 20px; border-radius: 20px; }
-            .pano-card { min-height: 300px; }
+            header { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .details-grid { grid-template-columns: 1fr; }
+            .horizontal-stepper::before { left: 10%; right: 10%; } /* Aanpassing voor kleine schermen */
         }
     </style>
 </head>
 <body>
 
-    <div class="dashboard-wrapper">
+    <div class="dashboard-container">
         
         <!-- Header -->
-        <header class="top-bar glass-card">
-            <div class="brand">HuisVisual.nl</div>
-            <div class="user-info">
-                <span>Welkom, Familie de Vries</span>
-                <a href="#" class="logout-btn">Uitloggen</a>
+        <header>
+            <div class="brand">
+                <h1>HuisVisual.nl</h1>
             </div>
+            <a href="index.html" class="btn-terug">
+                <!-- Lucide Arrow Left Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Terug naar Home
+            </a>
         </header>
 
-        <!-- Main Dashboard Grid -->
-        <main class="grid-container">
+        <!-- Hoofd Grid -->
+        <main class="dashboard-grid">
             
-            <!-- 1. 360° Panorama Viewer -->
-            <section class="glass-card pano-card">
-                <div class="card-header">Interactief 360° Panorama</div>
-                
-                <div class="pano-container">
-                    <!-- PLAATS HIER JOUW IFRAME EMBED CODE -->
-                    <!-- Voorbeeld: <iframe src="https://renderstuff.com/jouw-link" allowfullscreen></iframe> -->
+            <!-- 1. Interactief 360° Panorama (Links, Groot) -->
+            <div class="glass-card pano-card" onclick="openPanoModal()">
+                <div class="card-header">
+                    <h2 class="card-title">Interactief 360° Panorama</h2>
+                </div>
+                <div class="pano-placeholder">
+                    <div class="pano-overlay">
+                        <!-- Lucide Play/Expand Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path></svg>
+                        Klik om viewer te openen
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Project Details (Rechtsboven) -->
+            <div class="glass-card details-card">
+                <div class="card-header">
+                    <h2 class="card-title">Project Details</h2>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Projectnaam</span>
+                        <span class="detail-value">Villa Vught Interieur</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Klant</span>
+                        <span class="detail-value">A. de Vries</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Offertenummer</span>
+                        <span class="detail-value">HV-24-089</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Datum aanvraag</span>
+                        <span class="detail-value">12 Nov 2024</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Prijs</span>
+                        <span class="detail-value">€ 850,- excl. BTW</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Aantal foto's</span>
+                        <span class="detail-value">4 High-Res beelden</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Alle Foto's (Rechtsonder) -->
+            <div class="glass-card photos-card">
+                <div class="card-header">
+                    <h2 class="card-title">Alle foto's</h2>
+                    <button class="download-btn">
+                        <!-- Lucide Download Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Download alles
+                    </button>
+                </div>
+                <div class="thumbnails-grid">
+                    <!-- Klikken op een thumb roept de JS functie op met de afbeeldings URL -->
+                    <div class="thumb-wrapper" onclick="openImageModal('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80')">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80" alt="Concept 1">
+                    </div>
+                    <div class="thumb-wrapper" onclick="openImageModal('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80')">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80" alt="Concept 2">
+                    </div>
+                    <div class="thumb-wrapper" onclick="openImageModal('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=80')">
+                        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=400&q=80" alt="Concept 3">
+                    </div>
+                    <div class="thumb-wrapper" onclick="openImageModal('https://images.unsplash.com/photo-1600566753086-00f18efc2297?auto=format&fit=crop&w=1600&q=80')">
+                        <img src="https://images.unsplash.com/photo-1600566753086-00f18efc2297?auto=format&fit=crop&w=400&q=80" alt="Concept 4">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Project Status (Onderkant) -->
+            <div class="glass-card status-card">
+                <div class="horizontal-stepper">
                     
-                    <div class="pano-placeholder-text">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 12px; opacity: 0.5;"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path></svg>
-                        <br>360° Viewer wordt geladen...<br><small>(Plak iframe code in HTML)</small>
+                    <!-- completed = voltooid | active = huidige fase -->
+                    <div class="step completed">
+                        <div class="step-dot"></div>
+                        <span class="step-label">Opdracht Bevestigd</span>
                     </div>
-                </div>
-            </section>
-
-            <!-- 2. Project Informatie -->
-            <section class="glass-card info-card">
-                <div class="card-header">Project Details</div>
-                <ul class="info-list">
-                    <li class="info-item">
-                        <span class="info-label">Project</span>
-                        <span class="info-value">Villa Vught - Interieur</span>
-                    </li>
-                    <li class="info-item">
-                        <span class="info-label">Klant</span>
-                        <span class="info-value">Familie de Vries</span>
-                    </li>
-                    <li class="info-item">
-                        <span class="info-label">Offertenummer</span>
-                        <span class="info-value">#HV-2024-089</span>
-                    </li>
-                    <li class="info-item">
-                        <span class="info-label">Geplande Oplevering</span>
-                        <span class="info-value">12 November 2024</span>
-                    </li>
-                    <li class="info-item">
-                        <span class="info-label">Totaalbedrag</span>
-                        <span class="info-value highlight">€ 850,- excl. BTW</span>
-                    </li>
-                </ul>
-            </section>
-
-            <!-- 3. Preview Galerij -->
-            <section class="glass-card gallery-card">
-                <div class="card-header">Nieuwste Renders (Concepten)</div>
-                <div class="gallery-track">
-                    <!-- Thumbnail placeholders (vervang src in background-image via inline style of JS) -->
-                    <div class="thumbnail" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=400&q=80');"></div>
-                    <div class="thumbnail" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&q=80');"></div>
-                    <div class="thumbnail" style="background-image: url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=400&q=80');"></div>
-                    <div class="thumbnail" style="background-image: url('https://images.unsplash.com/photo-1600566753086-00f18efc2297?auto=format&fit=crop&w=400&q=80');"></div>
-                </div>
-            </section>
-
-            <!-- 4. Project Status Timeline -->
-            <section class="glass-card status-card">
-                <div class="card-header">Huidige Status</div>
-                <div class="timeline">
                     
-                    <!-- Stap 1: Voltooid -->
-                    <div class="status-step completed">
+                    <div class="step completed">
                         <div class="step-dot"></div>
-                        <span class="step-text">Opdracht Bevestigd</span>
+                        <span class="step-label">3D Modelleren</span>
                     </div>
-
-                    <!-- Stap 2: Voltooid -->
-                    <div class="status-step completed">
+                    
+                    <div class="step active">
                         <div class="step-dot"></div>
-                        <span class="step-text">3D Modellering & Opzet</span>
+                        <span class="step-label">Alle foto's (Concepten)</span>
                     </div>
-
-                    <!-- Stap 3: ACTIEF -->
-                    <div class="status-step active">
+                    
+                    <div class="step">
                         <div class="step-dot"></div>
-                        <span class="step-text">Rendering Concepten</span>
-                    </div>
-
-                    <!-- Stap 4: In de toekomst -->
-                    <div class="status-step">
-                        <div class="step-dot"></div>
-                        <span class="step-text">Feedbackronde (Klant)</span>
-                    </div>
-
-                    <!-- Stap 5: In de toekomst -->
-                    <div class="status-step">
-                        <div class="step-dot"></div>
-                        <span class="step-text">Eindoplevering HD</span>
+                        <span class="step-label">Afronding & Oplevering</span>
                     </div>
 
                 </div>
-            </section>
+            </div>
 
         </main>
     </div>
 
+    <!-- ==========================================================================
+         Media Modal (Voor Afbeeldingen en Pano Iframe)
+         ========================================================================== -->
+    <div id="mediaModal" class="modal">
+        <div class="modal-content-wrapper">
+            <button class="btn-close" onclick="closeModal()">
+                <!-- Lucide X Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            
+            <!-- Inhoud wordt hier via Javascript in geladen -->
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         Javascript
+         ========================================================================== -->
+    <script>
+        const modal = document.getElementById('mediaModal');
+        const modalBody = document.getElementById('modal-body');
+
+        // Functie om een foto in de modal te laden
+        function openImageModal(imageUrl) {
+            // Leeg de huidige inhoud en voeg een img tag toe
+            modalBody.innerHTML = `<img src="${imageUrl}" alt="Vergrote render">`;
+            // Toon de modal
+            modal.classList.add('show');
+        }
+
+        // Functie om de 360 iframe in de modal te laden
+        function openPanoModal() {
+            // Placeholder iframe code (Vervang de src door je eigen Renderstuff URL)
+            const iframeHTML = `<iframe src="https://renderstuff.com/jouw-link-hier" allowfullscreen></iframe>`;
+            modalBody.innerHTML = iframeHTML;
+            modal.classList.add('show');
+        }
+
+        // Functie om modal te sluiten
+        function closeModal() {
+            modal.classList.remove('show');
+            // Wis de iframe/img na het sluiten om audio/video of laden te stoppen
+            setTimeout(() => { modalBody.innerHTML = ''; }, 300); 
+        }
+
+        // Sluit modal als er buiten de content box (op de donkere achtergrond) wordt geklikt
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>

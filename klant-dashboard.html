@@ -221,14 +221,20 @@
 
         .download-btn:hover { color: var(--text-muted); }
 
-        .thumbnails-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            overflow-y: auto; /* Scrollbaar als er veel foto's zijn */
-            padding-right: 8px; /* Ruimte voor scrollbar */
-            flex-grow: 1;
-        }
+        /* -- Vervang alleen dit blokje in je CSS -- */
+ .thumbnails-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* AANGEPAST: Meer spacing tussen de foto's */
+    overflow-y: auto; 
+    padding-right: 12px; /* Iets bredere marge voor de scrollbar */
+    padding-bottom: 24px; /* Zorgt dat de laatste foto niet strak op de bodem plakt */
+    flex-grow: 1;
+    
+    /* DE FIX: Dit voorkomt dat de grid alle foto's in elkaar drukt. 
+       Ze behouden nu hun 16:9 formaat en triggeren perfect de scrollbar. */
+    align-content: start; 
+}
 
         /* Verberg standaard scrollbar voor cleane look */
         .thumbnails-grid::-webkit-scrollbar { width: 4px; }

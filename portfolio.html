@@ -163,51 +163,51 @@
         /* ==========================================================================
            5. Instagram Glass Button
            ========================================================================== */
-        .insta-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px; /* Ruimte tussen thumbnails en knop */
-            padding: 12px 16px;
-            text-decoration: none;
-            color: #ffffff;
-            font-size: 0.9rem;
-            font-weight: 500;
+        
+.insta-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px; /* De kleine afstand tussen de knoppen onderling */
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    
+    /* Liquid Glass effect */
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
 
-            /* Zorg dat alleen de ALLEREERSTE knop nog die grote afstand tot de foto's heeft */
-            .insta-link:first-of-type {
-                margin-top: 40px;
+/* Deze moet APART staan, buiten de accolades van de eerste .insta-link */
+.insta-link:first-of-type {
+    margin-top: 40px; /* De grote afstand boven de eerste knop */
+}
 
-            
-            /* Mini Liquid Glass effect */
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
+.insta-link svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
 
-        .insta-link svg {
-            flex-shrink: 0;
-            transition: transform 0.3s ease;
-        }
+.insta-link:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.4);
+}
 
-        .insta-link:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
-            /* Okergeel / gouden glow op hover */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.4);
-        }
-
-        .insta-link:hover svg {
-            transform: scale(1.1);
-        }
-
+.insta-link:hover svg {
+    transform: scale(1.1);
+}
+        
         /* ==========================================================================
            6. Bottom Nav (Project Schakelaar)
            ========================================================================== */

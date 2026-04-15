@@ -166,13 +166,20 @@
         .insta-link {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-top: 40px; /* Ruimte tussen thumbnails en knop */
+            gap: 10px;
+            margin-top: 10px; /* Ruimte tussen thumbnails en knop */
             padding: 12px 16px;
             text-decoration: none;
             color: #ffffff;
             font-size: 0.9rem;
             font-weight: 500;
+
+            }
+
+            /* Zorg dat alleen de ALLEREERSTE knop nog die grote afstand tot de foto's heeft */
+            .insta-link:first-of-type {
+                margin-top: 40px;
+            }
             
             /* Mini Liquid Glass effect */
             background: rgba(255, 255, 255, 0.05);

@@ -54,7 +54,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            z-index: 1; /* Gewijzigd van -2 naar 1 */
+            z-index: 1;
             opacity: 1; 
             transition: opacity 0.5s ease-in-out; 
             background-color: #111; 
@@ -67,7 +67,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.5) 100%);
-            z-index: 2; /* Gewijzigd van -1 naar 2 (ligt óp de foto) */
+            z-index: 2;
             pointer-events: none;
         }
 
@@ -92,7 +92,7 @@
         }
 
         /* ==========================================================================
-           4. Layout: Sidebar & Bottom Nav
+           4. Layout: Sidebar & Content
            ========================================================================== */
         .back-btn {
             position: absolute;
@@ -114,6 +114,10 @@
             width: 400px;
             padding: 40px;
             z-index: 10;
+            overflow: hidden; /* Belangrijk voor het inklappen */
+            max-width: 400px;
+            max-height: 800px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), max-height 0.4s ease, max-width 0.4s ease;
         }
 
         .project-title {
@@ -122,6 +126,7 @@
             letter-spacing: -0.03em;
             margin-bottom: 16px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+            padding-right: 40px; /* Ruimte voor de knop */
         }
 
         .project-desc {
@@ -163,50 +168,47 @@
         /* ==========================================================================
            5. Instagram Glass Button
            ========================================================================== */
-        
-.insta-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px; /* De kleine afstand tussen de knoppen onderling */
-    padding: 12px 16px;
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 0.9rem;
-    font-weight: 500;
-    
-    /* Liquid Glass effect */
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 12px;
-    
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
+        .insta-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px; 
+            padding: 12px 16px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
 
-/* Deze moet APART staan, buiten de accolades van de eerste .insta-link */
-.insta-link:first-of-type {
-    margin-top: 40px; /* De grote afstand boven de eerste knop */
-}
+        .insta-link:first-of-type {
+            margin-top: 40px; 
+        }
 
-.insta-link svg {
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
-}
+        .insta-link svg {
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
 
-.insta-link:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.4);
-}
+        .insta-link:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.4);
+        }
 
-.insta-link:hover svg {
-    transform: scale(1.1);
-}
+        .insta-link:hover svg {
+            transform: scale(1.1);
+        }
         
         /* ==========================================================================
            6. Bottom Nav (Project Schakelaar)
@@ -243,7 +245,58 @@
         }
 
         /* ==========================================================================
-           7. Responsive
+           7. Toggle Sidebar & Inklappen
+           ========================================================================== */
+        .toggle-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .sidebar-content {
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        /* Styling wanneer ingeklapt */
+        .sidebar.collapsed {
+            max-width: 64px !important;
+            max-height: 64px !important;
+            width: 64px;
+            height: 64px;
+            padding: 0 !important;
+        }
+
+        .sidebar.collapsed .sidebar-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Centreer de toggle knop in het kleine bolletje */
+        .sidebar.collapsed .toggle-btn {
+            top: 11px;
+            right: 11px;
+        }
+
+        /* ==========================================================================
+           8. Responsive
            ========================================================================== */
         @media (max-width: 800px) {
             .back-btn { top: 20px; left: 20px; }
@@ -253,13 +306,19 @@
                 left: 20px;
                 transform: none;
                 width: calc(100% - 40px);
+                max-width: calc(100% - 40px);
                 padding: 24px;
             }
             .project-title { font-size: 2rem; }
             .project-desc { font-size: 0.95rem; margin-bottom: 24px; }
             .thumb { width: 60px; height: 60px; }
-            .insta-link { margin-top: 24px; /* Minder afstand op mobiel */ }
+            .insta-link { margin-top: 24px; }
             .bottom-nav { width: calc(100% - 40px); bottom: 20px; padding: 8px 16px; }
+            
+            .toggle-btn {
+                top: 16px;
+                right: 16px;
+            }
         }
     </style>
 </head>
@@ -273,30 +332,47 @@
     <a href="index.html" class="back-btn liquid-glass">← Terug naar Home</a>
 
     <!-- Sidebar -->
-    <aside class="sidebar liquid-glass">
-        <h1 class="project-title" id="project-title">Project Laden...</h1>
-        <p class="project-desc" id="project-desc">Beschrijving laden...</p>
+    <aside class="sidebar liquid-glass" id="sidebar">
         
-        <!-- Thumbnails Container -->
-        <div class="thumbnails-container" id="thumbnails-container"></div>
+        <!-- Verberg / Toon Knop -->
+        <button class="toggle-btn" id="toggle-sidebar" aria-label="Toggle Sidebar">
+            <!-- Kruisje (Standaard zichtbaar) -->
+            <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <!-- Pijltje omhoog (Standaard verborgen) -->
+            <svg id="icon-open" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
 
-        <!-- Instagram Link -->
-        <a href="https://www.instagram.com/huisvisual.nl/" target="_blank" class="insta-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-            <span>Kijk op Insta voor alle foto's.</span>
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61572333130670" target="_blank" class="insta-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-            <span>Of kijk op Facebook voor alle foto's.</span>
-        </a>
+        <!-- Sidebar Inhoud Wrapper (Makkelijk te verbergen) -->
+        <div class="sidebar-content" id="sidebar-content">
+            <h1 class="project-title" id="project-title">Project Laden...</h1>
+            <p class="project-desc" id="project-desc">Beschrijving laden...</p>
+            
+            <!-- Thumbnails Container -->
+            <div class="thumbnails-container" id="thumbnails-container"></div>
+
+            <!-- Social Links -->
+            <a href="https://www.instagram.com/huisvisual.nl/" target="_blank" class="insta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                <span>Kijk op Insta voor alle foto's.</span>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61572333130670" target="_blank" class="insta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                <span>Of kijk op Facebook voor alle foto's.</span>
+            </a>
+        </div>
     </aside>
 
     <!-- Project Schakelaar -->
@@ -390,76 +466,52 @@
             const thumbsContainer = document.getElementById('thumbnails-container');
             const btnPrev = document.getElementById('btn-prev');
             const btnNext = document.getElementById('btn-next');
-
-            // Dubbelcheck of alle elementen bestaan
-            if (!bgLayer) console.error("CRITICAL ERROR: '#background-layer' niet gevonden in de HTML!");
-            if (!thumbsContainer) console.error("CRITICAL ERROR: '#thumbnails-container' niet gevonden in de HTML!");
+            
+            // Sidebar Toggle elementen
+            const sidebar = document.getElementById('sidebar');
+            const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+            const iconClose = document.getElementById('icon-close');
+            const iconOpen = document.getElementById('icon-open');
+            const sidebarContent = document.getElementById('sidebar-content');
 
             // --- 3. Functionaliteit ---
-
-            // Bulletproof functie om afbeelding te veranderen
             function changeBackground(imgSrc, thumbElement) {
-                console.log(`[Achtergrond Actie] Verzoek om afbeelding te laden: "${imgSrc}"`);
-
-                // 1. Update actieve thumbnail styling direct voor een snelle UI feedback
                 if (thumbElement) {
                     const allThumbs = document.querySelectorAll('.thumb');
                     allThumbs.forEach(t => t.classList.remove('active'));
                     thumbElement.classList.add('active');
                 }
 
-                // 2. Begin met het uitfaden van de huidige afbeelding
                 bgLayer.style.opacity = '0';
 
-                // 3. Creëer een Image object om te checken of het bestand echt bestaat
                 const imgPreload = new Image();
-
-                // 4A. Als het pad klopt en de afbeelding succesvol is binnengehaald:
                 imgPreload.onload = () => {
-                    console.log(`✅ [Succes] Afbeelding gevonden en geladen: "${imgSrc}"`);
-                    
-                    // Wacht precies zolang als de CSS overgang duurt (500ms) voordat je wisselt
                     setTimeout(() => {
                         bgLayer.style.backgroundImage = `url('${imgSrc}')`;
-                        bgLayer.style.opacity = '1'; // Fade weer netjes in
+                        bgLayer.style.opacity = '1';
                     }, 500);
                 };
 
-                // 4B. Als het bestandspad niet klopt of de foto mist:
                 imgPreload.onerror = () => {
-                    console.error(`❌ [FOUT] Afbeelding kan niet worden geladen. Bestaat de map/foto? Pad: "${imgSrc}"`);
-                    
-                    // Als er een fout is, zorg dat de container weer zichtbaar wordt (voorkomt vastzitten in zwart scherm)
-                    setTimeout(() => {
-                        bgLayer.style.opacity = '1'; 
-                    }, 500);
+                    setTimeout(() => { bgLayer.style.opacity = '1'; }, 500);
                 };
 
-                // Dit start het daadwerkelijke laad/check-proces
                 imgPreload.src = imgSrc;
             }
 
             function loadProject(index) {
-                console.log(`--- Laden van project Index: ${index} ---`);
                 const project = projects[index];
                 
-                // Update Tekst
                 titleEl.innerText = project.title;
                 descEl.innerText = project.desc;
-
-                // Wis oude thumbnails
                 thumbsContainer.innerHTML = '';
 
-                // Genereer nieuwe thumbnails
                 project.images.forEach((imgSrc, i) => {
                     const thumb = document.createElement('div');
                     thumb.classList.add('thumb');
-                    
                     if (i === 0) thumb.classList.add('active');
-                    
                     thumb.style.backgroundImage = `url('${imgSrc}')`;
                     
-                    // Koppel de click event
                     thumb.addEventListener('click', () => {
                         changeBackground(imgSrc, thumb);
                     });
@@ -467,11 +519,12 @@
                     thumbsContainer.appendChild(thumb);
                 });
 
-                // Zet de achtergrond naar de eerste foto van het zojuist geladen project
                 changeBackground(project.images[0], thumbsContainer.firstChild);
             }
 
-            // --- 4. Event Listeners voor navigatie ---
+            // --- 4. Event Listeners ---
+            
+            // Vorige / Volgende Navigatie
             btnNext.addEventListener('click', () => {
                 currentProjectIndex++;
                 if (currentProjectIndex >= projects.length) currentProjectIndex = 0;
@@ -484,8 +537,34 @@
                 loadProject(currentProjectIndex);
             });
 
+            // Sidebar In/Uitklappen
+            toggleSidebarBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
+                
+                if (sidebar.classList.contains('collapsed')) {
+                    // Verberg de content (verdwijnt langzaam via CSS opacity)
+                    iconClose.style.display = 'none';
+                    iconOpen.style.display = 'block';
+                    sidebarContent.style.opacity = '0';
+                    
+                    // Haal het na de transitie fysiek uit de weg
+                    setTimeout(() => {
+                        sidebarContent.style.display = 'none';
+                    }, 300);
+                } else {
+                    // Laat de content weer zien
+                    iconOpen.style.display = 'none';
+                    iconClose.style.display = 'block';
+                    sidebarContent.style.display = 'block';
+                    
+                    // Kleine timeout nodig zodat de opacity animatie werkt na display: block
+                    setTimeout(() => {
+                        sidebarContent.style.opacity = '1';
+                    }, 10);
+                }
+            });
+
             // --- 5. Preloader & Initialisatie ---
-            console.log("Starten met pre-loaden van afbeeldingen...");
             projects.forEach(p => {
                 p.images.forEach(src => {
                     const preImage = new Image();
@@ -493,10 +572,9 @@
                 });
             });
 
-            // Laad het eerste project bij de start
             loadProject(currentProjectIndex);
             
-        }); // Einde DOMContentLoaded
+        });
     </script>
 </body>
 </html>

@@ -96,78 +96,87 @@
             border-color: rgba(255,255,255,0.4);
         }
 
-        /* ==========================================================================
-           4. Navigatiebalk (Inklapbaar)
-           ========================================================================== */
-        .navbar-wrapper {
-            position: fixed;
-            top: 24px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            z-index: 1000;
-            padding: 0 24px;
-        }
+/* ==========================================================================
+   4. Navigatiebalk (Verbeterde interactie)
+   ========================================================================== */
+.navbar-wrapper {
+    position: fixed;
+    top: 24px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    padding: 0 24px;
+}
 
-        .liquid-nav {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            max-width: 1100px;
-            max-height: 600px;
-            padding: 16px 80px 16px 32px; /* Ruimte voor de toggle knop rechts */
-            border-radius: 100px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
+.liquid-nav {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1100px;
+    max-height: 600px;
+    padding: 16px 80px 16px 32px;
+    border-radius: 100px;
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    pointer-events: auto; /* Zorg dat de balk altijd klikbaar is */
+}
 
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            transition: opacity 0.3s ease;
-            opacity: 1;
-        }
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+}
 
-        .nav-left, .nav-right { flex: 1; font-weight: 600; font-size: 0.9rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-        .nav-right { text-align: right; font-weight: 500; opacity: 0.9; }
-        .nav-center { display: flex; gap: 40px; font-weight: 500; font-size: 0.95rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+/* De knop zelf */
+.nav-toggle-btn {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 101; /* Iets hoger dan de content */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+}
 
-        .liquid-nav a { transition: all 0.3s ease; }
-        .liquid-nav a:hover { color: var(--accent-gold); text-shadow: 0 0 10px rgba(204, 166, 85, 0.4); }
+/* Icoontjes wisselen via CSS (voorkomt JS bugs) */
+#nav-icon-open { display: none; }
+#nav-icon-close { display: block; }
 
-        /* Toggle Button Navigatie */
-        .nav-toggle-btn {
-            position: absolute;
-            top: 8px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            transition: all 0.3s ease;
-            color: white;
-        }
+.collapsed #nav-icon-open { display: block; }
+.collapsed #nav-icon-close { display: none; }
 
-        .nav-toggle-btn:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+/* Inklap-animatie */
+.liquid-nav.collapsed {
+    max-width: 64px !important;
+    max-height: 64px !important;
+    padding: 0 !important;
+    border-radius: 50px;
+}
 
-        /* Ingeklapte status */
-        .liquid-nav.collapsed {
-            max-width: 64px !important;
-            max-height: 64px !important;
-            padding: 0 !important;
-            border-radius: 50px;
-        }
+.liquid-nav.collapsed .nav-content {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
-        .liquid-nav.collapsed .nav-content { opacity: 0; pointer-events: none; }
-        .liquid-nav.collapsed .nav-toggle-btn { top: 11px; right: 11px; }
-
+.liquid-nav.collapsed .nav-toggle-btn {
+    top: 11px;
+    right: 11px;
+    background: rgba(255, 255, 255, 0.2);
+}
         /* ==========================================================================
            5. Hoofd Layout & Header
            ========================================================================== */
@@ -391,28 +400,19 @@
 
     <!-- JS VOOR INKLAPPEN NAV -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const nav = document.getElementById('main-nav');
-            const toggleNavBtn = document.getElementById('toggle-nav');
-            const navIconClose = document.getElementById('nav-icon-close');
-            const navIconOpen = document.getElementById('nav-icon-open');
-            const navContent = document.getElementById('nav-content');
+    document.addEventListener('DOMContentLoaded', () => {
+        const nav = document.getElementById('main-nav');
+        const toggleNavBtn = document.getElementById('toggle-nav');
 
-            toggleNavBtn.addEventListener('click', () => {
+        // Check of de elementen bestaan
+        if (toggleNavBtn && nav) {
+            toggleNavBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // Voorkom eventueel ongewenst scrollgedrag
                 nav.classList.toggle('collapsed');
-                if (nav.classList.contains('collapsed')) {
-                    navIconClose.style.display = 'none';
-                    navIconOpen.style.display = 'block';
-                    navContent.style.opacity = '0';
-                    setTimeout(() => { navContent.style.display = 'none'; }, 300);
-                } else {
-                    navIconOpen.style.display = 'none';
-                    navIconClose.style.display = 'block';
-                    navContent.style.display = 'flex';
-                    setTimeout(() => { navContent.style.opacity = '1'; }, 10);
-                }
+                console.log("Navigatie status:", nav.classList.contains('collapsed') ? "Ingeklapt" : "Open");
             });
-        });
-    </script>
+        }
+    });
+</script>
 </body>
 </html>

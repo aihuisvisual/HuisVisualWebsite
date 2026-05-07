@@ -48,7 +48,7 @@
         }
 
         /* ==========================================================================
-           2. Full-Screen Achtergrond
+           2. Full-Screen Achtergrond (Zichtbaar aan de linkerkant)
            ========================================================================== */
         #background-layer {
             position: fixed;
@@ -69,7 +69,6 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            /* Extra donkere overlay zodat de tekst goed leesbaar is */
             background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.9) 100%);
             z-index: -1;
             pointer-events: none;
@@ -98,16 +97,6 @@
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .liquid-glass:hover {
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.3), 
-                inset 0 1px 1px rgba(255, 255, 255, 0.6), 
-                0 0 40px rgba(255, 255, 255, 0.2);
-            border-top-color: rgba(255, 255, 255, 0.7);
-        }
-
         /* ==========================================================================
            4. Navigatiebalk (Desktop + Mobiel)
            ========================================================================== */
@@ -133,7 +122,6 @@
             color: #ffffff;
         }
 
-        /* Desktop lay-out containers */
         .desktop-nav {
             display: flex;
             justify-content: space-between;
@@ -176,44 +164,67 @@
             opacity: 0.8;
         }
 
-        /* Actieve link aanduiding */
         .nav-active {
             opacity: 1 !important;
         }
 
-        /* Mobiele lay-out container (standaard verborgen op PC) */
         .mobile-nav {
             display: none;
         }
 
         /* ==========================================================================
-           5. Hoofd Layout
+           5. Split-Screen Layout (Originele design)
            ========================================================================== */
-        .page-container {
-            flex: 1;
-            padding: 160px 24px 80px;
-            max-width: 1250px;
-            margin: 0 auto;
-            width: 100%;
+        .split-layout {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex: 1;
+            width: 100%;
+            padding-top: 100px; /* Ruimte voor de navigatie */
+            min-height: 100vh;
             position: relative;
             z-index: 1;
         }
 
+        /* Linker helft: Tekst container */
+        .text-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            width: 50%;
+        }
+
+        /* Rechter helft: Foto */
+        .image-section {
+            flex: 1;
+            width: 50%;
+            position: relative;
+        }
+
+        .image-section img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-top-left-radius: 24px;
+            border-bottom-left-radius: 24px;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+
         /* ==========================================================================
-           6. Liquid Glass Content Box (Gecentreerd)
+           6. Liquid Glass Content Box (Linkerkant)
            ========================================================================== */
         .glass-content {
             border-radius: 24px;
             padding: 56px 48px;
-            max-width: 800px;
+            max-width: 600px;
             width: 100%;
         }
 
-        /* We halen de standaard hover uit de glass utility voor deze specifieke container
-           zodat hij niet constant op en neer springt tijdens het lezen */
+        /* Voorkom dat de tekstbox gaat zweven tijdens het lezen */
         .glass-content:hover {
             transform: none;
             background: var(--glass-bg);
@@ -231,19 +242,17 @@
             letter-spacing: -0.03em;
             margin-bottom: 24px;
             text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-            text-align: center;
         }
 
         .intro-text {
             font-size: 1.1rem;
             color: var(--text-muted);
-            margin-bottom: 48px;
+            margin-bottom: 40px;
             line-height: 1.7;
             text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-            text-align: center;
         }
 
-        /* Kleine Liquid Glass Kaartjes (De 3 punten) */
+        /* Kleine Feature Kaartjes (Witte stijl) */
         .feature-cards {
             display: flex;
             flex-direction: column;
@@ -297,13 +306,6 @@
         }
 
         /* Afsluiting & Knop */
-        .closing-section {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
         .closing-text {
             font-size: 1.1rem;
             font-weight: 500;
@@ -365,7 +367,7 @@
         /* ==========================================================================
            8. Responsive Design (Mobiel)
            ========================================================================== */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             /* Navigatie wissel: Desktop verbergen, Mobiel tonen */
             .desktop-nav { display: none; }
             
@@ -386,19 +388,44 @@
             .navbar-wrapper { padding: 0 16px; top: 16px; }
             .liquid-nav { padding: 16px 24px; justify-content: center; }
 
-            /* Content aanpassingen */
-            .page-container { padding-top: 120px; padding-bottom: 40px; }
-            .glass-content { padding: 40px 24px; border-radius: 20px; }
-            
-            .feature-card { flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 20px; }
-            
+            /* Switch naar Column-Reverse zodat de foto Boven komt */
+            .split-layout {
+                flex-direction: column-reverse;
+                padding-top: 100px; 
+            }
+
+            .text-section {
+                width: 100%;
+                padding: 40px 24px 80px; 
+            }
+
+            .glass-content {
+                padding: 40px 24px;
+                border-radius: 20px;
+            }
+
+            .image-section {
+                width: 100%;
+                min-height: 50vh; 
+            }
+
+            .image-section img {
+                position: relative; 
+                border-radius: 0; 
+                border-bottom-left-radius: 24px;
+                border-bottom-right-radius: 24px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            }
+
+            .feature-card { flex-direction: column; align-items: flex-start; }
+
             .footer-container { grid-template-columns: 1fr; gap: 40px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Full-screen Dynamische Achtergrond -->
+    <!-- Full-screen Dynamische Achtergrond (Zichtbaar op de linker helft) -->
     <div id="background-layer"></div>
     <div class="overlay"></div>
 
@@ -436,56 +463,62 @@
         </nav>
     </div>
 
-    <!-- Main Content -->
-    <main class="page-container">
+    <!-- Main Split-Screen Content -->
+    <main class="split-layout">
         
-        <div class="glass-content liquid-glass">
-            <h2>Over ons</h2>
-            <p class="intro-text">HuisVisual brengt bouwplannen tot leven. Wij geloven dat een goed ontwerp pas echt overtuigt als je het kunt zien en voelen. Geen vage schetsen, maar beelden die precies laten zien wat de bedoeling is.</p>
-            
-            <!-- De 3 USP Cards -->
-            <div class="feature-cards">
+        <!-- Linkerkant: Tekst & Glazen box -->
+        <section class="text-section">
+            <div class="glass-content liquid-glass">
+                <h2>Over ons</h2>
+                <p class="intro-text">HuisVisual brengt bouwplannen tot leven. Wij geloven dat een goed ontwerp pas echt overtuigt als je het kunt zien en voelen. Geen vage schetsen, maar beelden die precies laten zien wat de bedoeling is.</p>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <!-- Handshake / Check Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                <!-- De 3 USP Cards -->
+                <div class="feature-cards">
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <!-- Handshake / Check Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Eerlijk & Direct</h4>
+                            <p>Geen gedoe met ingewikkelde contracten. We maken heldere afspraken over wat je krijgt en wanneer het af is.</p>
+                        </div>
                     </div>
-                    <div class="feature-text">
-                        <h4>Eerlijk & Direct</h4>
-                        <p>Geen gedoe met ingewikkelde contracten. We maken heldere afspraken over wat je krijgt en wanneer het af is.</p>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <!-- Eye / Detail Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Oog voor Detail</h4>
+                            <p>Van de juiste lichtinval tot de materialen op de muur, wij zorgen dat het klopt tot in de kleinste pixels.</p>
+                        </div>
                     </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <!-- Zap / Speed Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Snel Schakelen</h4>
+                            <p>De bouw stopt nooit, dus wij ook niet. Wij zorgen dat u snel verder kunt met uw presentatie.</p>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <!-- Eye / Detail Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                    </div>
-                    <div class="feature-text">
-                        <h4>Oog voor Detail</h4>
-                        <p>Van de juiste lichtinval tot de materialen op de muur, wij zorgen dat het klopt tot in de kleinste pixels.</p>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <!-- Zap / Speed Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    </div>
-                    <div class="feature-text">
-                        <h4>Snel Schakelen</h4>
-                        <p>De bouw stopt nooit, dus wij ook niet. Wij zorgen dat u snel verder kunt met uw presentatie.</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="closing-section">
                 <p class="closing-text">Benieuwd wat we voor uw project kunnen betekenen?</p>
                 <a href="offerte.html" class="btn-cta">Neem contact op</a>
             </div>
-        </div>
+        </section>
+
+        <!-- Rechterkant: Afgeronde Foto over de achtergrond heen -->
+        <section class="image-section">
+            <img src="https://huisvisual.x02.me/i/HKTT.webp" alt="3D Rendering">
+        </section>
 
     </main>
 

@@ -14,16 +14,15 @@
         /* ==========================================================================
            1. Basis & Variabelen
            ========================================================================== */
-        :root {
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.25);
-            --glass-highlight: rgba(255, 255, 255, 0.5);
-            --glass-shadow: rgba(0, 0, 0, 0.3);
-            --glass-glow: rgba(255, 255, 255, 0.15);
-            
-            --text-main: #ffffff;
-            --text-muted: #e5e7eb;
-        }
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border-light: rgba(255, 255, 255, 0.5); /* Voor de top en links reflectie */
+    --glass-border-dark: rgba(0, 0, 0, 0.2);       /* Voor de schaduwrand onder */
+    --glass-glow: rgba(255, 255, 255, 0.1);
+    
+    --text-main: #ffffff;
+    --text-muted: #e5e7eb;
+}
 
         * {
             box-sizing: border-box;
@@ -73,25 +72,41 @@
             pointer-events: none;
         }
 
-        /* ==========================================================================
-           3. Liquid Glass Utility
-           ========================================================================== */
-        .liquid-glass {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid var(--glass-highlight);
-            border-left: 1px solid var(--glass-highlight);
-            box-shadow: 0 15px 35px var(--glass-shadow);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
 
-        .liquid-glass:hover {
-            box-shadow: 0 15px 35px var(--glass-shadow), 0 0 25px var(--glass-glow);
-            border-color: rgba(255,255,255,0.5);
-        }
+/* ==========================================================================
+   3. Liquid Glass Utility (Nieuwe stijl)
+   ========================================================================== */
+.liquid-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px); /* Minder blur, meer transparantie */
+    -webkit-backdrop-filter: blur(8px);
+    
+    /* Gelaagde randen voor reflectie (highlights & shadows op de rand) */
+    border: 1px solid transparent;
+    border-top-color: var(--glass-border-light);
+    border-left-color: var(--glass-border-light);
+    border-bottom-color: var(--glass-border-dark);
+    border-right-color: var(--glass-border-dark);
+    
+    /* Complexe schaduwen: Diepte, Interne reflectie, en Gloed */
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.2), /* Drop shadow voor zwevend effect */
+        inset 0 1px 1px rgba(255, 255, 255, 0.5), /* Interne top highlight */
+        inset 0 -1px 1px rgba(0, 0, 0, 0.2), /* Interne bottom shadow */
+        0 0 30px var(--glass-glow); /* De subtiele gloed buitenom */
+        
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
 
+.liquid-glass:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.12); /* Iets meer zichtbaar op hover */
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.3), 
+        inset 0 1px 1px rgba(255, 255, 255, 0.6), 
+        0 0 40px rgba(255, 255, 255, 0.2); /* Sterkere gloed op hover */
+    border-top-color: rgba(255, 255, 255, 0.7);
+}
         /* ==========================================================================
            4. Navigatiebalk (Desktop + Mobiel)
            ========================================================================== */
@@ -106,16 +121,16 @@
             padding: 0 24px;
         }
 
-        .liquid-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 1100px;
-            padding: 16px 32px;
-            border-radius: 100px; /* Perfect ronde capsule vorm */
-            color: #ffffff;
-        }
+.liquid-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px;
+    padding: 16px 32px;
+    border-radius: 100px;
+    /* Verwijder hier eventuele border-regels, die komen uit .liquid-glass */
+}
 
         /* Desktop lay-out containers */
         .desktop-nav {
@@ -164,8 +179,6 @@
         /* Actieve link aanduiding in de nav (aangezien goud weg is) */
         .nav-active {
             opacity: 1 !important;
-            border-bottom: 1px solid #ffffff;
-            padding-bottom: 2px;
         }
 
         /* Mobiele lay-out container (standaard verborgen op PC) */

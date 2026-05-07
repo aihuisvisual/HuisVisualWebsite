@@ -12,19 +12,21 @@
 
     <style>
         /* ==========================================================================
-           1. Basis & Variabelen (Aura Studio Vibe)
+           1. Basis & Variabelen (Gecombineerd met Portfolio Stijl)
            ========================================================================== */
         :root {
             --accent-gold: #cca655;
             --accent-gold-hover: #b8954c;
             
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-highlight: rgba(255, 255, 255, 0.2);
-            --glass-shadow: rgba(0, 0, 0, 0.4);
+            /* Glass variabelen uit portfolio */
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-highlight: rgba(255, 255, 255, 0.5);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --glass-glow: rgba(255, 255, 255, 0.15);
             
             --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.65);
+            --text-muted: #e5e7eb;
         }
 
         * {
@@ -35,13 +37,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            /* Donkere basis met subtiele warme aura/glow effecten via radial gradients */
-            background-color: #0a0a0c;
-            background-image: 
-                radial-gradient(circle at 15% 30%, rgba(204, 166, 85, 0.12), transparent 40%),
-                radial-gradient(circle at 85% 70%, rgba(138, 100, 255, 0.08), transparent 40%),
-                radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.03), transparent 50%);
-            background-attachment: fixed;
+            background-color: #000;
             color: var(--text-main);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
@@ -49,6 +45,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         a {
@@ -57,7 +54,55 @@
         }
 
         /* ==========================================================================
-           2. Navigatiebalk (Zwevende Capsule uit vorig design)
+           2. Full-Screen Achtergrond (Fixed voor scrollen)
+           ========================================================================== */
+        #background-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            /* Standaard achtergrond uit je portfolio gekozen */
+            background-image: url('https://huisvisual.x02.me/i/HKTT.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            /* Donkere overlay zodat tekst goed leesbaar blijft */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.8) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           3. Liquid Glass Utility (Uit Portfolio)
+           ========================================================================== */
+        .liquid-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-left: 1px solid var(--glass-highlight);
+            box-shadow: 0 15px 35px var(--glass-shadow);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .liquid-glass:hover {
+            box-shadow: 0 15px 35px var(--glass-shadow), 0 0 25px var(--glass-glow);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* ==========================================================================
+           4. Navigatiebalk
            ========================================================================== */
         .navbar-wrapper {
             position: fixed;
@@ -78,33 +123,29 @@
             max-width: 1100px;
             padding: 16px 32px;
             border-radius: 100px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid var(--glass-highlight);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .nav-left, .nav-right { flex: 1; font-weight: 600; font-size: 0.9rem; }
+        .nav-left, .nav-right { flex: 1; font-weight: 600; font-size: 0.9rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         .nav-right { text-align: right; font-weight: 500; opacity: 0.9; }
-        .nav-center { display: flex; gap: 40px; font-weight: 500; font-size: 0.95rem; }
+        .nav-center { display: flex; gap: 40px; font-weight: 500; font-size: 0.95rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
         .liquid-nav a { transition: all 0.3s ease; }
         .liquid-nav a:hover { color: var(--accent-gold); text-shadow: 0 0 10px rgba(204, 166, 85, 0.4); }
 
         /* ==========================================================================
-           3. Hoofd Layout & Header
+           5. Hoofd Layout & Header
            ========================================================================== */
         .page-container {
             flex: 1;
-            padding: 160px 24px 80px; /* Top padding compenseert voor fixed nav */
+            padding: 160px 24px 80px;
             max-width: 1250px;
             margin: 0 auto;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         .section-header {
@@ -118,20 +159,18 @@
             font-weight: 800;
             letter-spacing: -0.03em;
             margin-bottom: 16px;
-            background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
         }
 
         .section-header p {
             font-size: 1.125rem;
             color: var(--text-muted);
             font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
         }
 
         /* ==========================================================================
-           4. Liquid Glass Cards (De 3 Kolommen)
+           6. Liquid Glass Cards (De 3 Kolommen)
            ========================================================================== */
         .pricing-grid {
             display: grid;
@@ -142,25 +181,14 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.04);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid var(--glass-highlight);
-            border-left: 1px solid var(--glass-highlight);
-            box-shadow: 0 20px 40px var(--glass-shadow), inset 0 1px 1px rgba(255,255,255,0.05);
             border-radius: 24px;
             padding: 40px 32px;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
         }
 
         .glass-card:hover {
             transform: translateY(-8px);
-            background: rgba(255, 255, 255, 0.06);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(204, 166, 85, 0.1);
-            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .kicker {
@@ -171,6 +199,7 @@
             font-weight: 700;
             margin-bottom: 12px;
             display: block;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
         .glass-card h3 {
@@ -178,13 +207,15 @@
             font-weight: 700;
             margin-bottom: 16px;
             line-height: 1.2;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
         .glass-card p.desc {
             color: var(--text-muted);
             font-size: 0.95rem;
             margin-bottom: 32px;
-            flex-grow: 1; /* Zorgt dat de prijs altijd onderaan wordt uitgelijnd */
+            flex-grow: 1; 
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
         /* Kenmerken Lijst */
@@ -198,8 +229,9 @@
             align-items: flex-start;
             gap: 12px;
             font-size: 0.9rem;
-            color: #d1d5db;
+            color: #ffffff;
             margin-bottom: 12px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
         .features-list svg {
@@ -216,24 +248,20 @@
             color: var(--accent-gold);
             padding-top: 24px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
         /* ==========================================================================
-           5. Trust-Bar
+           7. Trust-Bar
            ========================================================================== */
         .trust-bar {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 24px 32px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 24px;
             margin-bottom: 64px;
-            box-shadow: 0 10px 30px var(--glass-shadow);
         }
 
         .trust-item {
@@ -244,9 +272,8 @@
             padding: 0 16px;
         }
 
-        /* Verticale lijnen tussen de trust items op desktop */
         .trust-item:not(:last-child) {
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .trust-title {
@@ -256,16 +283,18 @@
             color: var(--text-muted);
             margin-bottom: 8px;
             font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
         .trust-value {
             font-size: 1rem;
             font-weight: 500;
             color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
         /* ==========================================================================
-           6. Call to Action (Grote Okergele Knop)
+           8. Call to Action (Glass Button Style met Gold Glow)
            ========================================================================== */
         .cta-container {
             text-align: center;
@@ -274,51 +303,72 @@
 
         .btn-cta {
             display: inline-block;
-            background-color: var(--accent-gold);
-            color: #ffffff; /* Wit contrast voor de gouden knop */
             padding: 20px 48px;
             border-radius: 50px;
             font-size: 1.125rem;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-            box-shadow: 0 10px 25px rgba(204, 166, 85, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .btn-cta:hover {
-            background-color: var(--accent-gold-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(204, 166, 85, 0.4), inset 0 1px 1px rgba(255,255,255,0.4);
+            transform: translateY(-4px);
+            /* Portfolio hover effect, maar met een vleugje goud i.p.v. alleen wit */
+            box-shadow: 0 15px 35px var(--glass-shadow), 0 0 25px rgba(204, 166, 85, 0.4);
+            border-color: rgba(204, 166, 85, 0.6);
+            color: var(--accent-gold);
         }
+
+/* ==========================================================================
+   9. Footer (Volledig Wit & Ondoorzichtig)
+   ========================================================================== */
+.site-footer {
+    background-color: #ffffff; /* Volledig witte achtergrond */
+    background: #ffffff;       /* Forceer wit (overschrijft gradients) */
+    backdrop-filter: none;     /* Verwijder de blur */
+    -webkit-backdrop-filter: none;
+    border-top: 1px solid #e5e7eb; /* Lichtgrijs lijntje in plaats van wit */
+    color: #4b5563;            /* Donkergrijze tekst voor leesbaarheid op wit */
+    padding: 60px 24px;
+    width: 100%;
+    position: relative;
+    z-index: 10;               /* Zorgt dat de footer boven de vaste achtergrond ligt */
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.footer-col h4 { 
+    color: #111827;            /* Zwarte koppen */
+    margin-bottom: 16px; 
+    text-shadow: none;         /* Schaduw verwijderen (niet nodig op wit) */
+}
+
+.footer-col ul { list-style: none; }
+
+.footer-col ul li { 
+    margin-bottom: 8px; 
+    text-shadow: none;         /* Schaduw verwijderen */
+    color: #4b5563; 
+}
+
+.footer-col a {
+    color: #4b5563;
+    transition: color 0.3s ease;
+}
+
+.footer-col a:hover { 
+    color: var(--accent-gold); /* Goud op hover */
+}
 
         /* ==========================================================================
-           7. Footer (Kopie van vorig design voor consistentie)
-           ========================================================================== */
-        .site-footer {
-            background-color: rgba(0, 0, 0, 0.5); /* Iets transparanter gemaakt om te blenden met aura */
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            color: #9ca3af;
-            padding: 60px 24px;
-            width: 100%;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .footer-col h4 { color: #ffffff; margin-bottom: 16px; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 8px; }
-        .footer-col a:hover { color: #ffffff; }
-
-        /* ==========================================================================
-           8. Responsive Design
+           10. Responsive Design
            ========================================================================== */
         @media (max-width: 1024px) {
             .pricing-grid {
@@ -332,22 +382,22 @@
             .nav-left, .nav-right, .nav-center { text-align: center; width: 100%; }
             .nav-center { flex-wrap: wrap; justify-content: center; gap: 20px; }
 
-            .page-container { padding-top: 220px; } /* Meer ruimte voor gestapelde mobiele nav */
+            .page-container { padding-top: 240px; }
 
             .pricing-grid {
-                grid-template-columns: 1fr; /* Stapel de kaarten op mobiel */
+                grid-template-columns: 1fr;
                 gap: 24px;
             }
 
             .trust-bar {
-                grid-template-columns: 1fr; /* Stapel de trust items */
+                grid-template-columns: 1fr;
                 gap: 24px;
                 padding: 32px 24px;
             }
 
             .trust-item:not(:last-child) {
                 border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.15);
                 padding-bottom: 24px;
             }
 
@@ -357,9 +407,13 @@
 </head>
 <body>
 
+    <!-- Full-screen Dynamische Achtergrond -->
+    <div id="background-layer"></div>
+    <div class="overlay"></div>
+
     <!-- Navigatie -->
     <div class="navbar-wrapper">
-        <nav class="liquid-nav">
+        <nav class="liquid-nav liquid-glass">
             <div class="nav-left">
                 <a href="offerte.html">Offerte aanvragen</a>
             </div>
@@ -387,10 +441,10 @@
         <section class="pricing-grid">
             
             <!-- Card 1 -->
-            <div class="glass-card">
+            <div class="glass-card liquid-glass">
                 <span class="kicker">High-End Renders</span>
                 <h3>Exterieur & Interieur Renders</h3>
-                <p class="desc">Fotorealistische beelden die de sfeer, materialen en lichtinval van uw ontwerp perfect vangen. Ideaal voor inzicht, verkoopbrochures en presentaties.</p>
+                <p class="desc">Fotorealistische beelden die de sfeer, materialen en lichtinval van uw ontwerp perfect vangen. Ideaal voor inzicht en presentaties.</p>
                 <ul class="features-list">
                     <li>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -409,10 +463,10 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="glass-card">
+            <div class="glass-card liquid-glass">
                 <span class="kicker">3D Modeling & Floorplans</span>
                 <h3>Van 2D naar 3D</h3>
-                <p class="desc">Heeft u alleen plattegronden en een moodboard? Wij bouwen het volledige 3D-model voor u op.</p>
+                <p class="desc">Heeft u alleen plattegronden en een moodboard? Ik bouw het volledige 3D-model voor u op met Sketchup.</p>
                 <ul class="features-list">
                     <li>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -431,7 +485,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="glass-card">
+            <div class="glass-card liquid-glass">
                 <span class="kicker">Video & Panorama</span>
                 <h3>Video & Animatie</h3>
                 <p class="desc">De ultieme beleving van een ontwerp. Een meeslepende tour door het gebouw, een vogelvlucht over het terrein of een interactieve panorama om rond te kijken.</p>
@@ -455,7 +509,7 @@
         </section>
 
         <!-- Trust-Bar -->
-        <section class="trust-bar">
+        <section class="trust-bar liquid-glass">
             <div class="trust-item">
                 <span class="trust-title">Dashboard</span>
                 <span class="trust-value">Uw eigen online dashboard met overzicht en updates</span>
@@ -472,7 +526,7 @@
 
         <!-- Call to Action -->
         <div class="cta-container">
-            <a href="offerte.html" class="btn-cta">Vraag nu een offerte op maat aan</a>
+            <a href="offerte.html" class="btn-cta liquid-glass">Vraag nu een offerte op maat aan</a>
         </div>
 
     </main>
@@ -501,7 +555,6 @@
                 <h4>Bedrijfsgegevens</h4>
                 <ul>
                     <li>HuisVisual</li>
-                    <li>KVK: [NUMMER]</li>
                     <li>Sjors Maas</li>
                 </ul>
             </div>

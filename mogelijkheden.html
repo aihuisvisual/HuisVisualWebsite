@@ -96,87 +96,83 @@
             border-color: rgba(255,255,255,0.4);
         }
 
-/* ==========================================================================
-   4. Navigatiebalk (Verbeterde interactie)
-   ========================================================================== */
-.navbar-wrapper {
-    position: fixed;
-    top: 24px;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    z-index: 1000;
-    padding: 0 24px;
-}
+        /* ==========================================================================
+           4. Navigatiebalk (Responsive & Strak)
+           ========================================================================== */
+        .navbar-wrapper {
+            position: fixed;
+            top: 24px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            padding: 0 24px;
+        }
 
-.liquid-nav {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    max-width: 1100px;
-    max-height: 600px;
-    padding: 16px 80px 16px 32px;
-    border-radius: 100px;
-    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    pointer-events: auto; /* Zorg dat de balk altijd klikbaar is */
-}
+        .liquid-nav {
+            width: 100%;
+            max-width: 1100px;
+            padding: 16px 32px;
+            border-radius: 100px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: max-height 0.4s ease, border-radius 0.4s ease;
+        }
 
-.nav-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    opacity: 1;
-    visibility: visible;
-}
+        /* Mobiele Header (Logo + Hamburger) - Verbergen op Desktop */
+        .nav-mobile-header {
+            display: none; 
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
 
-/* De knop zelf */
-.nav-toggle-btn {
-    position: absolute;
-    top: 8px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 101; /* Iets hoger dan de content */
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: white;
-}
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
 
-/* Icoontjes wisselen via CSS (voorkomt JS bugs) */
-#nav-icon-open { display: none; }
-#nav-icon-close { display: block; }
+        .nav-toggle-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
 
-.collapsed #nav-icon-open { display: block; }
-.collapsed #nav-icon-close { display: none; }
+        .nav-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
 
-/* Inklap-animatie */
-.liquid-nav.collapsed {
-    max-width: 64px !important;
-    max-height: 64px !important;
-    padding: 0 !important;
-    border-radius: 50px;
-}
+        /* Icoontjes voor de knop */
+        #nav-icon-open { display: block; }
+        #nav-icon-close { display: none; }
 
-.liquid-nav.collapsed .nav-content {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
+        /* De content van de menubalk (Links) */
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
 
-.liquid-nav.collapsed .nav-toggle-btn {
-    top: 11px;
-    right: 11px;
-    background: rgba(255, 255, 255, 0.2);
-}
+        .nav-left, .nav-right { flex: 1; font-weight: 600; font-size: 0.9rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .nav-right { text-align: right; font-weight: 500; opacity: 0.9; }
+        .nav-center { display: flex; gap: 40px; font-weight: 500; font-size: 0.95rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+
+        .liquid-nav a { transition: all 0.3s ease; }
+        .liquid-nav a:hover { color: var(--accent-gold); text-shadow: 0 0 10px rgba(204, 166, 85, 0.4); }
+
         /* ==========================================================================
            5. Hoofd Layout & Header
            ========================================================================== */
@@ -204,13 +200,13 @@
         .glass-card { border-radius: 24px; padding: 40px 32px; display: flex; flex-direction: column; }
         .glass-card:hover { transform: translateY(-8px); }
         .kicker { font-size: 0.75rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 700; margin-bottom: 12px; display: block; }
-        .glass-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; }
-        .glass-card p.desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; flex-grow: 1; }
+        .glass-card h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 16px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        .glass-card p.desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; flex-grow: 1; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
 
         .features-list { list-style: none; margin-bottom: 40px; }
-        .features-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9rem; color: #ffffff; margin-bottom: 12px; }
+        .features-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9rem; color: #ffffff; margin-bottom: 12px; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
         .features-list svg { flex-shrink: 0; width: 20px; height: 20px; color: var(--accent-gold); margin-top: 2px; }
-        .price-tag { font-size: 1.125rem; font-weight: 700; color: var(--accent-gold); padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+        .price-tag { font-size: 1.125rem; font-weight: 700; color: var(--accent-gold); padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
 
         /* ==========================================================================
            7. Trust-Bar
@@ -248,18 +244,51 @@
         .footer-col a:hover { color: var(--accent-gold); }
 
         /* ==========================================================================
-           10. Responsive
+           10. Responsive (Mobiele Menu Logica)
            ========================================================================== */
         @media (max-width: 768px) {
             .navbar-wrapper { padding: 0 16px; top: 16px; }
-            .liquid-nav { padding: 24px; border-radius: 24px; }
-            .nav-content { flex-direction: column; gap: 20px; margin-top: 30px; }
-            .nav-left, .nav-right, .nav-center { text-align: center; width: 100%; }
-            .nav-center { flex-wrap: wrap; justify-content: center; gap: 20px; }
-            .nav-toggle-btn { top: 16px; right: 16px; }
-            .liquid-nav.collapsed .nav-toggle-btn { top: 11px; right: 11px; }
+            
+            .liquid-nav { 
+                padding: 16px 24px; 
+                border-radius: 24px; 
+                max-height: 72px; /* Hoogte als hij ingeklapt is */
+                background: var(--glass-bg);
+            }
 
-            .page-container { padding-top: 240px; }
+            /* Laat de header met Logo en Hamburger zien */
+            .nav-mobile-header { display: flex; }
+
+            /* Verberg standaard de links */
+            .nav-content { 
+                flex-direction: column; 
+                gap: 20px; 
+                margin-top: 24px; 
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease;
+            }
+
+            .nav-left, .nav-right, .nav-center { text-align: center; width: 100%; }
+            .nav-center { flex-direction: column; gap: 20px; }
+
+            /* KLASSE WANNEER MENU OPEN IS */
+            .liquid-nav.nav-open {
+                max-height: 400px; /* Groot genoeg om alles te tonen */
+                background: rgba(30, 30, 30, 0.85); /* Iets donkerder zodat tekst leesbaar is */
+            }
+
+            .liquid-nav.nav-open .nav-content {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Icoontjes wisselen als menu open is */
+            .liquid-nav.nav-open #nav-icon-open { display: none; }
+            .liquid-nav.nav-open #nav-icon-close { display: block; }
+
+            /* Andere layout aanpassingen voor mobiel */
+            .page-container { padding-top: 140px; }
             .pricing-grid { grid-template-columns: 1fr; }
             .trust-bar { grid-template-columns: 1fr; }
             .trust-item:not(:last-child) { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 24px; }
@@ -277,19 +306,25 @@
     <div class="navbar-wrapper">
         <nav class="liquid-nav liquid-glass" id="main-nav">
             
-            <!-- In/Uitklap knop -->
-            <button class="nav-toggle-btn" id="toggle-nav" aria-label="Menu">
-                <svg id="nav-icon-close" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-                <svg id="nav-icon-open" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
+            <!-- Mobiele Header (Logo + Knop) -->
+            <div class="nav-mobile-header">
+                <a href="index.html" class="nav-logo">HuisVisual</a>
+                <button class="nav-toggle-btn" id="toggle-nav" aria-label="Menu">
+                    <!-- 3 Streepjes (Hamburger) -->
+                    <svg id="nav-icon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                    <!-- Kruisje -->
+                    <svg id="nav-icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
 
+            <!-- Links (Zichtbaar op desktop, inklapbaar op mobiel) -->
             <div class="nav-content" id="nav-content">
                 <div class="nav-left">
                     <a href="offerte.html">Offerte aanvragen</a>
@@ -303,6 +338,7 @@
                     <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
                 </div>
             </div>
+
         </nav>
     </div>
 
@@ -321,7 +357,7 @@
                 <ul class="features-list">
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 4K Ultra HD resolutie</li>
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Inclusief sfeer-stijling</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 1 revisierondes inbegrepen</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 1 revisieronde inbegrepen</li>
                 </ul>
                 <div class="price-tag">Vanaf €75,- voor uw eerste project</div>
             </div>
@@ -333,7 +369,7 @@
                 <ul class="features-list">
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Omzetten naar een 3D model</li>
                     <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Accurate maatvoering</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Gedetaileerd</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Gedetailleerd</li>
                 </ul>
                 <div class="price-tag">Prijs o.b.v. complexiteit</div>
             </div>
@@ -398,21 +434,20 @@
         </div>
     </footer>
 
-    <!-- JS VOOR INKLAPPEN NAV -->
+    <!-- JS VOOR MOBIEL MENU -->
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const nav = document.getElementById('main-nav');
-        const toggleNavBtn = document.getElementById('toggle-nav');
+        document.addEventListener('DOMContentLoaded', () => {
+            const nav = document.getElementById('main-nav');
+            const toggleNavBtn = document.getElementById('toggle-nav');
 
-        // Check of de elementen bestaan
-        if (toggleNavBtn && nav) {
-            toggleNavBtn.addEventListener('click', (e) => {
-                e.preventDefault(); // Voorkom eventueel ongewenst scrollgedrag
-                nav.classList.toggle('collapsed');
-                console.log("Navigatie status:", nav.classList.contains('collapsed') ? "Ingeklapt" : "Open");
-            });
-        }
-    });
-</script>
+            if (toggleNavBtn && nav) {
+                toggleNavBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Schakel de "nav-open" class in of uit
+                    nav.classList.toggle('nav-open');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

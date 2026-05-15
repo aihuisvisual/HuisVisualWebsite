@@ -134,7 +134,7 @@
         .header-container {
             display: flex;
             justify-content: space-between;
-            align-items: center; /* FIX: Zorgt dat logo en menu perfect op één lijn staan */
+            align-items: center;
         }
 
         .header-left, .header-right {
@@ -159,7 +159,6 @@
             height: 220px; 
             width: auto;
             filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
-            /* FIX: margin weggehaald zodat hij strak op de as blijft uitgelijnd met menu */
         }
 
         /* Hamburger Menu */
@@ -167,7 +166,7 @@
             background: none;
             border: none;
             cursor: pointer;
-            z-index: 1001;
+            z-index: 1002; /* Boven het menu overlay */
             padding: 10px;
         }
 
@@ -234,7 +233,7 @@
         .hero-section {
             position: relative;
             height: 100vh;
-            width: 100%; /* FIX voor mobiel (geen 100vw om scrollbars te voorkomen) */
+            width: 100%; 
             overflow: hidden;
         }
 
@@ -244,7 +243,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* FIX voor mobiel: geen ingewikkelde transforms meer nodig */
+            object-fit: cover; 
             z-index: 1;
         }
 
@@ -489,10 +488,8 @@
             h2 { font-size: 2rem; }
             .portfolio-grid { grid-template-columns: 1fr; }
             
-            /* Logo schalen op mobiel zodat het werkbaar blijft */
             .logo-header { height: 120px; }
             
-            /* Footer op mobiel onder elkaar centreren */
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -525,21 +522,21 @@
                 </button>
             </div>
         </div>
-
-        <nav class="dropdown-menu" id="dropdown-menu">
-            <ul>
-                <li><a href="#about" class="nav-link">Over Ons</a></li>
-                <li><a href="#process" class="nav-link">Werkwijze</a></li>
-                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                <li><a href="#faq" class="nav-link">Q&A</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-        </nav>
     </header>
 
-    <!-- ================= HERO SECTIE (FIX: Mobiele weergave .webm) ================= -->
+    <!-- Navigatie uit de header gehaald zodat linkjes doorklikbaar zijn -->
+    <nav class="dropdown-menu" id="dropdown-menu">
+        <ul>
+            <li><a href="#about" class="nav-link">Over Ons</a></li>
+            <li><a href="#process" class="nav-link">Werkwijze</a></li>
+            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="#faq" class="nav-link">Q&A</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ================= HERO SECTIE ================= -->
     <section id="hero" class="hero-section">
-        <!-- FIX: Type aangepast naar video/webm en attributen toegevoegd voor iOS weergave -->
         <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
             <source src="https://huisvisual.x02.me/i/8SFF.webm" type="video/webm">
         </video>
@@ -735,16 +732,27 @@
                     e.preventDefault(); 
                     const isOpen = faq.classList.contains('is-open');
 
+                    // Sluit alle ANDERE open vragen
                     faqs.forEach(f => {
-                        f.classList.remove('is-open');
-                        setTimeout(() => f.removeAttribute('open'), 400); 
+                        if (f !== faq && f.classList.contains('is-open')) {
+                            f.classList.remove('is-open');
+                            setTimeout(() => {
+                                if (!f.classList.contains('is-open')) f.removeAttribute('open');
+                            }, 400); 
+                        }
                     });
 
+                    // Toggle de vraag waar op geklikt is
                     if (!isOpen) {
                         faq.setAttribute('open', '');
                         setTimeout(() => {
                             faq.classList.add('is-open');
                         }, 10);
+                    } else {
+                        faq.classList.remove('is-open');
+                        setTimeout(() => {
+                            if (!faq.classList.contains('is-open')) faq.removeAttribute('open');
+                        }, 400);
                     }
                 });
             });

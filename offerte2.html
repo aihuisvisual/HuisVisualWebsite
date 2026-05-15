@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offerte Aanvragen | Huisvisual</title>
+
+    <!-- Importeer font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================= CSS VARIABELEN & BASIS (Identiek aan index.html) ================= */
+        @font-face {
+            font-family: 'Aguilette';
+            src: url('assets/Aiguilette.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            var(--clr-navy): #0D1B2D;
+            --clr-navy: #0D1B2D;
+            --clr-beige: #E8E2D6;
+            --clr-taupe: #A89F92;
+            --clr-black: #000000;
+            --clr-white: #FFFFFF;
+
+            --font-main: 'Aguilette', 'Playfair Display', 'Times New Roman', serif;
+            --font-sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 5rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--clr-beige);
+            color: var(--clr-navy);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        h1, h2, h3 { font-weight: 400; line-height: 1.2; color: var(--clr-navy); }
+        h2 { font-size: 2.8rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        p { font-family: var(--font-sans); font-weight: 300; font-size: 1.05rem; margin-bottom: var(--space-sm); }
+
+        .container { width: 90%; max-width: 1400px; margin: 0 auto; }
+
+        /* ================= HEADER & NAV (Identiek aan index.html) ================= */
+        .site-header {
+            position: absolute; 
+            top: 0; left: 0; width: 100%; z-index: 1000; padding: 2rem 5%; pointer-events: none; 
+        }
+
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .header-left, .header-right { width: 33.33%; }
+        .header-right { display: flex; justify-content: flex-end; pointer-events: auto; }
+        .header-center { width: 33.33%; display: flex; justify-content: center; pointer-events: auto; }
+
+        .logo-header {
+            height: 220px; width: auto; filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        body.menu-is-open .logo-header { opacity: 0; visibility: hidden; }
+
+        .hamburger { background: none; border: none; cursor: pointer; z-index: 1002; padding: 10px; }
+        .hamburger .line {
+            display: block; width: 35px; height: 1px; background-color: var(--clr-navy); margin: 8px 0; transition: all 0.3s ease;
+        }
+        .hamburger.active .line:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+        .hamburger.active .line:nth-child(2) { transform: translateY(-9px) rotate(-45deg); }
+
+        .dropdown-menu {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--clr-beige); display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; transition: all 0.5s ease; z-index: 999; padding: 2rem;
+        }
+        .dropdown-menu.active { opacity: 1; visibility: visible; }
+        .dropdown-menu ul { list-style: none; text-align: center; }
+        .dropdown-menu li { margin: 2rem 0; }
+        .nav-link { font-size: 3rem; color: var(--clr-navy); transition: color 0.3s ease; }
+        .nav-link:hover { color: var(--clr-taupe); }
+
+        /* ================= OFFERTE PAGINA LAYOUT ================= */
+        .offerte-section {
+            padding-top: 30vh; /* Ruimte voor de grote header */
+            padding-bottom: 10vh;
+            min-height: 100vh;
+        }
+
+        .offerte-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr; /* Info links, formulier rechts */
+            gap: 6rem;
+            align-items: start;
+        }
+
+        /* --- Linker Info Kolom --- */
+        .info-col h2 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+        }
+
+        .info-col .intro-text {
+            color: var(--clr-taupe);
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 3rem;
+        }
+
+        .contact-details {
+            margin-top: 4rem;
+            border-top: 1px solid rgba(168, 159, 146, 0.4);
+            padding-top: 2rem;
+        }
+
+        .contact-details h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            margin-bottom: 1rem;
+            font-family: var(--font-sans);
+            font-weight: 300;
+        }
+
+        .contact-item span {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--clr-taupe);
+            margin-bottom: 0.2rem;
+        }
+
+        .contact-item a, .contact-item p {
+            font-size: 1.1rem;
+            margin: 0;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--clr-taupe);
+        }
+
+        /* --- Rechter Formulier Kolom --- */
+        .form-section {
+            margin-bottom: 3rem;
+        }
+
+        .form-section-title {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--clr-taupe);
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--clr-navy);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Minimalistische Input Styling */
+        input, select, textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--clr-taupe);
+            color: var(--clr-navy);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-radius: 0; /* Voorkom afronding op iOS */
+        }
+
+        /* Voorkom standaard dropdown styling */
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230D1B2D' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0 center;
+            background-size: 1.2rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-bottom-color: var(--clr-navy);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: transparent; /* We gebruiken zwevende labels */
+        }
+
+        /* Zwevende Labels */
+        label {
+            position: absolute;
+            top: 1rem;
+            left: 0;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--clr-taupe);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Verplaats label als veld focus heeft of ingevuld is */
+        input:focus ~ label,
+        input:not(:placeholder-shown) ~ label,
+        textarea:focus ~ label,
+        textarea:not(:placeholder-shown) ~ label,
+        select:focus ~ label,
+        select:valid ~ label {
+            top: -10px;
+            font-size: 0.75rem;
+            color: var(--clr-navy);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Select heeft altijd een 'ingevuld' label nodig ivm default waarde */
+        .select-label {
+            top: -10px;
+            font-size: 0.75rem;
+            color: var(--clr-navy);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            padding-top: 1.5rem;
+        }
+
+        /* Checkbox styling (klein) */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+        }
+        
+        .checkbox-group label {
+            position: relative;
+            top: 0;
+            font-size: 0.9rem;
+            color: var(--clr-navy);
+            pointer-events: auto;
+            text-transform: none;
+            letter-spacing: normal;
+            cursor: pointer;
+        }
+
+        /* --- Knoppen --- */
+        .btn {
+            font-family: var(--font-sans);
+            padding: 1.2rem 3rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border-radius: 50px; 
+            border: 1px solid var(--clr-navy); 
+            display: inline-block;
+            background-color: transparent;
+            color: var(--clr-navy);
+            width: fit-content;
+        }
+
+        .btn:hover {
+            background-color: var(--clr-navy);
+            color: var(--clr-white);
+        }
+
+        /* ================= FOOTER ================= */
+        .site-footer {
+            background-color: var(--clr-beige); 
+            color: var(--clr-navy);
+            padding: 1rem 5%; 
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 1rem; }
+        .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+        .footer-links a:hover { color: var(--clr-taupe); }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 900px) {
+            .offerte-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            .offerte-section {
+                padding-top: 20vh;
+            }
+            .info-col h2 {
+                font-size: 2.5rem;
+            }
+            .contact-details {
+                display: none; /* Verberg dubbele info op mobiel om scrollen te beperken */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .logo-header { height: 120px; }
+            .footer-content { flex-direction: column; text-align: center; justify-content: center; }
+            .footer-links { justify-content: center; }
+            .nav-link { font-size: 2rem; }
+            .dropdown-menu li { margin: 1.5rem 0; }
+            .btn { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="site-header" id="header">
+        <div class="header-container">
+            <div class="header-left"></div>
+            
+            <div class="header-center">
+                <a href="index.html">
+                    <!-- Zorg dat dit hetzelfde logo is als op de hoofdpagina -->
+                    <img src="https://huisvisual.x02.me/i/P2MSY.png" alt="Huisvisual Logo" class="logo-header">
+                </a>
+            </div>
+            
+            <div class="header-right">
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigatie menu -->
+    <nav class="dropdown-menu" id="dropdown-menu">
+        <ul>
+            <li><a href="index.html#about" class="nav-link">Over Ons</a></li>
+            <li><a href="index.html#process" class="nav-link">Werkwijze</a></li>
+            <li><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="index.html#services" class="nav-link">Mogelijkheden</a></li>
+            <li><a href="index.html#faq" class="nav-link">Veelgestelde vragen</a></li>
+            <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ================= OFFERTE SECTIE ================= -->
+    <section class="offerte-section">
+        <div class="container offerte-grid">
+            
+            <!-- Linker Kolom: Intro & Contact -->
+            <div class="info-col">
+                <h2>Project<br>Aanvragen</h2>
+                <p class="intro-text">Vul het formulier in met zoveel mogelijk details over uw project. Ik streef ernaar om binnen 24 tot 48 uur een passend, vrijblijvend voorstel terug te koppelen.</p>
+                
+                <div class="contact-details">
+                    <h3>Huisvisual</h3>
+                    <div class="contact-item">
+                        <span>E-mailadres</span>
+                        <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
+                    </div>
+                    <div class="contact-item">
+                        <span>Ontwerper</span>
+                        <p>Sjors Maas</p>
+                    </div>
+                    <div class="contact-item">
+                        <span>Socials</span>
+                        <a href="https://www.instagram.com/huisvisual.nl/" target="_blank">Instagram</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rechter Kolom: Formulier -->
+            <div class="form-col">
+                <!-- VUL HIER JOUW FORMSPREE ID IN BIJ ACTION -->
+                <form action="https://formspree.io/f/jouw-id" method="POST" id="offerte-form">
+                    
+                    <!-- Sectie 1: Contactgegevens -->
+                    <div class="form-section">
+                        <span class="form-section-title">01. Contactgegevens</span>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <input type="text" id="naam" name="Naam" placeholder="Uw volledige naam" required>
+                                <label for="naam">Volledige naam</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="bedrijf" name="Bedrijf" placeholder="Bedrijfsnaam (optioneel)">
+                                <label for="bedrijf">Bedrijfsnaam (optioneel)</label>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="input-group">
+                                <input type="email" id="email" name="Email" placeholder="E-mailadres" required>
+                                <label for="email">E-mailadres</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="tel" id="telefoon" name="Telefoon" placeholder="Telefoonnummer">
+                                <label for="telefoon">Telefoonnummer</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sectie 2: Project Details -->
+                    <div class="form-section">
+                        <span class="form-section-title">02. Project Details</span>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <select id="type" name="Type_Visualisatie" required>
+                                    <option value="" disabled selected>Kies een optie...</option>
+                                    <option value="Exterieur">Exterieur Visualisaties</option>
+                                    <option value="Interieur">Interieur Renders</option>
+                                    <option value="Video">Video Animatie</option>
+                                    <option value="Panorama">Interactieve Panorama</option>
+                                    <option value="Meerdere">Meerdere Diensten / Compleet Pakket</option>
+                                </select>
+                                <label for="type" class="select-label">Dienst</label>
+                            </div>
+                            
+                            <div class="input-group">
+                                <input type="number" id="aantal" name="Aantal_Beelden" placeholder="Bijv. 3" min="1">
+                                <label for="aantal">Gewenst aantal beelden</label>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <!-- We gebruiken text in plaats van date ivm lelijke default browser styling, of een placeholder trick -->
+                            <input type="text" id="deadline" name="Deadline" placeholder="Wanneer moet het af zijn? (bijv. half juni)">
+                            <label for="deadline">Gewenste opleverdatum</label>
+                        </div>
+                    </div>
+
+                    <!-- Sectie 3: Toelichting & Bestanden -->
+                    <div class="form-section">
+                        <span class="form-section-title">03. Toelichting & Bestanden</span>
+                        
+                        <div class="input-group">
+                            <textarea id="bericht" name="Bericht" placeholder="Beschrijf uw project, de gewenste sfeer en eventuele bijzonderheden..." required></textarea>
+                            <label for="bericht">Projectomschrijving</label>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="url" id="link" name="Bestanden_Link" placeholder="Plaats hier een link (WeTransfer, Dropbox, etc.)">
+                            <label for="link">Link naar tekeningen/modellen (optioneel)</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Aanvraag Versturen</button>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <span>HuisVisual 2026</span>
+                <a href="https://www.instagram.com/huisvisual.nl/">Instagram</a>
+            </div>
+            <div class="footer-links">
+                <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
+                <span>Sjors Maas</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- HAMBURGER MENU LOGICA ---
+            const hamburger = document.getElementById('hamburger');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                dropdownMenu.classList.toggle('active');
+                document.body.classList.toggle('menu-is-open');
+                document.body.style.overflow = dropdownMenu.classList.contains('active') ? 'hidden' : 'auto';
+            });
+
+            // Extra check voor dropdown selects: Zorgt ervoor dat het label altijd omhoog blijft als er een geldige optie is gekozen.
+            const selectElement = document.getElementById('type');
+            selectElement.addEventListener('change', function() {
+                if(this.value !== "") {
+                    this.setAttribute('valid', 'true');
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>

@@ -30,7 +30,7 @@
 
             /* Typografie */
             --font-main: 'Aguilette', 'Playfair Display', 'Times New Roman', serif;
-            --font-sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif; /* Aangepast naar Manrope */
+            --font-sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
 
             /* Afstanden */
             --space-sm: 1rem;
@@ -122,19 +122,19 @@
 
         /* ================= HEADER (Zwevend & Onzichtbaar) ================= */
         .site-header {
-            position: absolute; /* Ligt over de hero heen, scrolt mee omhoog */
+            position: absolute; 
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
             padding: 2rem 5%;
-            pointer-events: none; /* Zorgt dat je door de lege ruimte kunt klikken */
+            pointer-events: none; 
         }
 
         .header-container {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* Uitlijnen naar boven ivm groot logo */
+            align-items: center; /* FIX: Zorgt dat logo en menu perfect op één lijn staan */
         }
 
         .header-left, .header-right {
@@ -144,22 +144,22 @@
         .header-right {
             display: flex;
             justify-content: flex-end;
-            pointer-events: auto; /* Klikken op menu weer activeren */
+            pointer-events: auto; 
         }
 
         .header-center {
             width: 33.33%;
             display: flex;
             justify-content: center;
-            pointer-events: auto; /* Klikken op logo activeren */
+            pointer-events: auto; 
         }
 
         /* EXTREME HEADER LOGO */
         .logo-header {
-            height: 220px; /* Nog 2x groter gemaakt */
+            height: 220px; 
             width: auto;
             filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
-            margin-top: -1rem; /* Visuele correctie */
+            /* FIX: margin weggehaald zodat hij strak op de as blijft uitgelijnd met menu */
         }
 
         /* Hamburger Menu */
@@ -234,20 +234,17 @@
         .hero-section {
             position: relative;
             height: 100vh;
-            width: 100vw;
+            width: 100%; /* FIX voor mobiel (geen 100vw om scrollbars te voorkomen) */
             overflow: hidden;
         }
 
         .hero-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* FIX voor mobiel: geen ingewikkelde transforms meer nodig */
             z-index: 1;
         }
 
@@ -386,7 +383,7 @@
             transform: rotate(45deg);
         }
 
-        /* ================= KNOPPEN (BEIDE SECONDARY) ================= */
+        /* ================= KNOPPEN ================= */
         .button-group {
             display: flex;
             gap: 1.5rem;
@@ -407,7 +404,6 @@
             display: inline-block;
         }
 
-        /* Beide knoppen gebruiken nu deze styling */
         .btn-secondary {
             background-color: transparent;
             color: var(--clr-navy);
@@ -418,11 +414,11 @@
             color: var(--clr-white);
         }
 
-        /* ================= FOOTER (Dun & Copyright Rechts) ================= */
+        /* ================= FOOTER ================= */
         .site-footer {
             background-color: var(--clr-beige); 
             color: var(--clr-navy);
-            padding: 1rem 5%; /* Heel dun */
+            padding: 1rem 5%; 
             font-family: var(--font-sans);
             font-size: 0.75rem;
             letter-spacing: 1px;
@@ -431,7 +427,7 @@
 
         .footer-content {
             display: flex;
-            justify-content: space-between; /* Links helemaal links, copyright helemaal rechts */
+            justify-content: space-between; 
             align-items: center;
             width: 100%;
             flex-wrap: wrap;
@@ -453,7 +449,7 @@
         }
 
         .footer-copyright {
-            white-space: nowrap; /* Voorkomt dat copyright op 2 regels breekt */
+            white-space: nowrap; 
         }
 
         /* ================= SCROLL ANIMATIES ================= */
@@ -493,8 +489,8 @@
             h2 { font-size: 2rem; }
             .portfolio-grid { grid-template-columns: 1fr; }
             
-            /* Logo schalen op mobiel zodat het niet het hele scherm vult */
-            .logo-header { height: 100px; margin-top: 0; }
+            /* Logo schalen op mobiel zodat het werkbaar blijft */
+            .logo-header { height: 120px; }
             
             /* Footer op mobiel onder elkaar centreren */
             .footer-content {
@@ -510,15 +506,15 @@
 </head>
 <body>
 
-    <!-- ================= HEADER (Volledig Onzichtbaar / Zwevend) ================= -->
+    <!-- ================= HEADER ================= -->
     <header class="site-header" id="header">
         <div class="header-container">
             <div class="header-left"></div>
             
-            <!-- Logo: Extreem groot -->
+            <!-- Logo -->
             <div class="header-center">
                 <a href="#hero">
-                    <img src="https://huisvisual.x02.me/i/BRSDUY.gif" alt="https://huisvisual.x02.me/i/MWWJJP.jpg" class="logo-header play-once-logo">
+                    <img src="https://huisvisual.x02.me/i/P2MSY.png" alt="Huisvisual Logo" class="logo-header play-once-logo">
                 </a>
             </div>
             
@@ -541,10 +537,11 @@
         </nav>
     </header>
 
-    <!-- ================= HERO SECTIE ================= -->
+    <!-- ================= HERO SECTIE (FIX: Mobiele weergave .webm) ================= -->
     <section id="hero" class="hero-section">
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="https://huisvisual.x02.me/i/8SFF.webm" type="video/mp4">
+        <!-- FIX: Type aangepast naar video/webm en attributen toegevoegd voor iOS weergave -->
+        <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+            <source src="https://huisvisual.x02.me/i/8SFF.webm" type="video/webm">
         </video>
         <div class="hero-overlay"></div>
     </section>
@@ -614,7 +611,7 @@
     <section id="big-logo" class="section bg-white">
         <div class="container animate-on-scroll">
             <div class="logo-section-wrapper">
-                <img src="https://huisvisual.x02.me/i/QEGW.gif" alt="https://huisvisual.x02.me/i/D722ZT.jpg" class="logo-large play-once-logo" loading="lazy">
+                <img src="https://huisvisual.x02.me/i/9GTY.png" alt="Huisvisual Geanimeerd Logo" class="logo-large play-once-logo" loading="lazy">
                 <p class="logo-subtext">Architectural Visualisation</p>
             </div>
         </div>
@@ -662,7 +659,6 @@
                 <p>Klaar om uw project visueel tot leven te wekken? Neem contact met ons op voor een kennismaking of vraag direct een vrijblijvende offerte aan.</p>
                 
                 <div class="button-group">
-                    <!-- Beide knoppen zijn nu identiek in design (.btn-secondary) -->
                     <a href="#offerte" class="btn btn-secondary">Offerte aanvragen</a>
                     <a href="mailto:info@huisvisual.nl" class="btn btn-secondary">Contact opnemen</a>
                 </div>
@@ -676,13 +672,11 @@
     <!-- ================= FOOTER ================= -->
     <footer class="site-footer">
         <div class="footer-content">
-            <!-- Linkerkant links -->
             <div class="footer-links">
                 <a href="#voorwaarden">Algemene Voorwaarden</a>
                 <a href="#projecten">Projecten</a>
                 <a href="https://www.instagram.com/huisvisual.nl/">Instagram</a>
             </div>
-            <!-- Rechterkant copyright -->
             <div class="footer-copyright">
                 <p>&copy; 2026 HUISVISUAL</p>
             </div>

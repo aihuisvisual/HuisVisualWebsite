@@ -10,6 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
 
+    <!-- Lenis Smooth Scrolling Library -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+
     <style>
         /* ================= CSS VARIABELEN & BASIS ================= */
         @font-face {
@@ -46,7 +49,7 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            /* scroll-behavior: smooth verwijderd omdat Lenis JS dit nu overneemt */
             font-size: 16px;
         }
 
@@ -56,6 +59,35 @@
             font-family: var(--font-main);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* ================= NOISE OVERLAY ================= */
+        .noise-overlay {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200vw;
+            height: 200vh;
+            pointer-events: none; /* Zorgt dat je overal op kunt klikken */
+            z-index: 9999;
+            opacity: 0.04; /* Subtiele zichtbaarheid */
+            /* SVG Base64 gegenereerde ruis */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: noiseAnimation 0.2s infinite;
+        }
+
+        @keyframes noiseAnimation {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -5%); }
+            20% { transform: translate(-10%, 5%); }
+            30% { transform: translate(5%, -10%); }
+            40% { transform: translate(-5%, 15%); }
+            50% { transform: translate(-10%, 5%); }
+            60% { transform: translate(15%, 0); }
+            70% { transform: translate(0, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+            100% { transform: translate(0, 0); }
         }
 
         .bg-white {
@@ -318,7 +350,7 @@
         .service-item {
             display: flex;
             align-items: center;
-            gap: 2rem; /* Ruimte tussen cijfer en titel op desktop */
+            gap: 2rem;
             padding: 1.5rem 0;
             border-bottom: 1px solid rgba(168, 159, 146, 0.4); 
             transition: all 0.4s ease;
@@ -347,19 +379,17 @@
             flex-shrink: 0;
         }
 
-        /* Overschrijf standaard .portfolio-text specifiek voor deze lijst */
         .service-item .portfolio-text {
             margin: 0;
-            margin-left: auto; /* DIT duwt alleen de tekst netjes naar rechts op desktop */
+            margin-left: auto;
             text-align: right;
             max-width: 50%;
         }
 
         .service-item .portfolio-text p {
-            margin-bottom: 0; /* Voorkom onnodige witruimte onder tekst in de lijst */
+            margin-bottom: 0; 
         }
 
-        /* Hover Effecten voor de lijst (Desktop) */
         @media (min-width: 769px) {
             .service-item:hover .service-title {
                 color: var(--clr-taupe);
@@ -367,7 +397,6 @@
             }
         }
         
-        /* Desktop Foto verhoudingen */
         @media (min-width: 901px) {
             .about-image img, 
             .process-image img, 
@@ -569,7 +598,6 @@
                 justify-content: center;
             }
 
-            /* Mobiel Menu styling verbeteringen */
             .nav-link { 
                 font-size: 2rem; 
             }
@@ -577,30 +605,29 @@
                 margin: 1.5rem 0; 
             }
 
-            /* HIER ZIT DE MOBIELE FIX VOOR 'MOGELIJKHEDEN' (Grid Layout) */
             .service-item {
                 display: grid;
-                grid-template-columns: 28px 1fr; /* Exacte breedte voor cijfer, de rest is voor tekst */
-                gap: 0.2rem 0.5rem; /* Subtiele ruimte tussen elementen */
+                grid-template-columns: 28px 1fr; 
+                gap: 0.2rem 0.5rem; 
                 align-items: start;
             }
             
             .service-item .service-number {
                 width: auto;
-                margin-top: 0.4rem; /* Zorgt dat het cijfer op 1 lijn ligt met de tekst */
+                margin-top: 0.4rem; 
             }
 
             .service-item .service-title {
                 font-size: 1.6rem;
                 line-height: 1.2;
-                text-align: left; /* Geforceerd links */
+                text-align: left; 
             }
 
             .service-item .portfolio-text {
-                grid-column: 2; /* Plaats de omschrijving strak onder de titel */
+                grid-column: 2; 
                 margin: 0;
                 padding-left: 0; 
-                text-align: left; /* Geforceerd links */
+                text-align: left; 
                 max-width: 100%;
                 width: 100%;
             }
@@ -608,6 +635,9 @@
     </style>
 </head>
 <body>
+    
+    <!-- NOISE OVERLAY -->
+    <div class="noise-overlay"></div>
 
     <!-- ================= HEADER ================= -->
     <header class="site-header" id="header">
@@ -616,7 +646,7 @@
             
             <!-- Logo -->
             <div class="header-center">
-                <a href="#hero">
+                <a href="#hero" class="nav-link-logo">
                     <img src="https://huisvisual.x02.me/i/P2MSY.png" alt="Huisvisual Logo" class="logo-header play-once-logo">
                 </a>
             </div>
@@ -630,7 +660,6 @@
         </div>
     </header>
 
-    <!-- Navigatie uit de header gehaald zodat linkjes doorklikbaar zijn -->
     <nav class="dropdown-menu" id="dropdown-menu">
         <ul>
             <li><a href="#about" class="nav-link">Over Ons</a></li>
@@ -748,13 +777,12 @@
                 </div>
             </div>
             <div class="services-image animate-on-scroll delay-2">
-                <!-- Tijdelijke placeholder foto (vervang deze met je eigen foto) -->
                 <img src="https://huisvisual.x02.me/i/JH2UK.webp" alt="Onze Mogelijkheden" loading="lazy">
             </div>
         </div>
     </section>
 
-    <!-- ================= GROOT GEANIMEERD LOGO (MID-PAGE) ================= -->
+    <!-- ================= GROOT GEANIMEERD LOGO ================= -->
     <section id="big-logo" class="section">
         <div class="container animate-on-scroll">
             <div class="logo-section-wrapper">
@@ -835,6 +863,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- 0. LENIS SMOOTH SCROLLING (Momentum Scroll) ---
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+                direction: 'vertical',
+                gestureDirection: 'vertical',
+                smooth: true,
+                mouseMultiplier: 1,
+                smoothTouch: false,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+
             // --- 1. HAMBURGER MENU & LOGO VERBERGEN ---
             const hamburger = document.getElementById('hamburger');
             const dropdownMenu = document.getElementById('dropdown-menu');
@@ -843,20 +889,42 @@
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 dropdownMenu.classList.toggle('active');
-                
-                // Toggle de class op de body om het logo te verbergen via CSS
                 document.body.classList.toggle('menu-is-open');
                 
-                document.body.style.overflow = dropdownMenu.classList.contains('active') ? 'hidden' : 'auto';
+                if (dropdownMenu.classList.contains('active')) {
+                    lenis.stop(); // Stop scrollen op de achtergrond als menu open is
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    lenis.start();
+                    document.body.style.overflow = 'auto';
+                }
             });
 
+            // Smooth scroll anchor links met Lenis instellen
             navLinks.forEach(link => {
-                link.addEventListener('click', () => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Menu sluiten
                     hamburger.classList.remove('active');
                     dropdownMenu.classList.remove('active');
                     document.body.classList.remove('menu-is-open');
                     document.body.style.overflow = 'auto';
+                    lenis.start(); // Herstart scrollen
+                    
+                    // Naar de sectie scrollen
+                    const targetId = link.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        lenis.scrollTo(targetSection);
+                    }
                 });
+            });
+
+            // Zorg dat het logo in de top-header óók netjes smooth scrollt
+            document.querySelector('.nav-link-logo').addEventListener('click', (e) => {
+                e.preventDefault();
+                lenis.scrollTo('#hero');
             });
 
             // --- 2. SCROLL ANIMATIES (FADE IN/UP) ---

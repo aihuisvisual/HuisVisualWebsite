@@ -159,10 +159,10 @@
             height: 220px; 
             width: auto;
             filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
-            transition: opacity 0.4s ease, visibility 0.4s ease; /* Fade animatie toegevoegd */
+            transition: opacity 0.4s ease, visibility 0.4s ease; 
         }
 
-        /* Verberg logo als menu open is (class via Javascript) */
+        /* Verberg logo als menu open is */
         body.menu-is-open .logo-header {
             opacity: 0;
             visibility: hidden;
@@ -318,8 +318,7 @@
         .service-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
+            gap: 2rem; /* Ruimte tussen cijfer en titel op desktop */
             padding: 1.5rem 0;
             border-bottom: 1px solid rgba(168, 159, 146, 0.4); 
             transition: all 0.4s ease;
@@ -335,7 +334,8 @@
             font-size: 0.9rem;
             color: var(--clr-taupe);
             font-weight: 500;
-            width: 20px;
+            width: 25px;
+            flex-shrink: 0;
         }
 
         .service-title {
@@ -344,20 +344,27 @@
             color: var(--clr-navy);
             margin-bottom: 0;
             transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
+            flex-shrink: 0;
         }
 
         /* Overschrijf standaard .portfolio-text specifiek voor deze lijst */
         .service-item .portfolio-text {
             margin: 0;
-            margin-left: auto; /* Zorgt dat de tekst helemaal naar rechts wordt geduwd */
+            margin-left: auto; /* DIT duwt alleen de tekst netjes naar rechts op desktop */
             text-align: right;
             max-width: 50%;
         }
 
-        /* Hover Effecten voor de lijst */
-        .service-item:hover .service-title {
-            color: var(--clr-taupe);
-            transform: translateX(15px);
+        .service-item .portfolio-text p {
+            margin-bottom: 0; /* Voorkom onnodige witruimte onder tekst in de lijst */
+        }
+
+        /* Hover Effecten voor de lijst (Desktop) */
+        @media (min-width: 769px) {
+            .service-item:hover .service-title {
+                color: var(--clr-taupe);
+                transform: translateX(15px);
+            }
         }
 
         /* Desktop Foto verhoudingen */
@@ -564,24 +571,36 @@
 
             /* Mobiel Menu styling verbeteringen */
             .nav-link { 
-                font-size: 2rem; /* Iets kleiner en chiquer voor mobiel */
+                font-size: 2rem; 
             }
             .dropdown-menu li { 
-                margin: 1.5rem 0; /* Iets compacter onder elkaar */
+                margin: 1.5rem 0; 
             }
 
-            /* Mobiele fix voor de 'Mogelijkheden' lijst */
+            /* HIER ZIT DE MOBIELE FIX VOOR 'MOGELIJKHEDEN' (Grid Layout) */
             .service-item {
-                flex-wrap: wrap;
-                gap: 0.5rem;
+                display: grid;
+                grid-template-columns: 28px 1fr; /* Exacte breedte voor cijfer, de rest is voor tekst */
+                gap: 0.2rem 0.5rem; /* Subtiele ruimte tussen elementen */
+                align-items: start;
             }
+            
             .service-item .service-number {
                 width: auto;
+                margin-top: 0.4rem; /* Zorgt dat het cijfer op 1 lijn ligt met de tekst */
             }
+
+            .service-item .service-title {
+                font-size: 1.6rem;
+                line-height: 1.2;
+                text-align: left; /* Geforceerd links */
+            }
+
             .service-item .portfolio-text {
-                margin-left: 0;
-                padding-left: 2rem; 
-                text-align: left; 
+                grid-column: 2; /* Plaats de omschrijving strak onder de titel */
+                margin: 0;
+                padding-left: 0; 
+                text-align: left; /* Geforceerd links */
                 max-width: 100%;
                 width: 100%;
             }
@@ -616,7 +635,7 @@
         <ul>
             <li><a href="#about" class="nav-link">Over Ons</a></li>
             <li><a href="#process" class="nav-link">Werkwijze</a></li>
-            <li><a href="#portfolio" class="nav-link">Beelden</a></li>
+            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
             <li><a href="#services" class="nav-link">Mogelijkheden</a></li>
             <li><a href="#faq" class="nav-link">Veelgestelde vragen</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>

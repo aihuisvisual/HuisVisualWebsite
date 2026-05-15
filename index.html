@@ -166,7 +166,7 @@
             background: none;
             border: none;
             cursor: pointer;
-            z-index: 1002; /* Boven het menu overlay */
+            z-index: 1002; 
             padding: 10px;
         }
 
@@ -257,14 +257,16 @@
             z-index: 2;
         }
 
-        /* ================= AFBEELDINGEN ================= */
+        /* ================= AFBEELDINGEN ALGEMEEN ================= */
         .about-image img, 
-        .process-image img, 
+        .process-image img,
+        .services-image img, 
         .contact-image img {
             width: 100%;
             object-fit: cover;
         }
 
+        /* ================= WERKWIJZE ================= */
         .process-steps {
             display: flex;
             flex-direction: column;
@@ -276,6 +278,7 @@
             padding-bottom: 1rem;
         }
 
+        /* ================= PORTFOLIO ================= */
         .portfolio-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -297,9 +300,54 @@
             color: var(--clr-taupe);
         }
 
+        /* ================= MOGELIJKHEDEN (NIEUW) ================= */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            margin-top: 2rem;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(168, 159, 146, 0.4); /* Subtiele taupe lijn */
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .service-item:first-child {
+            border-top: 1px solid rgba(168, 159, 146, 0.4);
+        }
+
+        .service-number {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--clr-taupe);
+            font-weight: 500;
+            width: 20px;
+        }
+
+        .service-title {
+            font-family: var(--font-main);
+            font-size: 1.8rem;
+            color: var(--clr-navy);
+            margin-bottom: 0;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
+        }
+
+        /* Hover Effecten voor de lijst */
+        .service-item:hover .service-title {
+            color: var(--clr-taupe);
+            transform: translateX(15px);
+        }
+
+        /* Desktop Foto verhoudingen */
         @media (min-width: 901px) {
             .about-image img, 
             .process-image img, 
+            .services-image img,
             .contact-image img {
                 height: 85vh; 
             }
@@ -474,11 +522,9 @@
                 grid-template-columns: 1fr;
                 gap: var(--space-md);
             }
-            .about-image { grid-row: 2; }
-            .contact-image { grid-row: 2; }
-            .process-image { grid-row: 2; }
+            .about-image, .contact-image, .process-image, .services-image { grid-row: 2; }
             
-            .about-image img, .process-image img, .contact-image img, .portfolio-item img {
+            .about-image img, .process-image img, .services-image img, .contact-image img, .portfolio-item img {
                 aspect-ratio: 4/5;
                 height: auto;
             }
@@ -530,6 +576,7 @@
             <li><a href="#about" class="nav-link">Over Ons</a></li>
             <li><a href="#process" class="nav-link">Werkwijze</a></li>
             <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="#services" class="nav-link">Mogelijkheden</a></li>
             <li><a href="#faq" class="nav-link">Veelgestelde vragen</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
@@ -604,8 +651,43 @@
         </div>
     </section>
 
+    <!-- ================= MOGELIJKHEDEN (NIEUWE SECTIE) ================= -->
+    <section id="services" class="section bg-white">
+        <div class="container grid-2">
+            <div class="services-text">
+                <h2 class="animate-on-scroll">Onze Mogelijkheden</h2>
+                <div class="services-list">
+                    <div class="service-item animate-on-scroll delay-1">
+                        <span class="service-number">01</span>
+                        <h3 class="service-title">Exterieur Visualisaties</h3>
+                        <div class="portfolio-text animate-on-scroll delay-2">
+                <p>Oog voor detail, harmonie en rust. Een perfecte vertaling van uw visie naar realiteit.</p>
+            </div>
+                    </div>
+                    <div class="service-item animate-on-scroll delay-2">
+                        <span class="service-number">02</span>
+                        <h3 class="service-title">Interieur Renders</h3>
+                    </div>
+                    <div class="service-item animate-on-scroll delay-3">
+                        <span class="service-number">03</span>
+                        <h3 class="service-title">Video</h3>
+                    </div>
+                    <div class="service-item animate-on-scroll delay-4">
+                        <span class="service-number">04</span>
+                        <h3 class="service-title">Interactieve Panorama</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="services-image animate-on-scroll delay-2">
+                <!-- Tijdelijke placeholder foto (vervang deze met je eigen foto) -->
+                <img src="https://huisvisual.x02.me/i/AGJNT.webp" alt="Onze Mogelijkheden" loading="lazy">
+            </div>
+        </div>
+    </section>
+
     <!-- ================= GROOT GEANIMEERD LOGO (MID-PAGE) ================= -->
-    <section id="big-logo" class="section bg-white">
+    <section id="big-logo" class="section">
+        <!-- Let op: sectie bg kleur afgewisseld voor zebra-effect! -->
         <div class="container animate-on-scroll">
             <div class="logo-section-wrapper">
                 <img src="https://huisvisual.x02.me/i/9GTY.png" alt="Huisvisual Geanimeerd Logo" class="logo-large play-once-logo" loading="lazy">
@@ -615,7 +697,7 @@
     </section>
 
     <!-- ================= Q&A ================= -->
-    <section id="faq" class="section">
+    <section id="faq" class="section bg-white">
         <div class="container max-width-small">
             <h2 class="animate-on-scroll">Veelgestelde vragen</h2>
             
@@ -649,7 +731,7 @@
     </section>
 
     <!-- ================= CONTACT ================= -->
-    <section id="contact" class="section bg-white">
+    <section id="contact" class="section">
         <div class="container grid-2">
             <div class="contact-text animate-on-scroll">
                 <h2>Laten we samenwerken</h2>

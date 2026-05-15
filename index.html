@@ -4,963 +4,928 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Huisvisual | High-end 3D Visualisaties</title>
+    
+<!-- Importeer een high-end, strak font voor de standaard teksten -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 
-    <!-- Importeer een high-end, strak font voor de standaard teksten -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
-    <!-- Lenis Smooth Scrolling Library -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+<style>
+    /* ================= CSS VARIABELEN & BASIS ================= */
+    @font-face {
+        font-family: 'Aguilette';
+        src: url('assets/Aiguilette.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
 
-    <style>
-        /* ================= CSS VARIABELEN & BASIS ================= */
-        @font-face {
-            font-family: 'Aguilette';
-            src: url('assets/Aiguilette.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
-        }
+    :root {
+        /* Kleurenpalet Huisvisual */
+        --clr-navy: #0D1B2D;
+        --clr-beige: #E8E2D6;
+        --clr-taupe: #A89F92;
+        --clr-black: #000000;
+        --clr-white: #FFFFFF;
 
-        :root {
-            /* Kleurenpalet Huisvisual */
-            --clr-navy: #0D1B2D;
-            --clr-beige: #E8E2D6;
-            --clr-taupe: #A89F92;
-            --clr-black: #000000;
-            --clr-white: #FFFFFF;
+        /* Typografie */
+        --font-main: 'Aguilette', 'Playfair Display', 'Times New Roman', serif;
+        --font-sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
 
-            /* Typografie */
-            --font-main: 'Aguilette', 'Playfair Display', 'Times New Roman', serif;
-            --font-sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+        /* Afstanden */
+        --space-sm: 1rem;
+        --space-md: 2rem;
+        --space-lg: 5rem;
+        --space-xl: 15vh;
+    }
 
-            /* Afstanden */
-            --space-sm: 1rem;
-            --space-md: 2rem;
-            --space-lg: 5rem;
-            --space-xl: 15vh;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+    }
 
-        html {
-            /* scroll-behavior: smooth verwijderd omdat Lenis JS dit nu overneemt */
-            font-size: 16px;
-        }
+    body {
+        background-color: var(--clr-beige);
+        color: var(--clr-navy);
+        font-family: var(--font-main);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
 
-        body {
-            background-color: var(--clr-beige);
-            color: var(--clr-navy);
-            font-family: var(--font-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+    .bg-white {
+        background-color: var(--clr-white);
+    }
 
-        .bg-white {
-            background-color: var(--clr-white);
-        }
+    img, video {
+        max-width: 100%;
+        display: block;
+    }
 
-        img, video {
-            max-width: 100%;
-            display: block;
-        }
+    /* ================= TYPOGRAFIE ================= */
+    h1, h2, h3 {
+        font-weight: 400;
+        line-height: 1.2;
+        color: var(--clr-navy);
+    }
 
-        /* ================= TYPOGRAFIE ================= */
-        h1, h2, h3 {
-            font-weight: 400;
-            line-height: 1.2;
-            color: var(--clr-navy);
-        }
+    h2 {
+        font-size: 2.8rem;
+        margin-bottom: var(--space-md);
+    }
 
-        h2 {
-            font-size: 2.8rem;
-            margin-bottom: var(--space-md);
-        }
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
 
-        h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+    p {
+        font-family: var(--font-sans);
+        font-weight: 300;
+        font-size: 1.05rem;
+        color: var(--clr-navy);
+        margin-bottom: var(--space-sm);
+    }
 
-        p {
-            font-family: var(--font-sans);
-            font-weight: 300;
-            font-size: 1.05rem;
-            color: var(--clr-navy);
-            margin-bottom: var(--space-sm);
-        }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+    /* ================= LAYOUT CONTAINERS ================= */
+    .container {
+        width: 90%;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
 
-        /* ================= LAYOUT CONTAINERS ================= */
-        .container {
-            width: 90%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+    .max-width-small {
+        max-width: 800px;
+        margin: 0 auto;
+    }
 
-        .max-width-small {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    .section {
+        padding: var(--space-xl) 0;
+    }
 
-        .section {
-            padding: var(--space-xl) 0;
-        }
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-lg);
+        align-items: center;
+    }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-lg);
-            align-items: center;
-        }
+    /* ================= HEADER (Zwevend & Onzichtbaar) ================= */
+    .site-header {
+        position: absolute; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 2rem 5%;
+        pointer-events: none; 
+    }
 
-        /* ================= HEADER (Zwevend & Onzichtbaar) ================= */
-        .site-header {
-            position: absolute; 
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 2rem 5%;
-            pointer-events: none; 
-        }
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .header-left, .header-right {
+        width: 33.33%;
+    }
 
-        .header-left, .header-right {
-            width: 33.33%;
-        }
+    .header-right {
+        display: flex;
+        justify-content: flex-end;
+        pointer-events: auto; 
+    }
 
-        .header-right {
-            display: flex;
-            justify-content: flex-end;
-            pointer-events: auto; 
-        }
+    .header-center {
+        width: 33.33%;
+        display: flex;
+        justify-content: center;
+        pointer-events: auto; 
+    }
 
-        .header-center {
-            width: 33.33%;
-            display: flex;
-            justify-content: center;
-            pointer-events: auto; 
-        }
+    /* EXTREME HEADER LOGO */
+    .logo-header {
+        height: 220px; 
+        width: auto;
+        filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
+        transition: opacity 0.4s ease, visibility 0.4s ease; 
+    }
 
-        /* EXTREME HEADER LOGO */
-        .logo-header {
-            height: 220px; 
-            width: auto;
-            filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
-            transition: opacity 0.4s ease, visibility 0.4s ease; 
-        }
+    /* Verberg logo als menu open is */
+    body.menu-is-open .logo-header {
+        opacity: 0;
+        visibility: hidden;
+    }
 
-        /* Verberg logo als menu open is */
-        body.menu-is-open .logo-header {
-            opacity: 0;
-            visibility: hidden;
-        }
+    /* Hamburger Menu */
+    .hamburger {
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1002; 
+        padding: 10px;
+    }
 
-        /* Hamburger Menu */
-        .hamburger {
-            background: none;
-            border: none;
-            cursor: pointer;
-            z-index: 1002; 
-            padding: 10px;
-        }
+    .hamburger .line {
+        display: block;
+        width: 35px;
+        height: 1px;
+        background-color: var(--clr-navy);
+        margin: 8px 0;
+        transition: all 0.3s ease;
+    }
 
-        .hamburger .line {
-            display: block;
-            width: 35px;
-            height: 1px;
-            background-color: var(--clr-navy);
-            margin: 8px 0;
-            transition: all 0.3s ease;
-        }
+    .hamburger.active .line:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+        background-color: var(--clr-navy);
+    }
+    .hamburger.active .line:nth-child(2) {
+        transform: translateY(-9px) rotate(-45deg);
+        background-color: var(--clr-navy);
+    }
 
-        .hamburger.active .line:nth-child(1) {
-            transform: translateY(9px) rotate(45deg);
-            background-color: var(--clr-navy);
-        }
-        .hamburger.active .line:nth-child(2) {
-            transform: translateY(-9px) rotate(-45deg);
-            background-color: var(--clr-navy);
-        }
+    /* Dropdown Menu Overlay */
+    .dropdown-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--clr-beige);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s ease;
+        z-index: 999;
+        padding: 2rem;
+    }
 
-        /* Dropdown Menu Overlay */
-        .dropdown-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background-color: var(--clr-beige);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-            z-index: 999;
-            padding: 2rem;
-        }
+    .dropdown-menu.active {
+        opacity: 1;
+        visibility: visible;
+    }
 
-        .dropdown-menu.active {
-            opacity: 1;
-            visibility: visible;
-        }
+    .dropdown-menu ul {
+        list-style: none;
+        text-align: center;
+    }
 
-        .dropdown-menu ul {
-            list-style: none;
-            text-align: center;
-        }
+    .dropdown-menu li {
+        margin: 2rem 0;
+    }
 
-        .dropdown-menu li {
-            margin: 2rem 0;
-        }
+    .nav-link {
+        font-size: 3rem;
+        color: var(--clr-navy);
+        transition: color 0.3s ease;
+    }
 
-        .nav-link {
-            font-size: 3rem;
-            color: var(--clr-navy);
-            transition: color 0.3s ease;
-        }
+    .nav-link:hover {
+        color: var(--clr-taupe);
+    }
 
-        .nav-link:hover {
+    /* ================= HERO SECTIE ================= */
+    .hero-section {
+        position: relative;
+        height: 100vh;
+        width: 100%; 
+        overflow: hidden;
+    }
+
+    .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+        z-index: 1;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(13, 27, 45, 0.1); 
+        z-index: 2;
+    }
+
+    /* ================= AFBEELDINGEN ALGEMEEN ================= */
+    .about-image img, 
+    .process-image img,
+    .services-image img, 
+    .contact-image img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    /* ================= WERKWIJZE ================= */
+    .process-steps {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+
+    .step {
+        border-bottom: 1px solid var(--clr-taupe);
+        padding-bottom: 1rem;
+    }
+
+    /* ================= PORTFOLIO ================= */
+    .portfolio-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: var(--space-md);
+    }
+
+    .portfolio-item img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .portfolio-text {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--clr-taupe);
+    }
+
+    /* ================= MOGELIJKHEDEN ================= */
+    .services-list {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+
+    .service-item {
+        display: flex;
+        align-items: center;
+        gap: 2rem; /* Ruimte tussen cijfer en titel op desktop */
+        padding: 1.5rem 0;
+        border-bottom: 1px solid rgba(168, 159, 146, 0.4); 
+        transition: all 0.4s ease;
+        cursor: pointer;
+    }
+
+    .service-item:first-child {
+        border-top: 1px solid rgba(168, 159, 146, 0.4);
+    }
+
+    .service-number {
+        font-family: var(--font-sans);
+        font-size: 0.9rem;
+        color: var(--clr-taupe);
+        font-weight: 500;
+        width: 25px;
+        flex-shrink: 0;
+    }
+
+    .service-title {
+        font-family: var(--font-main);
+        font-size: 1.8rem;
+        color: var(--clr-navy);
+        margin-bottom: 0;
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
+        flex-shrink: 0;
+    }
+
+    /* Overschrijf standaard .portfolio-text specifiek voor deze lijst */
+    .service-item .portfolio-text {
+        margin: 0;
+        margin-left: auto; /* DIT duwt alleen de tekst netjes naar rechts op desktop */
+        text-align: right;
+        max-width: 50%;
+    }
+
+    .service-item .portfolio-text p {
+        margin-bottom: 0; /* Voorkom onnodige witruimte onder tekst in de lijst */
+    }
+
+    /* Hover Effecten voor de lijst (Desktop) */
+    @media (min-width: 769px) {
+        .service-item:hover .service-title {
             color: var(--clr-taupe);
+            transform: translateX(15px);
         }
-
-        /* ================= HERO SECTIE ================= */
-        .hero-section {
-            position: relative;
-            height: 100vh;
-            width: 100%; 
-            overflow: hidden;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-            z-index: 1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(13, 27, 45, 0.1); 
-            z-index: 2;
-        }
-
-        /* ================= AFBEELDINGEN ALGEMEEN ================= */
+    }
+    
+    /* Desktop Foto verhoudingen */
+    @media (min-width: 901px) {
         .about-image img, 
-        .process-image img,
-        .services-image img, 
+        .process-image img, 
+        .services-image img,
         .contact-image img {
-            width: 100%;
-            object-fit: cover;
+            height: 85vh; 
         }
+        .portfolio-item img {
+            height: 90vh; 
+        }
+    }
+    
+    /* ================= MID-PAGE GROOT LOGO ================= */
+    .logo-section-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 
-        /* ================= WERKWIJZE ================= */
-        .process-steps {
-            display: flex;
-            flex-direction: column;
+    .logo-large {
+        max-width: 900px;
+        width: 90%;
+        margin-bottom: 1.5rem;
+    }
+
+    .logo-subtext {
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--clr-black);
+        margin: 0;
+    }
+
+    /* ================= Q&A ACCORDEON ================= */
+    .faq-accordion details {
+        border-bottom: 1px solid var(--clr-taupe);
+        margin-bottom: 1rem;
+    }
+
+    .faq-accordion summary {
+        font-family: var(--font-main);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 1.5rem 0;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .faq-accordion summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-accordion summary::after {
+        content: '+';
+        font-size: 1.5rem;
+        color: var(--clr-taupe);
+        transition: transform 0.4s ease;
+    }
+
+    .faq-content-wrapper {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition: grid-template-rows 0.5s ease, opacity 0.5s ease;
+    }
+
+    .details-content {
+        overflow: hidden;
+        padding-bottom: 0;
+        color: var(--clr-navy);
+    }
+
+    details.is-open .faq-content-wrapper {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        padding-bottom: 1.5rem;
+    }
+
+    details.is-open summary::after {
+        transform: rotate(45deg);
+    }
+
+    /* ================= KNOPPEN ================= */
+    .button-group {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        font-family: var(--font-sans);
+        padding: 1.2rem 3rem;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.4s ease;
+        cursor: pointer;
+        border-radius: 50px; 
+        border: 1px solid var(--clr-navy); 
+        display: inline-block;
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        color: var(--clr-navy);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--clr-navy);
+        color: var(--clr-white);
+    }
+
+    /* ================= FOOTER ================= */
+    .site-footer {
+        background-color: var(--clr-beige); 
+        color: var(--clr-navy);
+        padding: 1rem 5%; 
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .footer-links {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-links a {
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: var(--clr-taupe);
+    }
+
+    .footer-copyright {
+        white-space: nowrap; 
+    }
+
+    /* ================= SCROLL ANIMATIES ================= */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .animate-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 900px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
             gap: var(--space-md);
         }
-
-        .step {
-            border-bottom: 1px solid var(--clr-taupe);
-            padding-bottom: 1rem;
+        .about-image, .contact-image, .process-image, .services-image { grid-row: 2; }
+        
+        .about-image img, .process-image img, .services-image img, .contact-image img, .portfolio-item img {
+            aspect-ratio: 4/5;
+            height: auto;
         }
+    }
 
-        /* ================= PORTFOLIO ================= */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: var(--space-md);
-        }
-
-        .portfolio-item img {
-            width: 100%;
-            object-fit: cover;
-        }
-
-        .portfolio-text {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-            font-size: 1.2rem;
-            font-style: italic;
-            color: var(--clr-taupe);
-        }
-
-        /* ================= MOGELIJKHEDEN ================= */
-        .services-list {
-            display: flex;
+    @media (max-width: 768px) {
+        h2 { font-size: 2rem; }
+        .portfolio-grid { grid-template-columns: 1fr; }
+        
+        .logo-header { height: 120px; }
+        
+        .footer-content {
             flex-direction: column;
-            margin-top: 2rem;
+            text-align: center;
+            justify-content: center;
+        }
+        .footer-links {
+            justify-content: center;
         }
 
+        /* Mobiel Menu styling verbeteringen */
+        .nav-link { 
+            font-size: 2rem; 
+        }
+        .dropdown-menu li { 
+            margin: 1.5rem 0; 
+        }
+
+        /* HIER ZIT DE MOBIELE FIX VOOR 'MOGELIJKHEDEN' (Grid Layout) */
         .service-item {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(168, 159, 146, 0.4); 
-            transition: all 0.4s ease;
-            cursor: pointer;
+            display: grid;
+            grid-template-columns: 28px 1fr; /* Exacte breedte voor cijfer, de rest is voor tekst */
+            gap: 0.2rem 0.5rem; /* Subtiele ruimte tussen elementen */
+            align-items: start;
+        }
+        
+        .service-item .service-number {
+            width: auto;
+            margin-top: 0.4rem; /* Zorgt dat het cijfer op 1 lijn ligt met de tekst */
         }
 
-        .service-item:first-child {
-            border-top: 1px solid rgba(168, 159, 146, 0.4);
-        }
-
-        .service-number {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            color: var(--clr-taupe);
-            font-weight: 500;
-            width: 25px;
-            flex-shrink: 0;
-        }
-
-        .service-title {
-            font-family: var(--font-main);
-            font-size: 1.8rem;
-            color: var(--clr-navy);
-            margin-bottom: 0;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
-            flex-shrink: 0;
+        .service-item .service-title {
+            font-size: 1.6rem;
+            line-height: 1.2;
+            text-align: left; /* Geforceerd links */
         }
 
         .service-item .portfolio-text {
+            grid-column: 2; /* Plaats de omschrijving strak onder de titel */
             margin: 0;
-            margin-left: auto;
-            text-align: right;
-            max-width: 50%;
-        }
-
-        .service-item .portfolio-text p {
-            margin-bottom: 0; 
-        }
-
-        @media (min-width: 769px) {
-            .service-item:hover .service-title {
-                color: var(--clr-taupe);
-                transform: translateX(15px);
-            }
-        }
-        
-        @media (min-width: 901px) {
-            .about-image img, 
-            .process-image img, 
-            .services-image img,
-            .contact-image img {
-                height: 85vh; 
-            }
-            .portfolio-item img {
-                height: 90vh; 
-            }
-        }
-        
-        /* ================= MID-PAGE GROOT LOGO ================= */
-        .logo-section-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .logo-large {
-            max-width: 900px;
-            width: 90%;
-            margin-bottom: 1.5rem;
-        }
-
-        .logo-subtext {
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--clr-black);
-            margin: 0;
-        }
-
-        /* ================= Q&A ACCORDEON ================= */
-        .faq-accordion details {
-            border-bottom: 1px solid var(--clr-taupe);
-            margin-bottom: 1rem;
-        }
-
-        .faq-accordion summary {
-            font-family: var(--font-main);
-            font-size: 1.4rem;
-            cursor: pointer;
-            padding: 1.5rem 0;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .faq-accordion summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .faq-accordion summary::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: var(--clr-taupe);
-            transition: transform 0.4s ease;
-        }
-
-        .faq-content-wrapper {
-            display: grid;
-            grid-template-rows: 0fr;
-            opacity: 0;
-            transition: grid-template-rows 0.5s ease, opacity 0.5s ease;
-        }
-
-        .details-content {
-            overflow: hidden;
-            padding-bottom: 0;
-            color: var(--clr-navy);
-        }
-
-        details.is-open .faq-content-wrapper {
-            grid-template-rows: 1fr;
-            opacity: 1;
-            padding-bottom: 1.5rem;
-        }
-
-        details.is-open summary::after {
-            transform: rotate(45deg);
-        }
-
-        /* ================= KNOPPEN ================= */
-        .button-group {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            font-family: var(--font-sans);
-            padding: 1.2rem 3rem;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.4s ease;
-            cursor: pointer;
-            border-radius: 50px; 
-            border: 1px solid var(--clr-navy); 
-            display: inline-block;
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--clr-navy);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--clr-navy);
-            color: var(--clr-white);
-        }
-
-        /* ================= FOOTER ================= */
-        .site-footer {
-            background-color: var(--clr-beige); 
-            color: var(--clr-navy);
-            padding: 1rem 5%; 
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
+            padding-left: 0; 
+            text-align: left; /* Geforceerd links */
+            max-width: 100%;
             width: 100%;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--clr-taupe);
-        }
-
-        .footer-copyright {
-            white-space: nowrap; 
-        }
-
-        /* ================= SCROLL ANIMATIES ================= */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .animate-on-scroll.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .delay-1 { transition-delay: 0.1s; }
-        .delay-2 { transition-delay: 0.2s; }
-        .delay-3 { transition-delay: 0.3s; }
-        .delay-4 { transition-delay: 0.4s; }
-
-        /* ================= RESPONSIVE ================= */
-        @media (max-width: 900px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-                gap: var(--space-md);
-            }
-            .about-image, .contact-image, .process-image, .services-image { grid-row: 2; }
-            
-            .about-image img, .process-image img, .services-image img, .contact-image img, .portfolio-item img {
-                aspect-ratio: 4/5;
-                height: auto;
-            }
-        }
-
-        @media (max-width: 768px) {
-            h2 { font-size: 2rem; }
-            .portfolio-grid { grid-template-columns: 1fr; }
-            
-            .logo-header { height: 120px; }
-            
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-                justify-content: center;
-            }
-            .footer-links {
-                justify-content: center;
-            }
-
-            .nav-link { 
-                font-size: 2rem; 
-            }
-            .dropdown-menu li { 
-                margin: 1.5rem 0; 
-            }
-
-            .service-item {
-                display: grid;
-                grid-template-columns: 28px 1fr; 
-                gap: 0.2rem 0.5rem; 
-                align-items: start;
-            }
-            
-            .service-item .service-number {
-                width: auto;
-                margin-top: 0.4rem; 
-            }
-
-            .service-item .service-title {
-                font-size: 1.6rem;
-                line-height: 1.2;
-                text-align: left; 
-            }
-
-            .service-item .portfolio-text {
-                grid-column: 2; 
-                margin: 0;
-                padding-left: 0; 
-                text-align: left; 
-                max-width: 100%;
-                width: 100%;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
+    
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="header">
+    <div class="header-container">
+        <div class="header-left"></div>
+        
+        <!-- Logo -->
+        <div class="header-center">
+            <a href="#hero">
+                <img src="https://huisvisual.x02.me/i/P2MSY.png" alt="Huisvisual Logo" class="logo-header play-once-logo">
+            </a>
+        </div>
+        
+        <div class="header-right">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+        </div>
+    </div>
+</header>
 
-    <!-- ================= HEADER ================= -->
-    <header class="site-header" id="header">
-        <div class="header-container">
-            <div class="header-left"></div>
+<!-- Navigatie uit de header gehaald zodat linkjes doorklikbaar zijn -->
+<nav class="dropdown-menu" id="dropdown-menu">
+    <ul>
+        <li><a href="#about" class="nav-link">Over Ons</a></li>
+        <li><a href="#process" class="nav-link">Werkwijze</a></li>
+        <li><a href="#portfolio" class="nav-link">Beelden</a></li>
+        <li><a href="#services" class="nav-link">Mogelijkheden</a></li>
+        <li><a href="#faq" class="nav-link">Veelgestelde vragen</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- ================= HERO SECTIE ================= -->
+<section id="hero" class="hero-section">
+    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+        <source src="https://huisvisual.x02.me/i/8SFF.webm" type="video/webm">
+    </video>
+    <div class="hero-overlay"></div>
+</section>
+
+<!-- ================= OVER ONS ================= -->
+<section id="about" class="section">
+    <div class="container grid-2">
+        <div class="about-text animate-on-scroll">
+            <h2>Verfijnde 3D-visualisaties voor elk project</h2>
+            <p>Bij Huisvisual breng ik architectuur en interieur tot leven voordat de eerste steen gelegd is. Met oog voor detail, licht en materiaal crëeer ik beelden die niet alleen overtuigen, maar ook emotie oproepen.</p>
+            <p>De bouw stopt nooit, dus wij ook niet. Wij zorgen dat u snel verder kunt met uw project.</p>
+        </div>
+        <div class="about-image animate-on-scroll delay-1">
+            <img src="https://huisvisual.x02.me/i/DZ6H.webp" alt="3D visualisatie interieur" loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- ================= WERKWIJZE ================= -->
+<section id="process" class="section bg-white">
+    <div class="container">
+        <h2 class="animate-on-scroll">Onze Werkwijze</h2>
+        <div class="grid-2 process-grid">
+            <div class="process-image animate-on-scroll">
+                <img src="https://huisvisual.x02.me/i/JDGP4Z.webp" alt="Het proces van 3D visualisatie" loading="lazy">
+            </div>
+            <div class="process-steps">
+                <div class="step animate-on-scroll delay-1">
+                    <h3>01. Concept & Visie</h3>
+                    <p>We bespreken het ontwerp, de materialen en de sfeer die de visualisatie moet uitstralen.</p>
+                </div>
+                <div class="step animate-on-scroll delay-2">
+                    <h3>02. Modellering</h3>
+                    <p>Het 2D-ontwerp wordt nauwkeurig vertaald naar een gedetailleerd 3D-model. U krijgt hier de eerste concept beelden.</p>
+                </div>
+                <div class="step animate-on-scroll delay-3">
+                    <h3>03. Licht & Texturen</h3>
+                    <p>Toepassing van realistische belichting en hoogwaardige texturen voor een levensecht resultaat.</p>
+                </div>
+                <div class="step animate-on-scroll delay-4">
+                    <h3>04. Oplevering</h3>
+                    <p>De definitieve, high-end renders worden in hoge resolutie gepresenteerd.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio" class="section">
+    <div class="container">
+        <div class="portfolio-grid">
+            <div class="portfolio-item animate-on-scroll">
+                <img src="https://huisvisual.x02.me/i/5MY7.webp" alt="Portfolio project 1" loading="lazy">
+            </div>
+            <div class="portfolio-item animate-on-scroll delay-1">
+                <img src="https://huisvisual.x02.me/i/AGJNT.webp" alt="Portfolio project 2" loading="lazy">
+            </div>
+        </div>
+        <div class="portfolio-text animate-on-scroll delay-2">
+            <p>Oog voor detail, harmonie en rust. Een perfecte vertaling van uw visie naar realiteit.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= MOGELIJKHEDEN ================= -->
+<section id="services" class="section bg-white">
+    <div class="container grid-2">
+        <div class="services-text">
+            <h2 class="animate-on-scroll">Onze Mogelijkheden</h2>
+            <div class="services-list">
+                <div class="service-item animate-on-scroll delay-1">
+                    <span class="service-number">01</span>
+                    <h3 class="service-title">Exterieur Visualisaties</h3>
+                    <div class="portfolio-text animate-on-scroll delay-2">
+                        <p>Een visualisatie van uw visie naar realiteit.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll delay-2">
+                    <span class="service-number">02</span>
+                    <h3 class="service-title">Interieur Renders</h3>
+                    <div class="portfolio-text animate-on-scroll delay-2">
+                        <p>Fotorealistische beelden die sfeer en gevoel vangen.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll delay-3">
+                    <span class="service-number">03</span>
+                    <h3 class="service-title">Video</h3>
+                    <div class="portfolio-text animate-on-scroll delay-2">
+                        <p>De ultieme beleving van een ontwerp.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll delay-4">
+                    <span class="service-number">04</span>
+                    <h3 class="service-title">Interactieve Panorama</h3>
+                    <div class="portfolio-text animate-on-scroll delay-2">
+                        <p>Een interactieve rondkijk in het ontwerp.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="services-image animate-on-scroll delay-2">
+            <!-- Tijdelijke placeholder foto (vervang deze met je eigen foto) -->
+            <img src="https://huisvisual.x02.me/i/JH2UK.webp" alt="Onze Mogelijkheden" loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- ================= GROOT GEANIMEERD LOGO (MID-PAGE) ================= -->
+<section id="big-logo" class="section">
+    <div class="container animate-on-scroll">
+        <div class="logo-section-wrapper">
+            <img src="https://huisvisual.x02.me/i/9GTY.png" alt="Huisvisual Geanimeerd Logo" class="logo-large play-once-logo" loading="lazy">
+            <p class="logo-subtext">Een technische tekening is voor veel mensen lastig te begrijpen. Ik help u om uw ideeën simpel te visualiseren of uit te leggen aan klanten of de gemeente. Met de 3D-beelden ziet iedereen direct wat de bedoeling is, nog voordat de bouw begint.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= Q&A ================= -->
+<section id="faq" class="section bg-white">
+    <div class="container max-width-small">
+        <h2 class="animate-on-scroll">Veelgestelde vragen</h2>
+        
+        <div class="faq-accordion animate-on-scroll delay-1">
+            <details>
+                <summary>Wat zijn de gemiddelde levertijden?</summary>
+                <div class="faq-content-wrapper">
+                    <div class="details-content">
+                        <p>Afhankelijk van de complexiteit van het project, lever ik de eerste concepten doorgaans binnen 5 tot 7 werkdagen aan.</p>
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Wat hebben jullie nodig om te starten?</summary>
+                <div class="faq-content-wrapper">
+                    <div class="details-content">
+                        <p>Ik ontvang graag plattegronden (dwg/pdf), 3D modellen (indien bij de hand), aanzichten, en een moodboard of specificatie van materialen en kleuren.</p>
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Zijn revisierondes inbegrepen?</summary>
+                <div class="faq-content-wrapper">
+                    <div class="details-content">
+                        <p>Ja, in mijn pakketten zit standaard één correctieronde verwerkt om tot het perfecte eindresultaat te komen.</p>
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="section">
+    <div class="container grid-2">
+        <div class="contact-text animate-on-scroll">
+            <h2>Laten we samenwerken</h2>
+            <p>Klaar om uw project visueel tot leven te wekken? Neem contact met mij op voor een kennismaking of vraag direct een vrijblijvende offerte aan.</p>
             
-            <!-- Logo -->
-            <div class="header-center">
-                <a href="#hero" class="nav-link-logo">
-                    <img src="https://huisvisual.x02.me/i/P2MSY.png" alt="Huisvisual Logo" class="logo-header play-once-logo">
-                </a>
+            <div class="button-group">
+                <a href="offerte1.html" class="btn btn-secondary">Offerte aanvragen</a>
+                <a href="mailto:info@huisvisual.nl" class="btn btn-secondary">Contact opnemen</a>
             </div>
+        </div>
+        <div class="contact-image animate-on-scroll delay-1">
+            <img src="https://huisvisual.x02.me/i/UTKD.webp" alt="Contact Huisvisual" loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-links">
+            <span>HuisVisual 2026</span>
+            <a href="https://www.instagram.com/huisvisual.nl/">Instagram</a>
+            <a href="offerte1.html">Offerte Aanvragen</a>
+        </div>
+        <div class="footer-links">
+            <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
+            <span>Sjors Maas</span>
+        </div>
+    </div>
+</footer>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- 1. HAMBURGER MENU & LOGO VERBERGEN ---
+        const hamburger = document.getElementById('hamburger');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            dropdownMenu.classList.toggle('active');
             
-            <div class="header-right">
-                <button class="hamburger" id="hamburger" aria-label="Menu">
-                    <span class="line"></span>
-                    <span class="line"></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <nav class="dropdown-menu" id="dropdown-menu">
-        <ul>
-            <li><a href="#about" class="nav-link">Over Ons</a></li>
-            <li><a href="#process" class="nav-link">Werkwijze</a></li>
-            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-            <li><a href="#services" class="nav-link">Mogelijkheden</a></li>
-            <li><a href="#faq" class="nav-link">Veelgestelde vragen</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
-        </ul>
-    </nav>
-
-    <!-- ================= HERO SECTIE ================= -->
-    <section id="hero" class="hero-section">
-        <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
-            <source src="https://huisvisual.x02.me/i/8SFF.webm" type="video/webm">
-        </video>
-        <div class="hero-overlay"></div>
-    </section>
-
-    <!-- ================= OVER ONS ================= -->
-    <section id="about" class="section">
-        <div class="container grid-2">
-            <div class="about-text animate-on-scroll">
-                <h2>Verfijnde 3D-visualisaties voor elk project</h2>
-                <p>Bij Huisvisual breng ik architectuur en interieur tot leven voordat de eerste steen gelegd is. Met oog voor detail, licht en materiaal crëeer ik beelden die niet alleen overtuigen, maar ook emotie oproepen.</p>
-                <p>De bouw stopt nooit, dus wij ook niet. Wij zorgen dat u snel verder kunt met uw project.</p>
-            </div>
-            <div class="about-image animate-on-scroll delay-1">
-                <img src="https://huisvisual.x02.me/i/DZ6H.webp" alt="3D visualisatie interieur" loading="lazy">
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= WERKWIJZE ================= -->
-    <section id="process" class="section bg-white">
-        <div class="container">
-            <h2 class="animate-on-scroll">Onze Werkwijze</h2>
-            <div class="grid-2 process-grid">
-                <div class="process-image animate-on-scroll">
-                    <img src="https://huisvisual.x02.me/i/JDGP4Z.webp" alt="Het proces van 3D visualisatie" loading="lazy">
-                </div>
-                <div class="process-steps">
-                    <div class="step animate-on-scroll delay-1">
-                        <h3>01. Concept & Visie</h3>
-                        <p>We bespreken het ontwerp, de materialen en de sfeer die de visualisatie moet uitstralen.</p>
-                    </div>
-                    <div class="step animate-on-scroll delay-2">
-                        <h3>02. Modellering</h3>
-                        <p>Het 2D-ontwerp wordt nauwkeurig vertaald naar een gedetailleerd 3D-model. U krijgt hier de eerste concept beelden.</p>
-                    </div>
-                    <div class="step animate-on-scroll delay-3">
-                        <h3>03. Licht & Texturen</h3>
-                        <p>Toepassing van realistische belichting en hoogwaardige texturen voor een levensecht resultaat.</p>
-                    </div>
-                    <div class="step animate-on-scroll delay-4">
-                        <h3>04. Oplevering</h3>
-                        <p>De definitieve, high-end renders worden in hoge resolutie gepresenteerd.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= PORTFOLIO ================= -->
-    <section id="portfolio" class="section">
-        <div class="container">
-            <div class="portfolio-grid">
-                <div class="portfolio-item animate-on-scroll">
-                    <img src="https://huisvisual.x02.me/i/5MY7.webp" alt="Portfolio project 1" loading="lazy">
-                </div>
-                <div class="portfolio-item animate-on-scroll delay-1">
-                    <img src="https://huisvisual.x02.me/i/AGJNT.webp" alt="Portfolio project 2" loading="lazy">
-                </div>
-            </div>
-            <div class="portfolio-text animate-on-scroll delay-2">
-                <p>Oog voor detail, harmonie en rust. Een perfecte vertaling van uw visie naar realiteit.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= MOGELIJKHEDEN ================= -->
-    <section id="services" class="section bg-white">
-        <div class="container grid-2">
-            <div class="services-text">
-                <h2 class="animate-on-scroll">Onze Mogelijkheden</h2>
-                <div class="services-list">
-                    <div class="service-item animate-on-scroll delay-1">
-                        <span class="service-number">01</span>
-                        <h3 class="service-title">Exterieur Visualisaties</h3>
-                        <div class="portfolio-text animate-on-scroll delay-2">
-                            <p>Een visualisatie van uw visie naar realiteit.</p>
-                        </div>
-                    </div>
-                    <div class="service-item animate-on-scroll delay-2">
-                        <span class="service-number">02</span>
-                        <h3 class="service-title">Interieur Renders</h3>
-                        <div class="portfolio-text animate-on-scroll delay-2">
-                            <p>Fotorealistische beelden die sfeer en gevoel vangen.</p>
-                        </div>
-                    </div>
-                    <div class="service-item animate-on-scroll delay-3">
-                        <span class="service-number">03</span>
-                        <h3 class="service-title">Video</h3>
-                        <div class="portfolio-text animate-on-scroll delay-2">
-                            <p>De ultieme beleving van een ontwerp.</p>
-                        </div>
-                    </div>
-                    <div class="service-item animate-on-scroll delay-4">
-                        <span class="service-number">04</span>
-                        <h3 class="service-title">Interactieve Panorama</h3>
-                        <div class="portfolio-text animate-on-scroll delay-2">
-                            <p>Een interactieve rondkijk in het ontwerp.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="services-image animate-on-scroll delay-2">
-                <img src="https://huisvisual.x02.me/i/JH2UK.webp" alt="Onze Mogelijkheden" loading="lazy">
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= GROOT GEANIMEERD LOGO ================= -->
-    <section id="big-logo" class="section">
-        <div class="container animate-on-scroll">
-            <div class="logo-section-wrapper">
-                <img src="https://huisvisual.x02.me/i/9GTY.png" alt="Huisvisual Geanimeerd Logo" class="logo-large play-once-logo" loading="lazy">
-                <p class="logo-subtext">Een technische tekening is voor veel mensen lastig te begrijpen. Ik help u om uw ideeën simpel te visualiseren of uit te leggen aan klanten of de gemeente. Met de 3D-beelden ziet iedereen direct wat de bedoeling is, nog voordat de bouw begint.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= Q&A ================= -->
-    <section id="faq" class="section bg-white">
-        <div class="container max-width-small">
-            <h2 class="animate-on-scroll">Veelgestelde vragen</h2>
+            // Toggle de class op de body om het logo te verbergen via CSS
+            document.body.classList.toggle('menu-is-open');
             
-            <div class="faq-accordion animate-on-scroll delay-1">
-                <details>
-                    <summary>Wat zijn de gemiddelde levertijden?</summary>
-                    <div class="faq-content-wrapper">
-                        <div class="details-content">
-                            <p>Afhankelijk van de complexiteit van het project, lever ik de eerste concepten doorgaans binnen 5 tot 7 werkdagen aan.</p>
-                        </div>
-                    </div>
-                </details>
-                <details>
-                    <summary>Wat hebben jullie nodig om te starten?</summary>
-                    <div class="faq-content-wrapper">
-                        <div class="details-content">
-                            <p>Ik ontvang graag plattegronden (dwg/pdf), 3D modellen (indien bij de hand), aanzichten, en een moodboard of specificatie van materialen en kleuren.</p>
-                        </div>
-                    </div>
-                </details>
-                <details>
-                    <summary>Zijn revisierondes inbegrepen?</summary>
-                    <div class="faq-content-wrapper">
-                        <div class="details-content">
-                            <p>Ja, in mijn pakketten zit standaard één correctieronde verwerkt om tot het perfecte eindresultaat te komen.</p>
-                        </div>
-                    </div>
-                </details>
-            </div>
-        </div>
-    </section>
+            document.body.style.overflow = dropdownMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
 
-    <!-- ================= CONTACT ================= -->
-    <section id="contact" class="section">
-        <div class="container grid-2">
-            <div class="contact-text animate-on-scroll">
-                <h2>Laten we samenwerken</h2>
-                <p>Klaar om uw project visueel tot leven te wekken? Neem contact met mij op voor een kennismaking of vraag direct een vrijblijvende offerte aan.</p>
-                
-                <div class="button-group">
-                    <a href="offerte1.html" class="btn btn-secondary">Offerte aanvragen</a>
-                    <a href="mailto:info@huisvisual.nl" class="btn btn-secondary">Contact opnemen</a>
-                </div>
-            </div>
-            <div class="contact-image animate-on-scroll delay-1">
-                <img src="https://huisvisual.x02.me/i/UTKD.webp" alt="Contact Huisvisual" loading="lazy">
-            </div>
-        </div>
-    </section>
-
-    <!-- ================= FOOTER ================= -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-links">
-                <span>HuisVisual 2026</span>
-                <a href="https://www.instagram.com/huisvisual.nl/">Instagram</a>
-                <a href="offerte1.html">Offerte Aanvragen</a>
-            </div>
-            <div class="footer-links">
-                <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
-                <span>Sjors Maas</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ================= JAVASCRIPT ================= -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            // --- 0. LENIS SMOOTH SCROLLING (Momentum Scroll) ---
-            const lenis = new Lenis({
-                duration: 1.2,
-                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
-                direction: 'vertical',
-                gestureDirection: 'vertical',
-                smooth: true,
-                mouseMultiplier: 1,
-                smoothTouch: false,
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                dropdownMenu.classList.remove('active');
+                document.body.classList.remove('menu-is-open');
+                document.body.style.overflow = 'auto';
             });
+        });
 
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
+        // --- 2. SCROLL ANIMATIES (FADE IN/UP) ---
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.1
+        };
 
-
-            // --- 1. HAMBURGER MENU & LOGO VERBERGEN ---
-            const hamburger = document.getElementById('hamburger');
-            const dropdownMenu = document.getElementById('dropdown-menu');
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('active');
-                dropdownMenu.classList.toggle('active');
-                document.body.classList.toggle('menu-is-open');
-                
-                if (dropdownMenu.classList.contains('active')) {
-                    lenis.stop(); // Stop scrollen op de achtergrond als menu open is
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    lenis.start();
-                    document.body.style.overflow = 'auto';
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
                 }
             });
+        }, observerOptions);
 
-            // Smooth scroll anchor links met Lenis instellen
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Menu sluiten
-                    hamburger.classList.remove('active');
-                    dropdownMenu.classList.remove('active');
-                    document.body.classList.remove('menu-is-open');
-                    document.body.style.overflow = 'auto';
-                    lenis.start(); // Herstart scrollen
-                    
-                    // Naar de sectie scrollen
-                    const targetId = link.getAttribute('href');
-                    const targetSection = document.querySelector(targetId);
-                    if (targetSection) {
-                        lenis.scrollTo(targetSection);
-                    }
-                });
-            });
+        animatedElements.forEach(el => scrollObserver.observe(el));
 
-            // Zorg dat het logo in de top-header óók netjes smooth scrollt
-            document.querySelector('.nav-link-logo').addEventListener('click', (e) => {
-                e.preventDefault();
-                lenis.scrollTo('#hero');
-            });
+        // --- 3. ZACHTE Q&A ACCORDEON ---
+        const faqs = document.querySelectorAll('.faq-accordion details');
 
-            // --- 2. SCROLL ANIMATIES (FADE IN/UP) ---
-            const animatedElements = document.querySelectorAll('.animate-on-scroll');
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px 0px -10% 0px',
-                threshold: 0.1
-            };
+        faqs.forEach(faq => {
+            const summary = faq.querySelector('summary');
+            
+            summary.addEventListener('click', (e) => {
+                e.preventDefault(); 
+                const isOpen = faq.classList.contains('is-open');
 
-            const scrollObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            animatedElements.forEach(el => scrollObserver.observe(el));
-
-            // --- 3. ZACHTE Q&A ACCORDEON ---
-            const faqs = document.querySelectorAll('.faq-accordion details');
-
-            faqs.forEach(faq => {
-                const summary = faq.querySelector('summary');
-                
-                summary.addEventListener('click', (e) => {
-                    e.preventDefault(); 
-                    const isOpen = faq.classList.contains('is-open');
-
-                    // Sluit alle ANDERE open vragen
-                    faqs.forEach(f => {
-                        if (f !== faq && f.classList.contains('is-open')) {
-                            f.classList.remove('is-open');
-                            setTimeout(() => {
-                                if (!f.classList.contains('is-open')) f.removeAttribute('open');
-                            }, 400); 
-                        }
-                    });
-
-                    // Toggle de vraag waar op geklikt is
-                    if (!isOpen) {
-                        faq.setAttribute('open', '');
+                // Sluit alle ANDERE open vragen
+                faqs.forEach(f => {
+                    if (f !== faq && f.classList.contains('is-open')) {
+                        f.classList.remove('is-open');
                         setTimeout(() => {
-                            faq.classList.add('is-open');
-                        }, 10);
-                    } else {
-                        faq.classList.remove('is-open');
-                        setTimeout(() => {
-                            if (!faq.classList.contains('is-open')) faq.removeAttribute('open');
-                        }, 400);
+                            if (!f.classList.contains('is-open')) f.removeAttribute('open');
+                        }, 400); 
                     }
                 });
+
+                // Toggle de vraag waar op geklikt is
+                if (!isOpen) {
+                    faq.setAttribute('open', '');
+                    setTimeout(() => {
+                        faq.classList.add('is-open');
+                    }, 10);
+                } else {
+                    faq.classList.remove('is-open');
+                    setTimeout(() => {
+                        if (!faq.classList.contains('is-open')) faq.removeAttribute('open');
+                    }, 400);
+                }
             });
-
-            // --- 4. LOGO PLAY-ONCE LOGICA ---
-            const logos = document.querySelectorAll('.play-once-logo');
-            setTimeout(() => {
-                logos.forEach(logo => {
-                    let currentSrc = logo.src;
-                    if(currentSrc.includes('.gif')) {
-                        logo.src = currentSrc.replace('.gif', '.webp'); 
-                    }
-                });
-            }, 3800); 
-
         });
-    </script>
+
+        // --- 4. LOGO PLAY-ONCE LOGICA ---
+        const logos = document.querySelectorAll('.play-once-logo');
+        setTimeout(() => {
+            logos.forEach(logo => {
+                let currentSrc = logo.src;
+                if(currentSrc.includes('.gif')) {
+                    logo.src = currentSrc.replace('.gif', '.webp'); 
+                }
+            });
+        }, 3800); 
+
+    });
+</script>
 </body>
 </html>

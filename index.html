@@ -159,6 +159,13 @@
             height: 220px; 
             width: auto;
             filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
+            transition: opacity 0.4s ease, visibility 0.4s ease; /* Fade animatie toegevoegd */
+        }
+
+        /* Verberg logo als menu open is (class via Javascript) */
+        body.menu-is-open .logo-header {
+            opacity: 0;
+            visibility: hidden;
         }
 
         /* Hamburger Menu */
@@ -203,6 +210,7 @@
             visibility: hidden;
             transition: all 0.5s ease;
             z-index: 999;
+            padding: 2rem;
         }
 
         .dropdown-menu.active {
@@ -310,9 +318,10 @@
         .service-item {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 2rem;
             padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(168, 159, 146, 0.4); /* Subtiele taupe lijn */
+            border-bottom: 1px solid rgba(168, 159, 146, 0.4); 
             transition: all 0.4s ease;
             cursor: pointer;
         }
@@ -382,7 +391,7 @@
             font-family: var(--font-sans);
             font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
             color: var(--clr-black);
             margin: 0;
         }
@@ -553,6 +562,14 @@
                 justify-content: center;
             }
 
+            /* Mobiel Menu styling verbeteringen */
+            .nav-link { 
+                font-size: 2rem; /* Iets kleiner en chiquer voor mobiel */
+            }
+            .dropdown-menu li { 
+                margin: 1.5rem 0; /* Iets compacter onder elkaar */
+            }
+
             /* Mobiele fix voor de 'Mogelijkheden' lijst */
             .service-item {
                 flex-wrap: wrap;
@@ -563,8 +580,8 @@
             }
             .service-item .portfolio-text {
                 margin-left: 0;
-                padding-left: 2rem; /* Tekst valt netjes inspringen onder de titel */
-                text-align: left; /* Op mobiel links uitgelijnd */
+                padding-left: 2rem; 
+                text-align: left; 
                 max-width: 100%;
                 width: 100%;
             }
@@ -599,7 +616,7 @@
         <ul>
             <li><a href="#about" class="nav-link">Over Ons</a></li>
             <li><a href="#process" class="nav-link">Werkwijze</a></li>
-            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="#portfolio" class="nav-link">Beelden</a></li>
             <li><a href="#services" class="nav-link">Mogelijkheden</a></li>
             <li><a href="#faq" class="nav-link">Veelgestelde vragen</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -720,7 +737,6 @@
 
     <!-- ================= GROOT GEANIMEERD LOGO (MID-PAGE) ================= -->
     <section id="big-logo" class="section">
-        <!-- Let op: sectie bg kleur afgewisseld voor zebra-effect! -->
         <div class="container animate-on-scroll">
             <div class="logo-section-wrapper">
                 <img src="https://huisvisual.x02.me/i/9GTY.png" alt="Huisvisual Geanimeerd Logo" class="logo-large play-once-logo" loading="lazy">
@@ -799,7 +815,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- 1. HAMBURGER MENU ---
+            // --- 1. HAMBURGER MENU & LOGO VERBERGEN ---
             const hamburger = document.getElementById('hamburger');
             const dropdownMenu = document.getElementById('dropdown-menu');
             const navLinks = document.querySelectorAll('.nav-link');
@@ -807,6 +823,10 @@
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 dropdownMenu.classList.toggle('active');
+                
+                // Toggle de class op de body om het logo te verbergen via CSS
+                document.body.classList.toggle('menu-is-open');
+                
                 document.body.style.overflow = dropdownMenu.classList.contains('active') ? 'hidden' : 'auto';
             });
 
@@ -814,6 +834,7 @@
                 link.addEventListener('click', () => {
                     hamburger.classList.remove('active');
                     dropdownMenu.classList.remove('active');
+                    document.body.classList.remove('menu-is-open');
                     document.body.style.overflow = 'auto';
                 });
             });

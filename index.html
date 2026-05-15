@@ -366,7 +366,7 @@
                 transform: translateX(15px);
             }
         }
-
+        
         /* Desktop Foto verhoudingen */
         @media (min-width: 901px) {
             .about-image img, 
@@ -380,6 +380,18 @@
             }
         }
 
+        /* Smooth scroll animatie inschakelen */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respecteer de 'Minder beweging' instelling van de gebruiker */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+        
         /* ================= MID-PAGE GROOT LOGO ================= */
         .logo-section-wrapper {
             display: flex;

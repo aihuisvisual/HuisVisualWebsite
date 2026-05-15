@@ -301,60 +301,98 @@
         }
 
         /* ================= MOGELIJKHEDEN (NIEUW) ================= */
-        .services-list {
-            display: flex;
-            flex-direction: column;
-            margin-top: 2rem;
-        }
+/* De container voor de lijst */
+.services-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
 
-        .service-item {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid rgba(168, 159, 146, 0.4); /* Subtiele taupe lijn */
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
+/* Het item zelf: we voegen justify-content toe */
+.service-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Drukt de elementen uit elkaar */
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(168, 159, 146, 0.4);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
 
-        .service-item:first-child {
-            border-top: 1px solid rgba(168, 159, 146, 0.4);
-        }
+.service-item:first-child {
+    border-top: 1px solid rgba(168, 159, 146, 0.4);
+}
 
-        .service-number {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            color: var(--clr-taupe);
-            font-weight: 500;
-            width: 20px;
-        }
+/* Nummer: iets breder maken zodat titels uitlijnen */
+.service-number {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--clr-taupe);
+    font-weight: 500;
+    width: 40px; /* Verhoogd van 20px voor betere uitlijning */
+    flex-shrink: 0; /* Voorkomt dat het nummer wordt ingedrukt */
+}
 
-        .service-title {
-            font-family: var(--font-main);
-            font-size: 1.8rem;
-            color: var(--clr-navy);
-            margin-bottom: 0;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
-        }
+/* Titel: flex-grow zorgt dat hij de ruimte vult */
+.service-title {
+    font-family: var(--font-main);
+    font-size: 1.8rem;
+    color: var(--clr-navy);
+    margin: 0;
+    flex: 1; /* Neemt de beschikbare ruimte in */
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
+}
 
-        /* Hover Effecten voor de lijst */
-        .service-item:hover .service-title {
-            color: var(--clr-taupe);
-            transform: translateX(15px);
-        }
+/* De beschrijving aan de rechterkant */
+.portfolio-text {
+    flex: 1; /* Neemt ook ruimte in */
+    text-align: right; /* Lijnt tekst rechts uit */
+}
 
-        /* Desktop Foto verhoudingen */
-        @media (min-width: 901px) {
-            .about-image img, 
-            .process-image img, 
-            .services-image img,
-            .contact-image img {
-                height: 85vh; 
-            }
-            .portfolio-item img {
-                height: 90vh; 
-            }
-        }
+.portfolio-text p {
+    margin: 0;
+    font-style: italic; /* Zoals in je voorbeeld afbeelding */
+    font-size: 1rem;
+    color: var(--clr-navy);
+    opacity: 0.8;
+}
+
+/* Hover Effecten */
+.service-item:hover .service-title {
+    color: var(--clr-taupe);
+    transform: translateX(10px);
+}
+
+/* Desktop Foto verhoudingen (ongewijzigd) */
+@media (min-width: 901px) {
+    .about-image img, 
+    .process-image img, 
+    .services-image img,
+    .contact-image img {
+        height: 85vh; 
+        object-fit: cover; /* Tip: voeg dit toe om vervorming te voorkomen */
+    }
+    .portfolio-item img {
+        height: 90vh; 
+        object-fit: cover;
+    }
+}
+
+/* Belangrijk: Mobiele weergave aanpassing */
+@media (max-width: 768px) {
+    .service-item {
+        flex-direction: column; /* Stapel ze op mobiel */
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .portfolio-text {
+        text-align: left;
+    }
+    .service-item:hover .service-title {
+        transform: none; /* Geen zijwaartse beweging op mobiel */
+    }
+}
 
         /* ================= MID-PAGE GROOT LOGO ================= */
         .logo-section-wrapper {

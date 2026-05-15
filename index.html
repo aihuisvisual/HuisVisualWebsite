@@ -62,7 +62,7 @@
             background-color: var(--clr-white);
         }
 
-        img, video, iframe {
+        img, video {
             max-width: 100%;
             display: block;
         }
@@ -237,19 +237,14 @@
             overflow: hidden;
         }
 
-        /* Vimeo iframe specifieke CSS om het als dekkende background te laten werken */
         .hero-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100vw;
-            height: 56.25vw; /* 16:9 verhouding (100 / 16 * 9) */
-            min-height: 100vh;
-            min-width: 177.77vh; /* 16:9 verhouding (100 / 9 * 16) */
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
             z-index: 1;
-            pointer-events: none; /* Zorgt dat je niet per ongeluk op de video klikt */
-            border: none;
         }
 
         .hero-overlay {
@@ -529,28 +524,22 @@
         </div>
     </header>
 
-    <!-- Navigatie -->
+    <!-- Navigatie uit de header gehaald zodat linkjes doorklikbaar zijn -->
     <nav class="dropdown-menu" id="dropdown-menu">
         <ul>
             <li><a href="#about" class="nav-link">Over Ons</a></li>
             <li><a href="#process" class="nav-link">Werkwijze</a></li>
             <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-            <li><a href="#faq" class="nav-link">Q&A</a></li>
+            <li><a href="#faq" class="nav-link">Veelgestelde vragen</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
         </ul>
     </nav>
 
     <!-- ================= HERO SECTIE ================= -->
     <section id="hero" class="hero-section">
-        <!-- Vimeo Background iFrame -->
-        <iframe 
-            class="hero-video"
-            src="https://player.vimeo.com/video/1192433101?background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-            frameborder="0" 
-            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" 
-            title="videosite_apo8">
-        </iframe>
+        <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+            <source src="https://huisvisual.x02.me/i/8SFF.webm" type="video/webm">
+        </video>
         <div class="hero-overlay"></div>
     </section>
 
@@ -681,12 +670,11 @@
     <footer class="site-footer">
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#voorwaarden">Algemene Voorwaarden</a>
-                <a href="#projecten">Projecten</a>
                 <a href="https://www.instagram.com/huisvisual.nl/">Instagram</a>
             </div>
-            <div class="footer-copyright">
-                <p>&copy; 2026 HUISVISUAL</p>
+            <div class="footer-links">
+                <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
+                <li>Sjors Maas</li>
             </div>
         </div>
     </footer>

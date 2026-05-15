@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Huisvisual | High-end 3D Visualisaties</title>
 
+    <!-- Importeer een high-end, strak font voor de standaard teksten -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
         /* ================= CSS VARIABELEN & BASIS ================= */
         @font-face {
-    font-family: 'Aguilette';
-    /* PAS HIERONDER HET PAD AAN NAAR JOUW BESTAND */
-    src: url('assets/Aiguilette.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
+            font-family: 'Aguilette';
+            src: url('assets/Aiguilette.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             /* Kleurenpalet Huisvisual */
             --clr-navy: #0D1B2D;
@@ -23,19 +28,17 @@
             --clr-black: #000000;
             --clr-white: #FFFFFF;
 
-            /* Typografie (Aguilette) */
-            /* Zorg dat je de font-bestanden hebt of installeert op de server */
+            /* Typografie */
             --font-main: 'Aguilette', 'Playfair Display', 'Times New Roman', serif;
-            --font-sans: 'Helvetica Neue', Arial, sans-serif; 
+            --font-sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif; /* Aangepast naar Manrope */
 
-            /* Afstanden (White space voor een high-end, rustige look) */
+            /* Afstanden */
             --space-sm: 1rem;
             --space-md: 2rem;
             --space-lg: 5rem;
-            --space-xl: 12vh;
+            --space-xl: 15vh;
         }
 
-        /* Base Reset */
         * {
             margin: 0;
             padding: 0;
@@ -55,7 +58,6 @@
             overflow-x: hidden;
         }
 
-        /* Voor secties die wit moeten zijn (afwisseling in de rustige kleuren) */
         .bg-white {
             background-color: var(--clr-white);
         }
@@ -73,7 +75,7 @@
         }
 
         h2 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: var(--space-md);
         }
 
@@ -85,7 +87,7 @@
         p {
             font-family: var(--font-sans);
             font-weight: 300;
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: var(--clr-navy);
             margin-bottom: var(--space-sm);
         }
@@ -98,7 +100,7 @@
         /* ================= LAYOUT CONTAINERS ================= */
         .container {
             width: 90%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -118,27 +120,21 @@
             align-items: center;
         }
 
-        /* ================= HEADER & NAVIGATIE ================= */
+        /* ================= HEADER (Zwevend & Onzichtbaar) ================= */
         .site-header {
-            position: fixed;
+            position: absolute; /* Ligt over de hero heen, scrolt mee omhoog */
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 1.5rem 5%;
-            transition: background-color 0.4s ease, border-bottom 0.4s ease;
-        }
-
-        .site-header.scrolled {
-            background-color: rgba(232, 226, 214, 0.95); /* Semi-transparant beige */
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(168, 159, 146, 0.2);
+            padding: 2rem 5%;
+            pointer-events: none; /* Zorgt dat je door de lege ruimte kunt klikken */
         }
 
         .header-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start; /* Uitlijnen naar boven ivm groot logo */
         }
 
         .header-left, .header-right {
@@ -148,17 +144,22 @@
         .header-right {
             display: flex;
             justify-content: flex-end;
+            pointer-events: auto; /* Klikken op menu weer activeren */
         }
 
         .header-center {
             width: 33.33%;
             display: flex;
             justify-content: center;
+            pointer-events: auto; /* Klikken op logo activeren */
         }
 
+        /* EXTREME HEADER LOGO */
         .logo-header {
-            height: 40px; /* Hoogte van het logo in de header */
+            height: 220px; /* Nog 2x groter gemaakt */
             width: auto;
+            filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
+            margin-top: -1rem; /* Visuele correctie */
         }
 
         /* Hamburger Menu */
@@ -172,19 +173,20 @@
 
         .hamburger .line {
             display: block;
-            width: 30px;
+            width: 35px;
             height: 1px;
             background-color: var(--clr-navy);
-            margin: 6px 0;
+            margin: 8px 0;
             transition: all 0.3s ease;
         }
 
-        /* Actieve Hamburger (Kruisje) */
         .hamburger.active .line:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
+            transform: translateY(9px) rotate(45deg);
+            background-color: var(--clr-navy);
         }
         .hamburger.active .line:nth-child(2) {
-            transform: translateY(-7px) rotate(-45deg);
+            transform: translateY(-9px) rotate(-45deg);
+            background-color: var(--clr-navy);
         }
 
         /* Dropdown Menu Overlay */
@@ -219,7 +221,7 @@
         }
 
         .nav-link {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--clr-navy);
             transition: color 0.3s ease;
         }
@@ -255,23 +257,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(13, 27, 45, 0.15); /* Subtiele overlay zodat menu goed leesbaar is */
+            background: rgba(13, 27, 45, 0.1); 
             z-index: 2;
         }
 
-        /* ================= AFBEELDINGEN & VERHOUDINGEN ================= */
-        /* Esthetische verhoudingen voor architectuurfoto's */
+        /* ================= AFBEELDINGEN ================= */
         .about-image img, 
         .process-image img, 
-        .portfolio-item img, 
         .contact-image img {
             width: 100%;
-            height: auto;
             object-fit: cover;
-            aspect-ratio: 4/5; 
         }
 
-        /* ================= WERKWIJZE (STAPPENPLAN) ================= */
         .process-steps {
             display: flex;
             flex-direction: column;
@@ -283,12 +280,16 @@
             padding-bottom: 1rem;
         }
 
-        /* ================= PORTFOLIO ================= */
         .portfolio-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: var(--space-md);
+            gap: 2rem;
             margin-bottom: var(--space-md);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            object-fit: cover;
         }
 
         .portfolio-text {
@@ -300,16 +301,38 @@
             color: var(--clr-taupe);
         }
 
-        /* ================= GROOT GEANIMEERD LOGO ================= */
-        .center-content {
+        @media (min-width: 901px) {
+            .about-image img, 
+            .process-image img, 
+            .contact-image img {
+                height: 85vh; 
+            }
+            .portfolio-item img {
+                height: 90vh; 
+            }
+        }
+
+        /* ================= MID-PAGE GROOT LOGO ================= */
+        .logo-section-wrapper {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            text-align: center;
         }
 
         .logo-large {
-            max-width: 500px;
-            width: 100%;
+            max-width: 900px;
+            width: 90%;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-subtext {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--clr-taupe);
+            margin: 0;
         }
 
         /* ================= Q&A ACCORDEON ================= */
@@ -322,63 +345,69 @@
             font-family: var(--font-main);
             font-size: 1.4rem;
             cursor: pointer;
-            padding: 1rem 0;
-            list-style: none; /* Verwijdert standaard pijltje */
+            padding: 1.5rem 0;
+            list-style: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        /* Zelfgemaakt plusje */
-        .faq-accordion summary::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: var(--clr-taupe);
-            transition: transform 0.3s ease;
-        }
-
-        .faq-accordion details[open] summary::after {
-            transform: rotate(45deg); /* Wordt een kruisje */
         }
 
         .faq-accordion summary::-webkit-details-marker {
             display: none;
         }
 
+        .faq-accordion summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--clr-taupe);
+            transition: transform 0.4s ease;
+        }
+
+        .faq-content-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            transition: grid-template-rows 0.5s ease, opacity 0.5s ease;
+        }
+
         .details-content {
+            overflow: hidden;
+            padding-bottom: 0;
+            color: var(--clr-navy);
+        }
+
+        details.is-open .faq-content-wrapper {
+            grid-template-rows: 1fr;
+            opacity: 1;
             padding-bottom: 1.5rem;
         }
 
-        /* ================= KNOPPEN ================= */
+        details.is-open summary::after {
+            transform: rotate(45deg);
+        }
+
+        /* ================= KNOPPEN (BEIDE SECONDARY) ================= */
         .button-group {
             display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: 1.5rem;
+            margin-top: 3rem;
             flex-wrap: wrap;
         }
 
         .btn {
             font-family: var(--font-sans);
-            padding: 1rem 2.5rem;
+            padding: 1.2rem 3rem;
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             cursor: pointer;
-            border: 1px solid var(--clr-navy);
+            border-radius: 50px; 
+            border: 1px solid var(--clr-navy); 
             display: inline-block;
         }
 
-        .btn-primary {
-            background-color: var(--clr-navy);
-            color: var(--clr-white);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--clr-taupe);
-            border-color: var(--clr-taupe);
-        }
-
+        /* Beide knoppen gebruiken nu deze styling */
         .btn-secondary {
             background-color: transparent;
             color: var(--clr-navy);
@@ -389,25 +418,33 @@
             color: var(--clr-white);
         }
 
-        /* ================= FOOTER ================= */
+        /* ================= FOOTER (Dun & Copyright Rechts) ================= */
         .site-footer {
-            background-color: var(--clr-navy);
-            color: var(--clr-white);
-            padding: 1.5rem 0;
+            background-color: var(--clr-beige); 
+            color: var(--clr-navy);
+            padding: 1rem 5%; /* Heel dun */
             font-family: var(--font-sans);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .footer-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; /* Links helemaal links, copyright helemaal rechts */
             align-items: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 1.5rem;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
-            margin-left: 2rem;
             transition: color 0.3s ease;
         }
 
@@ -415,11 +452,15 @@
             color: var(--clr-taupe);
         }
 
+        .footer-copyright {
+            white-space: nowrap; /* Voorkomt dat copyright op 2 regels breekt */
+        }
+
         /* ================= SCROLL ANIMATIES ================= */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(40px);
-            transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .animate-on-scroll.is-visible {
@@ -432,51 +473,55 @@
         .delay-3 { transition-delay: 0.3s; }
         .delay-4 { transition-delay: 0.4s; }
 
-        /* ================= RESPONSIVE DESIGN ================= */
+        /* ================= RESPONSIVE ================= */
         @media (max-width: 900px) {
             .grid-2 {
                 grid-template-columns: 1fr;
                 gap: var(--space-md);
             }
-            /* Foto onder tekst op mobiel/tablet */
             .about-image { grid-row: 2; }
             .contact-image { grid-row: 2; }
             .process-image { grid-row: 2; }
+            
+            .about-image img, .process-image img, .contact-image img, .portfolio-item img {
+                aspect-ratio: 4/5;
+                height: auto;
+            }
         }
 
         @media (max-width: 768px) {
             h2 { font-size: 2rem; }
-            
             .portfolio-grid { grid-template-columns: 1fr; }
-
+            
+            /* Logo schalen op mobiel zodat het niet het hele scherm vult */
+            .logo-header { height: 100px; margin-top: 0; }
+            
+            /* Footer op mobiel onder elkaar centreren */
             .footer-content {
                 flex-direction: column;
                 text-align: center;
-                gap: 1.5rem;
+                justify-content: center;
             }
-
-            .footer-links a {
-                display: block;
-                margin: 0.5rem 0;
+            .footer-links {
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ================= HEADER ================= -->
-    <header class="site-header">
+    <!-- ================= HEADER (Volledig Onzichtbaar / Zwevend) ================= -->
+    <header class="site-header" id="header">
         <div class="header-container">
             <div class="header-left"></div>
             
-            <!-- Logo Placeholder 1: Geanimeerde GIF in Header -->
+            <!-- Logo: Extreem groot -->
             <div class="header-center">
                 <a href="#hero">
-                    <img src="https://huisvisual.x02.me/i/BRSDUY.gif" alt="Huisvisual Geanimeerd Logo" class="logo-header">
+                    <img src="https://huisvisual.x02.me/i/BRSDUY.gif" alt="https://huisvisual.x02.me/i/MWWJJP.jpg" class="logo-header play-once-logo">
                 </a>
             </div>
             
-            <!-- Hamburger Menu -->
             <div class="header-right">
                 <button class="hamburger" id="hamburger" aria-label="Menu">
                     <span class="line"></span>
@@ -485,7 +530,6 @@
             </div>
         </div>
 
-        <!-- Dropdown Menu Navigatie -->
         <nav class="dropdown-menu" id="dropdown-menu">
             <ul>
                 <li><a href="#about" class="nav-link">Over Ons</a></li>
@@ -499,10 +543,8 @@
 
     <!-- ================= HERO SECTIE ================= -->
     <section id="hero" class="hero-section">
-        <!-- VIDEO PLACEHOLDER (Schermvullend) -->
         <video class="hero-video" autoplay muted loop playsinline>
-            <source src="https://files.catbox.moe/hp4ngb.mp4" type="video/mp4">
-            Uw browser ondersteunt geen video.
+            <source src="https://huisvisual.x02.me/i/8SFF.webm" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
     </section>
@@ -516,19 +558,17 @@
                 <p>Onze minimalistische benadering zorgt ervoor dat uw ontwerp altijd de hoofdrol speelt in elke visualisatie.</p>
             </div>
             <div class="about-image animate-on-scroll delay-1">
-                <!-- FOTO PLACEHOLDER 1 -->
                 <img src="https://huisvisual.x02.me/i/DZ6H.webp" alt="3D visualisatie interieur" loading="lazy">
             </div>
         </div>
     </section>
 
-    <!-- ================= GEANIMEERD STAPPENPLAN ================= -->
+    <!-- ================= WERKWIJZE ================= -->
     <section id="process" class="section bg-white">
         <div class="container">
             <h2 class="animate-on-scroll">Onze Werkwijze</h2>
             <div class="grid-2 process-grid">
                 <div class="process-image animate-on-scroll">
-                    <!-- FOTO PLACEHOLDER 2 -->
                     <img src="https://huisvisual.x02.me/i/JDGP4Z.webp" alt="Het proces van 3D visualisatie" loading="lazy">
                 </div>
                 <div class="process-steps">
@@ -553,16 +593,14 @@
         </div>
     </section>
 
-    <!-- ================= PORTFOLIO HIGHLIGHT ================= -->
+    <!-- ================= PORTFOLIO ================= -->
     <section id="portfolio" class="section">
         <div class="container">
             <div class="portfolio-grid">
                 <div class="portfolio-item animate-on-scroll">
-                    <!-- FOTO PLACEHOLDER 3 -->
                     <img src="https://huisvisual.x02.me/i/5MY7.webp" alt="Portfolio project 1" loading="lazy">
                 </div>
                 <div class="portfolio-item animate-on-scroll delay-1">
-                    <!-- FOTO PLACEHOLDER 4 -->
                     <img src="https://huisvisual.x02.me/i/AGJNT.webp" alt="Portfolio project 2" loading="lazy">
                 </div>
             </div>
@@ -572,11 +610,13 @@
         </div>
     </section>
 
-    <!-- ================= GROOT GEANIMEERD LOGO ================= -->
+    <!-- ================= GROOT GEANIMEERD LOGO (MID-PAGE) ================= -->
     <section id="big-logo" class="section bg-white">
-        <div class="container center-content animate-on-scroll">
-            <!-- LOGO PLACEHOLDER 2: Groot geanimeerd GIF -->
-            <img src="https://huisvisual.x02.me/i/QEGW.gif" alt="Huisvisual Groot Geanimeerd Logo" class="logo-large" loading="lazy">
+        <div class="container animate-on-scroll">
+            <div class="logo-section-wrapper">
+                <img src="https://huisvisual.x02.me/i/QEGW.gif" alt="https://huisvisual.x02.me/i/D722ZT.jpg" class="logo-large play-once-logo" loading="lazy">
+                <p class="logo-subtext">Architectural Visualisation</p>
+            </div>
         </div>
     </section>
 
@@ -588,20 +628,26 @@
             <div class="faq-accordion animate-on-scroll delay-1">
                 <details>
                     <summary>Wat zijn de gemiddelde levertijden?</summary>
-                    <div class="details-content">
-                        <p>Afhankelijk van de complexiteit van het project, leveren wij de eerste concepten doorgaans binnen 5 tot 10 werkdagen aan.</p>
+                    <div class="faq-content-wrapper">
+                        <div class="details-content">
+                            <p>Afhankelijk van de complexiteit van het project, leveren wij de eerste concepten doorgaans binnen 5 tot 10 werkdagen aan.</p>
+                        </div>
                     </div>
                 </details>
                 <details>
                     <summary>Wat hebben jullie nodig om te starten?</summary>
-                    <div class="details-content">
-                        <p>We ontvangen graag plattegronden (dwg/pdf), aanzichten, en een moodboard of specificatie van materialen en kleuren.</p>
+                    <div class="faq-content-wrapper">
+                        <div class="details-content">
+                            <p>We ontvangen graag plattegronden (dwg/pdf), aanzichten, en een moodboard of specificatie van materialen en kleuren.</p>
+                        </div>
                     </div>
                 </details>
                 <details>
                     <summary>Zijn correctierondes inbegrepen?</summary>
-                    <div class="details-content">
-                        <p>Ja, in onze standaardpakketten zitten twee correctierondes verwerkt om tot het perfecte eindresultaat te komen.</p>
+                    <div class="faq-content-wrapper">
+                        <div class="details-content">
+                            <p>Ja, in onze standaardpakketten zitten twee correctierondes verwerkt om tot het perfecte eindresultaat te komen.</p>
+                        </div>
                     </div>
                 </details>
             </div>
@@ -616,12 +662,12 @@
                 <p>Klaar om uw project visueel tot leven te wekken? Neem contact met ons op voor een kennismaking of vraag direct een vrijblijvende offerte aan.</p>
                 
                 <div class="button-group">
-                    <a href="#offerte" class="btn btn-primary">Offerte aanvragen</a>
-                    <a href="mailto:info@huisvisual.nl" class="btn btn-secondary">Contact</a>
+                    <!-- Beide knoppen zijn nu identiek in design (.btn-secondary) -->
+                    <a href="#offerte" class="btn btn-secondary">Offerte aanvragen</a>
+                    <a href="mailto:info@huisvisual.nl" class="btn btn-secondary">Contact opnemen</a>
                 </div>
             </div>
             <div class="contact-image animate-on-scroll delay-1">
-                <!-- FOTO PLACEHOLDER 5 -->
                 <img src="https://huisvisual.x02.me/i/UTKD.webp" alt="Contact Huisvisual" loading="lazy">
             </div>
         </div>
@@ -629,12 +675,16 @@
 
     <!-- ================= FOOTER ================= -->
     <footer class="site-footer">
-        <div class="container footer-content">
-            <p>&copy; 2026 Huisvisual</p>
+        <div class="footer-content">
+            <!-- Linkerkant links -->
             <div class="footer-links">
                 <a href="#voorwaarden">Algemene Voorwaarden</a>
-                <a href="#privacy">Privacy Policy</a>
-                <a href="#instagram">Instagram</a>
+                <a href="#projecten">Projecten</a>
+                <a href="https://www.instagram.com/huisvisual.nl/">Instagram</a>
+            </div>
+            <!-- Rechterkant copyright -->
+            <div class="footer-copyright">
+                <p>&copy; 2026 HUISVISUAL</p>
             </div>
         </div>
     </footer>
@@ -647,21 +697,13 @@
             const hamburger = document.getElementById('hamburger');
             const dropdownMenu = document.getElementById('dropdown-menu');
             const navLinks = document.querySelectorAll('.nav-link');
-            const header = document.querySelector('.site-header');
 
             hamburger.addEventListener('click', () => {
                 hamburger.classList.toggle('active');
                 dropdownMenu.classList.toggle('active');
-                
-                // Voorkom scrollen als menu open is
-                if(dropdownMenu.classList.contains('active')) {
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    document.body.style.overflow = 'auto';
-                }
+                document.body.style.overflow = dropdownMenu.classList.contains('active') ? 'hidden' : 'auto';
             });
 
-            // Sluit menu bij klik op link
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     hamburger.classList.remove('active');
@@ -670,18 +712,8 @@
                 });
             });
 
-            // --- 2. HEADER SCROLL BACKGROUND ---
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-
-            // --- 3. SCROLL ANIMATIES (FADE IN/UP) ---
+            // --- 2. SCROLL ANIMATIES (FADE IN/UP) ---
             const animatedElements = document.querySelectorAll('.animate-on-scroll');
-
             const observerOptions = {
                 root: null,
                 rootMargin: '0px 0px -10% 0px',
@@ -692,26 +724,47 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Animatie speelt slechts 1x af
+                        observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
             animatedElements.forEach(el => scrollObserver.observe(el));
 
-            // --- 4. Q&A ACCORDEON GEDRAG ---
-            // Zorg dat er altijd maar maximaal 1 open staat voor een strak design
-            const detailsElements = document.querySelectorAll('.faq-accordion details');
+            // --- 3. ZACHTE Q&A ACCORDEON ---
+            const faqs = document.querySelectorAll('.faq-accordion details');
 
-            detailsElements.forEach((targetDetail) => {
-                targetDetail.addEventListener('click', () => {
-                    detailsElements.forEach((detail) => {
-                        if (detail !== targetDetail) {
-                            detail.removeAttribute('open');
-                        }
+            faqs.forEach(faq => {
+                const summary = faq.querySelector('summary');
+                
+                summary.addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    const isOpen = faq.classList.contains('is-open');
+
+                    faqs.forEach(f => {
+                        f.classList.remove('is-open');
+                        setTimeout(() => f.removeAttribute('open'), 400); 
                     });
+
+                    if (!isOpen) {
+                        faq.setAttribute('open', '');
+                        setTimeout(() => {
+                            faq.classList.add('is-open');
+                        }, 10);
+                    }
                 });
             });
+
+            // --- 4. LOGO PLAY-ONCE LOGICA ---
+            const logos = document.querySelectorAll('.play-once-logo');
+            setTimeout(() => {
+                logos.forEach(logo => {
+                    let currentSrc = logo.src;
+                    if(currentSrc.includes('.gif')) {
+                        logo.src = currentSrc.replace('.gif', '.webp'); 
+                    }
+                });
+            }, 3800); 
 
         });
     </script>

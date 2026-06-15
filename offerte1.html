@@ -22,7 +22,6 @@
         }
 
         :root {
-            var(--clr-navy): #0D1B2D;
             --clr-navy: #0D1B2D;
             --clr-beige: #E8E2D6;
             --clr-taupe: #A89F92;
@@ -50,7 +49,7 @@
         }
 
         body {
-            background-color: var(--clr-white); /* Gehele pagina Warm Beige */
+            background-color: var(--clr-white); 
             color: var(--clr-navy);
             font-family: var(--font-main);
             line-height: 1.6;
@@ -77,13 +76,13 @@
         /* ================= LAYOUT ================= */
         .container {
             width: 90%;
-            max-width: 1200px; /* Iets smaller dan homepage voor betere leesbaarheid formulier */
+            max-width: 1200px; 
             margin: 0 auto;
         }
 
-        /* ================= HEADER (Statisch / Solid Beige) ================= */
+        /* ================= HEADER ================= */
         .site-header {
-            position: relative; /* Niet zwevend over video, gewoon statisch bovenaan */
+            position: relative; 
             width: 100%;
             z-index: 1000;
             padding: 2rem 5% 0 5%;
@@ -101,7 +100,7 @@
         .header-center { width: 33.33%; display: flex; justify-content: center; }
 
         .logo-header {
-            height: 220px; /* Ietsje kleiner ingedeeld dan homepage voor een formulier pagina */
+            height: 220px; 
             width: auto;
         }
 
@@ -139,7 +138,7 @@
 
         .quote-grid {
             display: grid;
-            grid-template-columns: 1fr 1.5fr; /* Linker kolom iets smaller dan formulier kolom */
+            grid-template-columns: 1fr 1.5fr; 
             gap: var(--space-lg);
             align-items: flex-start;
         }
@@ -198,7 +197,7 @@
         .form-wrapper {
             background-color: var(--clr-beige);
             padding: 4rem 5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.03); /* Zeer subtiele schaduw */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03); 
         }
 
         .form-section-title {
@@ -240,7 +239,7 @@
             margin-bottom: 0.5rem;
         }
 
-        /* De minimalistische input stijl (alleen bottom border) */
+        /* De minimalistische input stijl */
         .form-control {
             width: 100%;
             border: none;
@@ -263,7 +262,6 @@
             border-bottom-color: var(--clr-navy);
         }
 
-        /* Select styling reset */
         select.form-control {
             appearance: none;
             -webkit-appearance: none;
@@ -272,7 +270,6 @@
             border-radius: 0;
         }
 
-        /* Textarea specifieke padding */
         textarea.form-control {
             resize: vertical;
             min-height: 120px;
@@ -289,12 +286,12 @@
             letter-spacing: 2px;
             transition: all 0.4s ease;
             cursor: pointer;
-            border-radius: 50px; /* Pill-shape */
-            border: 1px solid var(--clr-navy); /* Dunne border conform secondary */
+            border-radius: 50px; 
+            border: 1px solid var(--clr-navy); 
             background-color: transparent;
             color: var(--clr-navy);
             display: inline-block;
-            width: 100%; /* Knop over de volle breedte voor impact, of haal dit weg voor knop links */
+            width: 100%; 
             text-align: center;
         }
 
@@ -385,13 +382,14 @@
         </div>
     </header>
 
-    <!-- Navigatie: Linkjes verwijzen nu specifiek naar de secties op index.html -->
+    <!-- Navigatie: Linkjes verwijzen nu specifiek naar de secties op index.html en prijzen.html -->
     <nav class="dropdown-menu" id="dropdown-menu">
         <ul>
             <li><a href="index.html#about" class="nav-link">Over Ons</a></li>
             <li><a href="index.html#process" class="nav-link">Werkwijze</a></li>
-            <li><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="index.html#portfolio" class="nav-link">Beelden</a></li>
             <li><a href="index.html#services" class="nav-link">Mogelijkheden</a></li>
+            <li><a href="prijzen.html" class="nav-link">Tarieven</a></li>
             <li><a href="index.html#faq" class="nav-link">Veelgestelde vragen</a></li>
             <li><a href="index.html#contact" class="nav-link">Contact</a></li>
         </ul>
@@ -419,11 +417,6 @@
                         <strong>Architectural Visualizer</strong>
                         <span>Sjors Maas</span>
                     </div>
-                    <!-- Optioneel: Voeg telefoonnummer toe -->
-                    <!-- <div class="contact-detail">
-                        <strong>Telefoon</strong>
-                        <a href="tel:+31612345678">+31 6 1234 5678</a>
-                    </div> -->
                 </div>
             </div>
 
@@ -478,7 +471,6 @@
 
                         <div class="form-group">
                             <label class="form-label" for="datum">Gewenste opleverdatum (Optioneel)</label>
-                            <!-- Door type="text" met focus events te gebruiken blijft de strakke vormgeving behouden totdat je klikt -->
                             <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="datum" name="Opleverdatum" class="form-control" placeholder="dd-mm-jjjj">
                         </div>
                     </div>

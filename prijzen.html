@@ -64,7 +64,7 @@
     }
 
     body {
-        background-color: var(--clr-beige);
+        background-color: var(--clr-white); 
         color: var(--clr-navy);
         font-family: var(--font-main);
         line-height: 1.6;
@@ -73,6 +73,10 @@
 
     .bg-white {
         background-color: var(--clr-white);
+    }
+
+    .bg-beige {
+        background-color: var(--clr-beige); 
     }
 
     img, video {
@@ -266,6 +270,7 @@
     .pricing-hero {
         padding: 22vh 0 8vh 0;
         text-align: center;
+        background-color: var(--clr-white);
     }
 
     .pricing-hero p {
@@ -274,16 +279,17 @@
         font-size: 1.15rem;
     }
 
-    /* ================= PRIJZEN CARDS ================= */
+    /* ================= PRIJZEN CARDS (STRAK RECHT EN GELIJK) ================= */
     .pricing-card {
         background-color: var(--clr-white);
-        border: 1px solid rgba(168, 159, 146, 0.3);
+        border: 1px solid rgba(13, 27, 45, 0.12); 
         padding: 3.5rem 2.5rem;
         border-radius: 4px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-between; /* Zorgt dat de knop altijd onderaan staat */
         position: relative;
+        text-align: left; /* Geforceerd strak links uitgelijnd */
         transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
 
@@ -308,8 +314,7 @@
     .pricing-badge {
         position: absolute;
         top: -15px;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 2.5rem; /* Links uitgelijnd in plaats van gecentreerd */
         background-color: var(--clr-taupe);
         color: var(--clr-white);
         font-family: var(--font-sans);
@@ -322,7 +327,7 @@
     }
 
     .pricing-header {
-        text-align: center;
+        text-align: left; /* Strak links uitgelijnd */
         margin-bottom: 2rem;
     }
 
@@ -336,7 +341,7 @@
         font-size: 2.8rem;
         font-weight: 400;
         color: var(--clr-navy);
-        margin: 1rem 0;
+        margin: 0.5rem 0 1rem 0;
     }
 
     .pricing-header .price span {
@@ -354,29 +359,43 @@
         font-size: 0.95rem;
         color: var(--clr-taupe);
         line-height: 1.5;
+        margin-bottom: 0;
     }
 
+    /* Features List (Vaste uitlijning) */
     .pricing-features {
         list-style: none;
-        margin-bottom: 3rem;
-        flex-grow: 1;
+        margin: 2rem 0 3rem 0;
+        flex-grow: 1; /* Neemt de resterende ruimte in zodat knoppen uitlijnen */
     }
 
     .pricing-features li {
+        position: relative;
         font-family: var(--font-sans);
         font-size: 0.95rem;
         font-weight: 300;
-        padding: 0.8rem 0;
+        padding: 0.8rem 0 0.8rem 1.8rem; /* Ruimte aan de linkerkant voor het vinkje */
         border-bottom: 1px solid rgba(168, 159, 146, 0.15);
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+        color: var(--clr-navy);
+        text-align: left;
+        line-height: 1.4;
     }
 
+    .pricing-card.featured .pricing-features li {
+        color: var(--clr-white);
+        border-bottom-color: rgba(232, 226, 214, 0.15);
+    }
+
+    /* Absoluut gepositioneerd vinkje voorkomt foute uitlijning bij tekstterugloop */
     .pricing-features li::before {
         content: "✓";
+        position: absolute;
+        left: 0;
+        top: 0.8rem; /* Lijnt perfect uit met de bovenkant van de regel */
         color: var(--clr-taupe);
         font-weight: bold;
+        font-size: 1rem;
+        line-height: 1;
     }
 
     .pricing-card.featured .pricing-features li::before {
@@ -455,57 +474,6 @@
             color: var(--clr-taupe);
             transform: translateX(15px);
         }
-    }
-
-    /* ================= Q&A ACCORDEON ================= */
-    .faq-accordion details {
-        border-bottom: 1px solid var(--clr-taupe);
-        margin-bottom: 1rem;
-    }
-
-    .faq-accordion summary {
-        font-family: var(--font-main);
-        font-size: 1.4rem;
-        cursor: pointer;
-        padding: 1.5rem 0;
-        list-style: none;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .faq-accordion summary::-webkit-details-marker {
-        display: none;
-    }
-
-    .faq-accordion summary::after {
-        content: '+';
-        font-size: 1.5rem;
-        color: var(--clr-taupe);
-        transition: transform 0.4s ease;
-    }
-
-    .faq-content-wrapper {
-        display: grid;
-        grid-template-rows: 0fr;
-        opacity: 0;
-        transition: grid-template-rows 0.5s ease, opacity 0.5s ease;
-    }
-
-    .details-content {
-        overflow: hidden;
-        padding-bottom: 0;
-        color: var(--clr-navy);
-    }
-
-    details.is-open .faq-content-wrapper {
-        grid-template-rows: 1fr;
-        opacity: 1;
-        padding-bottom: 1.5rem;
-    }
-
-    details.is-open summary::after {
-        transform: rotate(45deg);
     }
 
     /* ================= KNOPPEN ================= */
@@ -589,10 +557,9 @@
         transform: translateY(0);
     }
 
-    .delay-1 { transition-delay: 0.1s; }
-    .delay-2 { transition-delay: 0.2s; }
-    .delay-3 { transition-delay: 0.3s; }
-    .delay-4 { transition-delay: 0.4s; }
+    .delay-1 { transition-delay: 0.15s; }
+    .delay-2 { transition-delay: 0.3s; }
+    .delay-3 { transition-delay: 0.45s; }
 
     /* ================= RESPONSIVE ================= */
     @media (max-width: 900px) {
@@ -671,7 +638,7 @@
         <!-- Logo -->
         <div class="header-center">
             <a href="index.html">
-                <img src="https://huisvisual.x02.me/i/P2MSY.png" alt="Huisvisual Logo" class="logo-header play-once-logo">
+                <img src="https://huisvisual.x02.me/i/9GTY.png" alt="Huisvisual Logo" class="logo-header play-once-logo">
             </a>
         </div>
         
@@ -701,63 +668,60 @@
 <section class="pricing-hero">
     <div class="container animate-on-scroll">
         <h1>Transparante Tarieven</h1>
-        <p>Helderheid in kosten, nog voordat de eerste render start. Kies een passend pakket voor uw project of neem contact op voor een voorstel op maat.</p>
+        <p>Helderheid in kosten, voordat de eerste render start. Kies een pakket voor uw project of neem contact op voor een voorstel op maat.</p>
     </div>
 </section>
 
 <!-- ================= PRIJZEN SECTIE ================= -->
-<section class="section bg-white" style="padding-top: 8vh;">
+<section class="section bg-beige">
     <div class="container">
         <div class="grid-3">
             
-            <!-- Pakket 1 -->
+            <!-- Pakket 1 (Exterieur) -->
             <div class="pricing-card animate-on-scroll">
                 <div class="pricing-header">
                     <h3>Exterieur</h3>
-                    <div class="price"><span>Vanaf</span> €349,-</div>
-                    <p class="pricing-desc">Perfect voor de presentatie van gevelwijzigingen, nieuwbouw of uitbouwen aan gemeentes of kopers.</p>
+                    <div class="price"><span>Vanaf</span> €205,-</div>
+                    <p class="pricing-desc">Perfect voor de presentatie van gevelwijzigingen, nieuwbouw of uitbouwen aan jezelf of kopers.</p>
                 </div>
                 <ul class="pricing-features">
-                    <li>1 Hoge resolutie 3D render</li>
+                    <li>3 Hoge resolutie (4K) renders</li>
                     <li>Nauwkeurige materiaal- en lichtsimulatie</li>
-                    <li>Integratie met bestaande omgeving</li>
                     <li>Inclusief 1 correctieronde</li>
-                    <li>Levering in JPG/PNG indeling</li>
+                    <li>Eerste concept binnen 7 dagen</li>
                 </ul>
                 <a href="offerte1.html?pakket=exterieur" class="btn btn-secondary">Aanvragen</a>
             </div>
 
-            <!-- Pakket 2 (Uitgelicht / Meest Gekozen) -->
-            <div class="pricing-card featured animate-on-scroll delay-1">
-                <span class="pricing-badge">Meest gekozen</span>
+            <!-- Pakket 2 (Interieur) -->
+            <div class="pricing-card animate-on-scroll delay-1">
                 <div class="pricing-header">
                     <h3>Interieur</h3>
-                    <div class="price"><span>Vanaf</span> €299,-</div>
-                    <p class="pricing-desc">Ideaal om sfeer, routing en meubilair inzichtelijk te maken voor verbouwingen of verkoop.</p>
+                    <div class="price"><span>Vanaf</span> €170,-</div>
+                    <p class="pricing-desc">Ideaal om sfeer, afwerking en meubilair inzichtelijk te maken voor verbouwingen of verkoop.</p>
                 </div>
                 <ul class="pricing-features">
-                    <li>1 Fotorealistische interieurrender</li>
+                    <li>3 fotorealistische interieurrenders</li>
                     <li>Realistische lichtinval & styling</li>
-                    <li>Kleur- en materiaaladvies vertaald in beeld</li>
                     <li>Inclusief 1 correctieronde</li>
-                    <li>Snel geleverd binnen 5-7 werkdagen</li>
+                    <li>Eerste concept binnen 7 dagen</li>
                 </ul>
                 <a href="offerte1.html?pakket=interieur" class="btn btn-secondary">Aanvragen</a>
             </div>
 
-            <!-- Pakket 3 -->
-            <div class="pricing-card animate-on-scroll delay-2">
+            <!-- Pakket 3 (Totaal Project - Uitgelicht) -->
+            <div class="pricing-card featured animate-on-scroll delay-2">
+                <span class="pricing-badge">Meest gekozen</span>
                 <div class="pricing-header">
                     <h3>Totaal Project</h3>
-                    <div class="price"><span>Vanaf</span> €799,-</div>
-                    <p class="pricing-desc">Compleet pakket voor volledige woningen, bedrijfspanden of grotere presentaties.</p>
+                    <div class="price"><span>Vanaf</span> €330,-</div>
+                    <p class="pricing-desc">Compleet pakket voor volledige woningen, projecten of grotere presentaties.</p>
                 </div>
                 <ul class="pricing-features">
-                    <li>Meerdere standpunten (binnen & buiten)</li>
-                    <li>Gedetailleerde 3D modellering</li>
-                    <li>Samenhangende sfeer en materialisatie</li>
+                    <li>6 Hoge resolutie (4K) renders</li>
+                    <li>Realistische lichtinval en materialen</li>
                     <li>Inclusief 2 correctierondes</li>
-                    <li>Persoonlijk overleg & advies</li>
+                    <li>Eerste concept binnen 7 dagen</li>
                 </ul>
                 <a href="offerte1.html?pakket=totaal" class="btn btn-secondary">Aanvragen</a>
             </div>
@@ -767,83 +731,49 @@
 </section>
 
 <!-- ================= EXTRA OPTIES (ADD-ONS) ================= -->
-<section class="section">
+<section class="section bg-white">
     <div class="container max-width-small">
         <h2 class="animate-on-scroll" style="text-align: center; margin-bottom: 3rem;">Aanvullende Opties</h2>
         <div class="services-list">
             
             <div class="service-item animate-on-scroll delay-1">
                 <span class="service-number">01</span>
-                <h3 class="service-title">Extra Camerapositie</h3>
-                <div class="portfolio-text animate-on-scroll delay-2">
-                    <p>Een extra aanzicht vanuit dezelfde ruimte of model — €125,- per stuk</p>
+                <h3 class="service-title">Extra standpunt</h3>
+                <div class="portfolio-text animate-on-scroll delay-1">
+                    <p>Een extra aanzicht vanuit dezelfde ruimte of model — €25,- per stuk</p>
                 </div>
             </div>
 
             <div class="service-item animate-on-scroll delay-2">
                 <span class="service-number">02</span>
                 <h3 class="service-title">Interactieve Panorama</h3>
-                <div class="portfolio-text animate-on-scroll delay-2">
-                    <p>Virtueel 360-graden rondkijken in het ontwerp — €195,- per ruimte</p>
+                <div class="portfolio-text animate-on-scroll delay-1">
+                    <p>Virtueel 360-graden rondkijken in het ontwerp — €45,- per stuk</p>
                 </div>
             </div>
 
-            <div class="service-item animate-on-scroll delay-3">
+            <div class="service-item animate-on-scroll delay-2">
                 <span class="service-number">03</span>
-                <h3 class="service-title">Video Walkthrough</h3>
-                <div class="portfolio-text animate-on-scroll delay-2">
+                <h3 class="service-title">Video</h3>
+                <div class="portfolio-text animate-on-scroll delay-1">
                     <p>Vloeiende video-animatie door het 3D model — Tarief op aanvraag</p>
                 </div>
             </div>
 
-            <div class="service-item animate-on-scroll delay-4">
+            <div class="service-item animate-on-scroll delay-3">
                 <span class="service-number">04</span>
-                <h3 class="service-title">Spoedlevering</h3>
-                <div class="portfolio-text animate-on-scroll delay-2">
-                    <p>Eerste concepten binnen 48 uur geleverd — +25% op de projectprijs</p>
+                <h3 class="service-title">3D Plattegrond</h3>
+                <div class="portfolio-text animate-on-scroll delay-1">
+                    <p>Volledige verdieping in 3D — €25,- per stuk</p>
                 </div>
             </div>
 
-        </div>
-    </div>
-</section>
-
-<!-- ================= Q&A ================= -->
-<section id="faq" class="section bg-white">
-    <div class="container max-width-small">
-        <h2 class="animate-on-scroll">Veelgestelde vragen over tarieven</h2>
-        
-        <div class="faq-accordion animate-on-scroll delay-1">
-            <details>
-                <summary>Zijn de genoemde tarieven in- of exclusief btw?</summary>
-                <div class="faq-content-wrapper">
-                    <div class="details-content">
-                        <p>De genoemde prijzen op onze website zijn exclusief 21% btw, tenzij expliciet anders vermeld.</p>
-                    </div>
-                </div>
-            </details>
-            <details>
-                <summary>Wat valt er binnen een correctieronde?</summary>
-                <div class="faq-content-wrapper">
-                    <div class="details-content">
-                        <p>Binnen een correctieronde passen we details aan zoals materiaaltexturen, kleuren, meubilering en subtiele wijzigingen in de belichting. Grote structurele wijzigingen in het architectonische ontwerp vallen hier buiten.</p>
-                    </div>
-                </div>
-            </details>
-            <details>
-                <summary>Ontvang ik korting bij grotere afnames?</summary>
-                <div class="faq-content-wrapper">
-                    <div class="details-content">
-                        <p>Zeker. Voor projectontwikkelaars, makelaars en architecten die regelmatig visualisaties nodig hebben of meerdere ruimtes tegelijk aanvragen, hanteren we aangepaste projecttarieven.</p>
-                    </div>
-                </div>
-            </details>
         </div>
     </div>
 </section>
 
 <!-- ================= CONTACT ================= -->
-<section id="contact" class="section">
+<section id="contact" class="section bg-beige">
     <div class="container grid-2">
         <div class="contact-text animate-on-scroll">
             <h2>Heeft u specifieke wensen?</h2>
@@ -923,42 +853,7 @@
 
         animatedElements.forEach(el => scrollObserver.observe(el));
 
-        // --- 3. ZACHTE Q&A ACCORDEON ---
-        const faqs = document.querySelectorAll('.faq-accordion details');
-
-        faqs.forEach(faq => {
-            const summary = faq.querySelector('summary');
-            
-            summary.addEventListener('click', (e) => {
-                e.preventDefault(); 
-                const isOpen = faq.classList.contains('is-open');
-
-                // Sluit alle ANDERE open vragen
-                faqs.forEach(f => {
-                    if (f !== faq && f.classList.contains('is-open')) {
-                        f.classList.remove('is-open');
-                        setTimeout(() => {
-                            if (!f.classList.contains('is-open')) f.removeAttribute('open');
-                        }, 400); 
-                    }
-                });
-
-                // Toggle de vraag waar op geklikt is
-                if (!isOpen) {
-                    faq.setAttribute('open', '');
-                    setTimeout(() => {
-                        faq.classList.add('is-open');
-                    }, 10);
-                } else {
-                    faq.classList.remove('is-open');
-                    setTimeout(() => {
-                        if (!faq.classList.contains('is-open')) faq.removeAttribute('open');
-                    }, 400);
-                }
-            });
-        });
-
-        // --- 4. LOGO PLAY-ONCE LOGICA ---
+        // --- 3. LOGO PLAY-ONCE LOGICA ---
         const logos = document.querySelectorAll('.play-once-logo');
         setTimeout(() => {
             logos.forEach(logo => {

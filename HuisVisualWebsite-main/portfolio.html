@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - HuisVisual.nl</title>
+    
+    <!-- HuisVisual gebruikt Manrope voor lopende teksten -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. Basis & Variabelen
+           ========================================================================== */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.25);
+            --glass-highlight: rgba(255, 255, 255, 0.5);
+            --glass-shadow: rgba(0, 0, 0, 0.3);
+            --glass-glow: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Manrope', sans-serif;
+            color: #ffffff;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        a, button {
+            all: unset;
+            cursor: pointer;
+        }
+
+        /* ==========================================================================
+           2. Full-Screen Achtergrond
+           ========================================================================== */
+        #background-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+            opacity: 1; 
+            transition: opacity 0.5s ease-in-out; 
+            background-color: #111; 
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.0) 50%, rgba(0,0,0,0.2) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           3. Liquid Glass Utility
+           ========================================================================== */
+        .liquid-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-left: 1px solid var(--glass-highlight);
+            box-shadow: 0 15px 35px var(--glass-shadow);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .liquid-glass:hover {
+            box-shadow: 0 15px 35px var(--glass-shadow), 0 0 25px var(--glass-glow);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        /* ==========================================================================
+           4. Layout: Sidebar & Content
+           ========================================================================== */
+        .back-btn {
+            position: absolute;
+            top: 32px;
+            left: 40px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 50%;
+            left: 40px;
+            transform: translateY(-50%);
+            width: 400px;
+            padding: 40px;
+            z-index: 10;
+            overflow: hidden; /* Belangrijk voor het inklappen */
+            max-width: 400px;
+            max-height: 800px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), max-height 0.4s ease, max-width 0.4s ease;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+            padding-right: 40px; /* Ruimte voor de knop */
+        }
+
+        .project-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #e5e7eb;
+            margin-bottom: 32px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .thumbnails-container {
+            display: flex;
+            gap: 16px;
+        }
+
+        .thumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .thumb:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .thumb.active {
+            border-color: #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+        }
+
+        /* ==========================================================================
+           5. Instagram Glass Button
+           ========================================================================== */
+        .insta-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px; 
+            padding: 12px 16px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 500;
+            
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .insta-link:first-of-type {
+            margin-top: 40px; 
+        }
+
+        .insta-link svg {
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .insta-link:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .insta-link:hover svg {
+            transform: scale(1.1);
+        }
+        
+        /* ==========================================================================
+           6. Bottom Nav (Project Schakelaar)
+           ========================================================================== */
+        .bottom-nav {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+            padding: 12px 24px;
+            border-radius: 100px;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ==========================================================================
+           7. Toggle Sidebar & Inklappen
+           ========================================================================== */
+        .toggle-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        .sidebar-content {
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        /* Styling wanneer ingeklapt */
+        .sidebar.collapsed {
+            max-width: 64px !important;
+            max-height: 64px !important;
+            width: 64px;
+            height: 64px;
+            padding: 0 !important;
+        }
+
+        .sidebar.collapsed .sidebar-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Centreer de toggle knop in het kleine bolletje */
+        .sidebar.collapsed .toggle-btn {
+            top: 11px;
+            right: 11px;
+        }
+
+        /* ==========================================================================
+           8. Responsive
+           ========================================================================== */
+        @media (max-width: 800px) {
+            .back-btn { top: 20px; left: 20px; }
+            .sidebar {
+                top: auto;
+                bottom: 120px;
+                left: 20px;
+                transform: none;
+                width: calc(100% - 40px);
+                max-width: calc(100% - 40px);
+                padding: 24px;
+            }
+            .project-title { font-size: 2rem; }
+            .project-desc { font-size: 0.95rem; margin-bottom: 24px; }
+            .thumb { width: 60px; height: 60px; }
+            .insta-link { margin-top: 24px; }
+            .bottom-nav { width: calc(100% - 40px); bottom: 20px; padding: 8px 16px; }
+            
+            .toggle-btn {
+                top: 16px;
+                right: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamische Achtergrond -->
+    <div id="background-layer"></div>
+    <div class="overlay"></div>
+
+    <!-- Terug naar Home -->
+    <a href="index.html" class="back-btn liquid-glass">← Terug naar Home</a>
+
+    <!-- Sidebar -->
+    <aside class="sidebar liquid-glass" id="sidebar">
+        
+        <!-- Verberg / Toon Knop -->
+        <button class="toggle-btn" id="toggle-sidebar" aria-label="Toggle Sidebar">
+            <!-- Kruisje (Standaard zichtbaar) -->
+            <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <!-- Pijltje omhoog (Standaard verborgen) -->
+            <svg id="icon-open" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+
+        <!-- Sidebar Inhoud Wrapper (Makkelijk te verbergen) -->
+        <div class="sidebar-content" id="sidebar-content">
+            <h1 class="project-title" id="project-title">Project Laden...</h1>
+            <p class="project-desc" id="project-desc">Beschrijving laden...</p>
+            
+            <!-- Thumbnails Container -->
+            <div class="thumbnails-container" id="thumbnails-container"></div>
+
+            <!-- Social Links -->
+            <a href="https://www.instagram.com/huisvisual.nl/" target="_blank" class="insta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                <span>Kijk op Insta voor alle foto's.</span>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61572333130670" target="_blank" class="insta-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                <span>Of kijk op Facebook voor alle foto's.</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Project Schakelaar -->
+    <nav class="bottom-nav liquid-glass">
+        <button class="nav-btn" id="btn-prev">
+            <span>←</span> Vorig Project
+        </button>
+        <button class="nav-btn" id="btn-next">
+            Volgend Project <span>→</span>
+        </button>
+    </nav>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM volledig geladen. Initialiseren van Portfolio Script...");
+
+            // --- 1. Data Structuur ---
+            const projects = [
+                {
+                    title: "Keukenvisualisatie",
+                    desc: "Een lichte keuken met houten balken, een kookeiland en donkergroene kasten. Zo komen licht, materialen en de open ruimte samen.",
+                    images: [
+                        "https://huisvisual.x02.me/i/yoTPEP.png"
+                    ]
+                },
+                {
+                    title: "Moderne luxe badkamer",
+                    desc: "Een strakke badkamer die luxe uitstraald. De badkamer heeft moderne meubels en mooie zwarte tinten.",
+                    images: [
+                        "https://huisvisual.x02.me/i/CU9H.png",
+                        "https://huisvisual.x02.me/i/JJGM65.png",
+                        "https://huisvisual.x02.me/i/NBMC.png"
+                    ]
+                },
+                {
+                    title: "Prachtige Villa",
+                    desc: "Dit huis combineert een modern ontwerp met een warme uitstraling. Dankzij de ruime lichtinval voelt de woning direct vertrouwd aan.",
+                    images: [
+                        "https://huisvisual.x02.me/i/ZGGRGP.webp",
+                        "https://huisvisual.x02.me/i/5PHCAE.webp",
+                        "https://huisvisual.x02.me/i/MFG2UG.webp"
+                    ]
+                },
+                {
+                    title: "Sfeervolle keuken",
+                    desc: "Deze visualisatie laat zien hoe mooi een landelijke keuken kan zijn. Door het groene stucwerk en de diepgroene tegels krijgt de keuken een eigen sfeer.",
+                    images: [
+                        "assets/project3-main.jpg",
+                        "assets/project3-thumb1.jpg",
+                        "assets/project3-thumb2.jpg"
+                    ]
+                },
+                {
+                    title: "Strakke Villa",
+                    desc: "Een strakke villa met houten tinten en een mooie tuin met zwembad.",
+                    images: [
+                        "https://huisvisual.x02.me/i/2T4HQ.webp",
+                        "https://huisvisual.x02.me/i/VCFB.webp",
+                        "https://huisvisual.x02.me/i/HKTT.webp"
+                    ]
+                },
+                {
+                    title: "Bungalow",
+                    desc: "Mooie bungalow met houten accenten en gelegen in een rustige straat.",
+                    images: [
+                        "https://huisvisual.x02.me/i/F4HPBM.png",
+                        "https://huisvisual.x02.me/i/85ET2E.png",
+                        "https://huisvisual.x02.me/i/RUC2.png"
+                    ]
+                },
+                {
+                    title: "50m2 Aanbouw",
+                    desc: "Een moderne aanbouw met antraciet metselwerk en een strak plat dak en overstek. De grote glazen pui zorgt voor een directe verbinding met de tuin vanuit de slaapkamer.",
+                    images: [
+                        "https://huisvisual.x02.me/i/AU98Q7.png",
+                        "https://huisvisual.x02.me/i/MSQBJV.png",
+                        "https://huisvisual.x02.me/i/CQQUX.png"
+                    ]
+                },
+                {
+                    title: "Keuken in woonkamer",
+                    desc: "Deze moderne keuken straalt een minimalistische rust uit. Dankzij de greeploze kasten en ingebouwde apperatuur ziet het er altijd opgeruimd uit.",
+                    images: [
+                        "https://huisvisual.x02.me/i/A4UDW.png",
+                        "https://huisvisual.x02.me/i/GKJBD.png",
+                        "https://huisvisual.x02.me/i/8234PA.png"
+                    ]
+                },
+                {
+                    title: "Badkamer",
+                    desc: "Een schitterende badkamer waar perfect gebruik is gemaakt van de ruimte door de zwevende meubels en glazen douchewand die ervoor zorgen dat de ruimte open voelt.",
+                    images: [
+                        "https://huisvisual.x02.me/i/EVB87U.png",
+                        "https://huisvisual.x02.me/i/X9M9.png",
+                        "https://huisvisual.x02.me/i/R39CGG.png"
+                    ]
+                }
+            ];
+
+            // --- 2. Variabelen en DOM Elementen Selecteren ---
+            let currentProjectIndex = 0;
+
+            const bgLayer = document.getElementById('background-layer');
+            const titleEl = document.getElementById('project-title');
+            const descEl = document.getElementById('project-desc');
+            const thumbsContainer = document.getElementById('thumbnails-container');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            
+            // Sidebar Toggle elementen
+            const sidebar = document.getElementById('sidebar');
+            const toggleSidebarBtn = document.getElementById('toggle-sidebar');
+            const iconClose = document.getElementById('icon-close');
+            const iconOpen = document.getElementById('icon-open');
+            const sidebarContent = document.getElementById('sidebar-content');
+
+            // --- 3. Functionaliteit ---
+            function changeBackground(imgSrc, thumbElement) {
+                if (thumbElement) {
+                    const allThumbs = document.querySelectorAll('.thumb');
+                    allThumbs.forEach(t => t.classList.remove('active'));
+                    thumbElement.classList.add('active');
+                }
+
+                bgLayer.style.opacity = '0';
+
+                const imgPreload = new Image();
+                imgPreload.onload = () => {
+                    setTimeout(() => {
+                        bgLayer.style.backgroundImage = `url('${imgSrc}')`;
+                        bgLayer.style.opacity = '1';
+                    }, 500);
+                };
+
+                imgPreload.onerror = () => {
+                    setTimeout(() => { bgLayer.style.opacity = '1'; }, 500);
+                };
+
+                imgPreload.src = imgSrc;
+            }
+
+            function loadProject(index) {
+                const project = projects[index];
+                
+                titleEl.innerText = project.title;
+                descEl.innerText = project.desc;
+                thumbsContainer.innerHTML = '';
+
+                project.images.forEach((imgSrc, i) => {
+                    const thumb = document.createElement('div');
+                    thumb.classList.add('thumb');
+                    if (i === 0) thumb.classList.add('active');
+                    thumb.style.backgroundImage = `url('${imgSrc}')`;
+                    
+                    thumb.addEventListener('click', () => {
+                        changeBackground(imgSrc, thumb);
+                    });
+                    
+                    thumbsContainer.appendChild(thumb);
+                });
+
+                changeBackground(project.images[0], thumbsContainer.firstChild);
+            }
+
+            // --- 4. Event Listeners ---
+            
+            // Vorige / Volgende Navigatie
+            btnNext.addEventListener('click', () => {
+                currentProjectIndex++;
+                if (currentProjectIndex >= projects.length) currentProjectIndex = 0;
+                loadProject(currentProjectIndex);
+            });
+
+            btnPrev.addEventListener('click', () => {
+                currentProjectIndex--;
+                if (currentProjectIndex < 0) currentProjectIndex = projects.length - 1;
+                loadProject(currentProjectIndex);
+            });
+
+            // Sidebar In/Uitklappen
+            toggleSidebarBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
+                
+                if (sidebar.classList.contains('collapsed')) {
+                    // Verberg de content (verdwijnt langzaam via CSS opacity)
+                    iconClose.style.display = 'none';
+                    iconOpen.style.display = 'block';
+                    sidebarContent.style.opacity = '0';
+                    
+                    // Haal het na de transitie fysiek uit de weg
+                    setTimeout(() => {
+                        sidebarContent.style.display = 'none';
+                    }, 300);
+                } else {
+                    // Laat de content weer zien
+                    iconOpen.style.display = 'none';
+                    iconClose.style.display = 'block';
+                    sidebarContent.style.display = 'block';
+                    
+                    // Kleine timeout nodig zodat de opacity animatie werkt na display: block
+                    setTimeout(() => {
+                        sidebarContent.style.opacity = '1';
+                    }, 10);
+                }
+            });
+
+            // --- 5. Preloader & Initialisatie ---
+            projects.forEach(p => {
+                p.images.forEach(src => {
+                    const preImage = new Image();
+                    preImage.src = src;
+                });
+            });
+
+            loadProject(currentProjectIndex);
+            
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1KVY8P1SX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-W1KVY8P1SX');
+</script>
+  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HuisVisual.nl - Hoogwaardige 3D Visualisaties</title>
+  <meta name="description" content="Een technische tekening is voor veel mensen lastig te begrijpen. Ik help u om uw ideeën simpel te visualiseren of uit te leggen aan klanten of de gemeente. Met de 3D-beelden ziet iedereen direct wat de bedoeling is, nog voordat de bouw begint.">
+    
+<!-- Importeer een high-end, strak font voor de standaard teksten -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+
+<style>
+    /* ================= CSS VARIABELEN & BASIS ================= */
+    @font-face {
+        font-family: 'Aguilette';
+        src: url('assets/Aiguilette.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    :root {
+        /* Kleurenpalet Huisvisual */
+        --clr-navy: #0D1B2D;
+        --clr-beige: #E8E2D6;
+        --clr-taupe: #A89F92;
+        --clr-black: #000000;
+        --clr-white: #FFFFFF;
+
+        /* Typografie */
+        --font-main: 'Aguilette', 'Playfair Display', 'Times New Roman', serif;
+        --font-sans: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+
+        /* Afstanden */
+        --space-sm: 1rem;
+        --space-md: 2rem;
+        --space-lg: 5rem;
+        --space-xl: 15vh;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+    }
+
+    body {
+        background-color: var(--clr-beige);
+        color: var(--clr-navy);
+        font-family: var(--font-main);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    .bg-white {
+        background-color: var(--clr-white);
+    }
+
+    img, video {
+        max-width: 100%;
+        display: block;
+    }
+
+    /* ================= TYPOGRAFIE ================= */
+    h1, h2, h3 {
+        font-weight: 400;
+        line-height: 1.2;
+        color: var(--clr-navy);
+    }
+
+    h2 {
+        font-size: 2.8rem;
+        margin-bottom: var(--space-md);
+    }
+
+    h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        font-family: var(--font-sans);
+        font-weight: 300;
+        font-size: 1.05rem;
+        color: var(--clr-navy);
+        margin-bottom: var(--space-sm);
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* ================= LAYOUT CONTAINERS ================= */
+    .container {
+        width: 90%;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .max-width-small {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .section {
+        padding: var(--space-xl) 0;
+    }
+
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-lg);
+        align-items: center;
+    }
+
+    /* ================= HEADER (Zwevend & Onzichtbaar) ================= */
+    .site-header {
+        position: absolute; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 2rem 5%;
+        pointer-events: none; 
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-left, .header-right {
+        width: 33.33%;
+    }
+
+    .header-right {
+        display: flex;
+        justify-content: flex-end;
+        pointer-events: auto; 
+    }
+
+    .header-center {
+        width: 33.33%;
+        display: flex;
+        justify-content: center;
+        pointer-events: auto; 
+    }
+
+    /* EXTREME HEADER LOGO */
+    .logo-header {
+        height: 220px; 
+        width: auto;
+        filter: drop-shadow(0px 2px 10px rgba(255,255,255,0.2));
+        transition: opacity 0.4s ease, visibility 0.4s ease; 
+    }
+
+    /* Verberg logo als menu open is */
+    body.menu-is-open .logo-header {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Hamburger Menu */
+    .hamburger {
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1002; 
+        padding: 10px;
+    }
+
+    .hamburger .line {
+        display: block;
+        width: 35px;
+        height: 1px;
+        background-color: var(--clr-navy);
+        margin: 8px 0;
+        transition: all 0.3s ease;
+    }
+
+    .hamburger.active .line:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+        background-color: var(--clr-navy);
+    }
+    .hamburger.active .line:nth-child(2) {
+        transform: translateY(-9px) rotate(-45deg);
+        background-color: var(--clr-navy);
+    }
+
+    /* Dropdown Menu Overlay */
+    .dropdown-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--clr-beige);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.5s ease;
+        z-index: 999;
+        padding: 2rem;
+    }
+
+    .dropdown-menu.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .dropdown-menu ul {
+        list-style: none;
+        text-align: center;
+    }
+
+    .dropdown-menu li {
+        margin: 2rem 0;
+    }
+
+    .nav-link {
+        font-size: 3rem;
+        color: var(--clr-navy);
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--clr-taupe);
+    }
+
+    /* ================= HERO SECTIE ================= */
+    .hero-section {
+        position: relative;
+        min-height: 640px;
+        height: 100svh;
+        width: 100%; 
+        overflow: hidden;
+    }
+
+    .hero-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+        z-index: 1;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(13, 27, 45, 0.68) 0%, rgba(13, 27, 45, 0.36) 48%, rgba(13, 27, 45, 0.08) 100%);
+        z-index: 2;
+    }
+
+    .hero-content {
+        position: absolute;
+        z-index: 3;
+        left: 8%;
+        bottom: 15%;
+        width: min(780px, 78%);
+    }
+
+    .hero-title {
+        color: var(--clr-white);
+        font-size: clamp(2.7rem, 5.4vw, 5.2rem);
+        line-height: 1.06;
+        max-width: 760px;
+        margin-bottom: 1.25rem;
+        text-wrap: balance;
+    }
+
+    .hero-intro {
+        color: var(--clr-white);
+        font-size: clamp(1rem, 1.35vw, 1.2rem);
+        font-weight: 400;
+        max-width: 610px;
+        margin-bottom: 0;
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        margin-top: 2rem;
+    }
+
+    .hero-actions .btn {
+        margin: 0;
+        padding: 1rem 1.7rem;
+        font-size: 0.78rem;
+        letter-spacing: 1.4px;
+    }
+
+    .btn-hero-primary {
+        color: var(--clr-navy);
+        border-color: var(--clr-white);
+        background-color: var(--clr-white);
+    }
+
+    .btn-hero-primary:hover {
+        color: var(--clr-white);
+        background-color: transparent;
+    }
+
+    .btn-hero-secondary {
+        color: var(--clr-white);
+        border-color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(13, 27, 45, 0.12);
+    }
+
+    .btn-hero-secondary:hover {
+        color: var(--clr-navy);
+        border-color: var(--clr-white);
+        background-color: var(--clr-white);
+    }
+
+    /* ================= AFBEELDINGEN ALGEMEEN ================= */
+    .about-image img, 
+    .process-image img,
+    .services-image img, 
+    .contact-image img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    /* ================= WERKWIJZE ================= */
+    .process-steps {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+
+    .step {
+        border-bottom: 1px solid var(--clr-taupe);
+        padding-bottom: 1rem;
+    }
+
+    /* ================= PORTFOLIO ================= */
+    .portfolio-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2rem;
+        margin-bottom: var(--space-md);
+    }
+
+    .portfolio-item img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .portfolio-link {
+        display: block;
+        width: fit-content;
+        margin: 2rem auto 0;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid var(--clr-taupe);
+        font-family: var(--font-sans);
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
+        transition: color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .portfolio-link:hover {
+        color: var(--clr-taupe);
+        border-color: var(--clr-navy);
+    }
+
+    .portfolio-text {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--clr-taupe);
+    }
+
+    /* ================= MOGELIJKHEDEN ================= */
+    .services-list {
+        display: flex;
+        flex-direction: column;
+        margin-top: 2rem;
+    }
+
+    .service-item {
+        display: flex;
+        align-items: center;
+        gap: 2rem; /* Ruimte tussen cijfer en titel op desktop */
+        padding: 1.5rem 0;
+        border-bottom: 1px solid rgba(168, 159, 146, 0.4); 
+        transition: all 0.4s ease;
+        cursor: pointer;
+    }
+
+    .service-item:first-child {
+        border-top: 1px solid rgba(168, 159, 146, 0.4);
+    }
+
+    .service-number {
+        font-family: var(--font-sans);
+        font-size: 0.9rem;
+        color: var(--clr-taupe);
+        font-weight: 500;
+        width: 25px;
+        flex-shrink: 0;
+    }
+
+    .service-title {
+        font-family: var(--font-main);
+        font-size: 1.8rem;
+        color: var(--clr-navy);
+        margin-bottom: 0;
+        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.4s ease;
+        flex-shrink: 0;
+    }
+
+    /* Overschrijf standaard .portfolio-text specifiek voor deze lijst */
+    .service-item .portfolio-text {
+        margin: 0;
+        margin-left: auto; /* DIT duwt alleen de tekst netjes naar rechts op desktop */
+        text-align: right;
+        max-width: 50%;
+    }
+
+    .service-item .portfolio-text p {
+        margin-bottom: 0; /* Voorkom onnodige witruimte onder tekst in de lijst */
+    }
+
+    /* Hover Effecten voor de lijst (Desktop) */
+    @media (min-width: 769px) {
+        .service-item:hover .service-title {
+            color: var(--clr-taupe);
+            transform: translateX(15px);
+        }
+    }
+    
+    /* Desktop Foto verhoudingen */
+    @media (min-width: 901px) {
+        .about-image img, 
+        .process-image img, 
+        .services-image img,
+        .contact-image img {
+            height: 85vh; 
+        }
+        .portfolio-item img {
+            height: 90vh;
+        }
+    }
+    
+    /* ================= MID-PAGE GROOT LOGO ================= */
+    .logo-section-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .logo-large {
+        max-width: 900px;
+        width: 90%;
+        margin-bottom: 1.5rem;
+    }
+
+    .logo-subtext {
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--clr-black);
+        margin: 0;
+    }
+
+    /* ================= Q&A ACCORDEON ================= */
+    .faq-accordion details {
+        border-bottom: 1px solid var(--clr-taupe);
+        margin-bottom: 1rem;
+    }
+
+    .faq-accordion summary {
+        font-family: var(--font-main);
+        font-size: 1.4rem;
+        cursor: pointer;
+        padding: 1.5rem 0;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .faq-accordion summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-accordion summary::after {
+        content: '+';
+        font-size: 1.5rem;
+        color: var(--clr-taupe);
+        transition: transform 0.4s ease;
+    }
+
+    .faq-content-wrapper {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition: grid-template-rows 0.5s ease, opacity 0.5s ease;
+    }
+
+    .details-content {
+        overflow: hidden;
+        padding-bottom: 0;
+        color: var(--clr-navy);
+    }
+
+    details.is-open .faq-content-wrapper {
+        grid-template-rows: 1fr;
+        opacity: 1;
+        padding-bottom: 1.5rem;
+    }
+
+    details.is-open summary::after {
+        transform: rotate(45deg);
+    }
+
+    /* ================= KNOPPEN ================= */
+    .button-group {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        font-family: var(--font-sans);
+        padding: 1.2rem 3rem;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.4s ease;
+        cursor: pointer;
+        border-radius: 50px; 
+        border: 1px solid var(--clr-navy); 
+        display: inline-block;
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        color: var(--clr-navy);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--clr-navy);
+        color: var(--clr-white);
+    }
+
+    /* ================= FOOTER ================= */
+    .site-footer {
+        background-color: var(--clr-beige); 
+        color: var(--clr-navy);
+        padding: 1rem 5%; 
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .footer-links {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .footer-links a {
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: var(--clr-taupe);
+    }
+
+    .footer-copyright {
+        white-space: nowrap; 
+    }
+
+    /* ================= SCROLL ANIMATIES ================= */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .animate-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 900px) {
+        .grid-2 {
+            grid-template-columns: 1fr;
+            gap: var(--space-md);
+        }
+        .about-image, .contact-image, .process-image, .services-image { grid-row: 2; }
+        
+        .about-image img, .process-image img, .services-image img, .contact-image img {
+            aspect-ratio: 4/5;
+            height: auto;
+        }
+
+        .portfolio-item img {
+            aspect-ratio: 4/5;
+            height: auto;
+        }
+
+        .portfolio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    }
+
+    @media (max-width: 768px) {
+        h2 { font-size: 2rem; }
+        .portfolio-grid { grid-template-columns: 1fr; }
+
+        .hero-section {
+            min-height: 620px;
+            height: 90svh;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(0deg, rgba(13, 27, 45, 0.72) 0%, rgba(13, 27, 45, 0.34) 62%, rgba(13, 27, 45, 0.12) 100%);
+        }
+
+        .hero-content {
+            left: 6%;
+            bottom: 10%;
+            width: 88%;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 10vw, 3.5rem);
+        }
+
+        .hero-actions {
+            gap: 0.7rem;
+            margin-top: 1.5rem;
+        }
+
+        .hero-actions .btn {
+            padding: 0.9rem 1.2rem;
+            font-size: 0.72rem;
+        }
+
+        .logo-header { height: 120px; }
+        
+        .footer-content {
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+        }
+        .footer-links {
+            justify-content: center;
+        }
+
+        /* Mobiel Menu styling verbeteringen */
+        .nav-link { 
+            font-size: 2rem; 
+        }
+        .dropdown-menu li { 
+            margin: 1.5rem 0; 
+        }
+
+        /* HIER ZIT DE MOBIELE FIX VOOR 'MOGELIJKHEDEN' (Grid Layout) */
+        .service-item {
+            display: grid;
+            grid-template-columns: 28px 1fr; /* Exacte breedte voor cijfer, de rest is voor tekst */
+            gap: 0.2rem 0.5rem; /* Subtiele ruimte tussen elementen */
+            align-items: start;
+        }
+        
+        .service-item .service-number {
+            width: auto;
+            margin-top: 0.4rem; /* Zorgt dat het cijfer op 1 lijn ligt met de tekst */
+        }
+
+        .service-item .service-title {
+            font-size: 1.6rem;
+            line-height: 1.2;
+            text-align: left; /* Geforceerd links */
+        }
+
+        .service-item .portfolio-text {
+            grid-column: 2; /* Plaats de omschrijving strak onder de titel */
+            margin: 0;
+            padding-left: 0; 
+            text-align: left; /* Geforceerd links */
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+    
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="header">
+    <div class="header-container">
+        <div class="header-left"></div>
+        
+        <!-- Logo -->
+        <div class="header-center">
+            <a href="#hero">
+                <img src="https://huisvisual.x02.me/i/P2MSY.png" alt="Huisvisual Logo" class="logo-header play-once-logo">
+            </a>
+        </div>
+        
+        <div class="header-right">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
+                <span class="line"></span>
+                <span class="line"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Navigatie uit de header gehaald zodat linkjes doorklikbaar zijn -->
+<nav class="dropdown-menu" id="dropdown-menu">
+    <ul>
+        <li><a href="#about" class="nav-link">Over Ons</a></li>
+        <li><a href="#process" class="nav-link">Werkwijze</a></li>
+        <li><a href="#portfolio" class="nav-link">Beelden</a></li>
+        <li><a href="#services" class="nav-link">Mogelijkheden</a></li>
+        <li><a href="prijzen.html" class="nav-link">Tarieven</a></li>
+        <li><a href="#faq" class="nav-link">Veelgestelde vragen</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- ================= HERO SECTIE ================= -->
+<section id="hero" class="hero-section">
+    <video class="hero-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+        <source src="https://huisvisual.x02.me/i/8SFF.webm" type="video/webm">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">Zie uw ontwerp al vóór de bouw begint</h1>
+        <p class="hero-intro">Met 3D-visualisaties krijgt u vooraf een helder beeld van uw woning. Handig om keuzes te maken of plannen te presenteren.</p>
+        <div class="hero-actions">
+            <a href="offerte1.html" class="btn btn-hero-primary">Vraag een offerte aan</a>
+            <a href="#portfolio" class="btn btn-hero-secondary">Bekijk beelden</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= OVER ONS ================= -->
+<section id="about" class="section">
+    <div class="container grid-2">
+        <div class="about-text animate-on-scroll">
+            <h2>Verfijnde 3D-visualisaties voor elk project</h2>
+            <p>Bij Huisvisual breng ik architectuur en interieur tot leven voordat de eerste steen gelegd is. Met oog voor detail, licht en materiaal creëer ik beelden die niet alleen overtuigen, maar ook emotie oproepen.</p>
+            <p>De bouw stopt nooit, dus ik ook niet. Ik zorg dat u snel verder kunt met uw project.</p>
+        </div>
+        <div class="about-image animate-on-scroll delay-1">
+            <img src="https://huisvisual.x02.me/i/DZ6H.webp" alt="3D visualisatie interieur" loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- ================= WERKWIJZE ================= -->
+<section id="process" class="section bg-white">
+    <div class="container">
+        <h2 class="animate-on-scroll">De Werkwijze</h2>
+        <div class="grid-2 process-grid">
+            <div class="process-image animate-on-scroll">
+                <img src="https://huisvisual.x02.me/i/JDGP4Z.webp" alt="Het proces van 3D visualisatie" loading="lazy">
+            </div>
+            <div class="process-steps">
+                <div class="step animate-on-scroll delay-1">
+                    <h3>01. Concept & Visie</h3>
+                    <p>We bespreken het ontwerp, de materialen en de sfeer die de visualisatie moet uitstralen.</p>
+                </div>
+                <div class="step animate-on-scroll delay-2">
+                    <h3>02. Modellering</h3>
+                    <p>Het 2D-ontwerp wordt nauwkeurig vertaald naar een gedetailleerd 3D-model. U krijgt hier de eerste concept beelden.</p>
+                </div>
+                <div class="step animate-on-scroll delay-3">
+                    <h3>03. Licht & Texturen</h3>
+                    <p>Toepassing van realistische belichting en hoogwaardige texturen voor een levensecht resultaat.</p>
+                </div>
+                <div class="step animate-on-scroll delay-4">
+                    <h3>04. Oplevering</h3>
+                    <p>De definitieve, high-end renders worden in hoge resolutie gepresenteerd.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= PORTFOLIO ================= -->
+<section id="portfolio" class="section">
+    <div class="container">
+        <div class="portfolio-grid">
+            <figure class="portfolio-item animate-on-scroll">
+                <img src="https://huisvisual.x02.me/i/yoTPEP.png" alt="Keukenvisualisatie met houten balken, kookeiland en donkergroene kasten" loading="lazy" width="1920" height="1080">
+            </figure>
+            <figure class="portfolio-item animate-on-scroll">
+                <img src="https://huisvisual.x02.me/i/5MY7.webp" alt="Lichte badkamer met vrijstaand bad, planten en natuurstenen vloer" loading="lazy">
+            </figure>
+            <figure class="portfolio-item animate-on-scroll delay-1">
+                <img src="https://huisvisual.x02.me/i/AGJNT.webp" alt="Warme woonkamer met zachte bank, houten tafel en wandpanelen" loading="lazy">
+            </figure>
+        </div>
+        <div class="portfolio-text animate-on-scroll delay-2">
+            <p>Oog voor detail, harmonie en rust. Een perfecte vertaling van uw visie naar realiteit.</p>
+        </div>
+        <a href="portfolio.html" class="portfolio-link">Bekijk alle beelden</a>
+    </div>
+</section>
+
+<!-- ================= MOGELIJKHEDEN ================= -->
+<section id="services" class="section bg-white">
+    <div class="container grid-2">
+        <div class="services-text">
+            <h2 class="animate-on-scroll">Onze Mogelijkheden</h2>
+            <div class="services-list">
+                <div class="service-item animate-on-scroll delay-1">
+                    <span class="service-number">01</span>
+                    <h3 class="service-title">Exterieur Visualisaties</h3>
+                    <div class="portfolio-text animate-on-scroll delay-2">
+                        <p>Een visualisatie van uw visie naar realiteit.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll delay-2">
+                    <span class="service-number">02</span>
+                    <h3 class="service-title">Interieur Renders</h3>
+                    <div class="portfolio-text animate-on-scroll delay-2">
+                        <p>Fotorealistische beelden die sfeer en gevoel vangen.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll delay-3">
+                    <span class="service-number">03</span>
+                    <h3 class="service-title">Video</h3>
+                    <div class="portfolio-text animate-on-scroll delay-2">
+                        <p>De ultieme beleving van een ontwerp.</p>
+                    </div>
+                </div>
+                <div class="service-item animate-on-scroll delay-4">
+                    <span class="service-number">04</span>
+                    <h3 class="service-title">Interactieve Panorama</h3>
+                    <div class="portfolio-text animate-on-scroll delay-2">
+                        <p>Een interactieve rondkijk in het ontwerp.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="services-image animate-on-scroll delay-2">
+            <!-- Tijdelijke placeholder foto (vervang deze met je eigen foto) -->
+            <img src="https://huisvisual.x02.me/i/JH2UK.webp" alt="Onze Mogelijkheden" loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- ================= GROOT GEANIMEERD LOGO (MID-PAGE) ================= -->
+<section id="big-logo" class="section">
+    <div class="container animate-on-scroll">
+        <div class="logo-section-wrapper">
+            <img src="https://huisvisual.x02.me/i/9GTY.png" alt="Huisvisual Geanimeerd Logo" class="logo-large play-once-logo" loading="lazy">
+            <p class="logo-subtext">Een technische tekening is voor veel mensen lastig te begrijpen. Ik help u om uw ideeën simpel te visualiseren of uit te leggen aan klanten of de gemeente. Met de 3D-beelden ziet iedereen direct wat de bedoeling is, nog voordat de bouw begint.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= Q&A ================= -->
+<section id="faq" class="section bg-white">
+    <div class="container max-width-small">
+        <h2 class="animate-on-scroll">Veelgestelde vragen</h2>
+        
+        <div class="faq-accordion animate-on-scroll delay-1">
+            <details>
+                <summary>Wat zijn de gemiddelde levertijden?</summary>
+                <div class="faq-content-wrapper">
+                    <div class="details-content">
+                        <p>Afhankelijk van de complexiteit van het project, lever ik de eerste concepten doorgaans binnen 5 tot 7 werkdagen aan.</p>
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Wat hebben jullie nodig om te starten?</summary>
+                <div class="faq-content-wrapper">
+                    <div class="details-content">
+                        <p>Ik ontvang graag plattegronden (dwg/pdf), 3D modellen (indien bij de hand), aanzichten, en een moodboard of specificatie van materialen en kleuren.</p>
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Zijn revisierondes inbegrepen?</summary>
+                <div class="faq-content-wrapper">
+                    <div class="details-content">
+                        <p>Ja, in mijn pakketten zit standaard één correctieronde verwerkt om tot het perfecte eindresultaat te komen.</p>
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="section">
+    <div class="container grid-2">
+        <div class="contact-text animate-on-scroll">
+            <h2>Laten we samenwerken</h2>
+            <p>Klaar om uw project visueel tot leven te wekken? Neem contact met mij op voor een kennismaking of vraag direct een vrijblijvende offerte aan.</p>
+            
+            <div class="button-group">
+                <a href="offerte1.html" class="btn btn-secondary">Offerte aanvragen</a>
+                <a href="mailto:info@huisvisual.nl" class="btn btn-secondary">Contact opnemen</a>
+            </div>
+        </div>
+        <div class="contact-image animate-on-scroll delay-1">
+            <img src="https://huisvisual.x02.me/i/UTKD.webp" alt="Contact Huisvisual" loading="lazy">
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <div class="footer-links">
+            <span>HuisVisual 2026</span>
+            <a href="https://www.instagram.com/huisvisual.nl/">Instagram</a>
+            <a href="offerte1.html">Offerte Aanvragen</a>
+        </div>
+        <div class="footer-links">
+            <a href="mailto:info@huisvisual.nl">info@huisvisual.nl</a>
+            <span>Sjors Maas</span>
+            <span>Nederland - Eindhoven</span>
+        </div>
+    </div>
+</footer>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- 1. HAMBURGER MENU & LOGO VERBERGEN ---
+        const hamburger = document.getElementById('hamburger');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            dropdownMenu.classList.toggle('active');
+            
+            // Toggle de class op de body om het logo te verbergen via CSS
+            document.body.classList.toggle('menu-is-open');
+            
+            document.body.style.overflow = dropdownMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                dropdownMenu.classList.remove('active');
+                document.body.classList.remove('menu-is-open');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // --- 2. SCROLL ANIMATIES (FADE IN/UP) ---
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -10% 0px',
+            threshold: 0.1
+        };
+
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        animatedElements.forEach(el => scrollObserver.observe(el));
+
+        // --- 3. ZACHTE Q&A ACCORDEON ---
+        const faqs = document.querySelectorAll('.faq-accordion details');
+
+        faqs.forEach(faq => {
+            const summary = faq.querySelector('summary');
+            
+            summary.addEventListener('click', (e) => {
+                e.preventDefault(); 
+                const isOpen = faq.classList.contains('is-open');
+
+                // Sluit alle ANDERE open vragen
+                faqs.forEach(f => {
+                    if (f !== faq && f.classList.contains('is-open')) {
+                        f.classList.remove('is-open');
+                        setTimeout(() => {
+                            if (!f.classList.contains('is-open')) f.removeAttribute('open');
+                        }, 400); 
+                    }
+                });
+
+                // Toggle de vraag waar op geklikt is
+                if (!isOpen) {
+                    faq.setAttribute('open', '');
+                    setTimeout(() => {
+                        faq.classList.add('is-open');
+                    }, 10);
+                } else {
+                    faq.classList.remove('is-open');
+                    setTimeout(() => {
+                        if (!faq.classList.contains('is-open')) faq.removeAttribute('open');
+                    }, 400);
+                }
+            });
+        });
+
+        // --- 4. LOGO PLAY-ONCE LOGICA ---
+        const logos = document.querySelectorAll('.play-once-logo');
+        setTimeout(() => {
+            logos.forEach(logo => {
+                let currentSrc = logo.src;
+                if(currentSrc.includes('.gif')) {
+                    logo.src = currentSrc.replace('.gif', '.webp'); 
+                }
+            });
+        }, 3800); 
+
+    });
+</script>
+</body>
+</html>
